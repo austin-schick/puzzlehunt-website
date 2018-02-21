@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Efficiency
+</h1>
+<hr>
+
+<ol>
+<li><a href="#bigOh"><b>Big-Oh</b></a></li>
+</li><li><a href="#fnFamilies"><b>Common Function Families</b></a></li>
+</li><li><a href="#efficiency"><b>Efficiency</b></a></li>
+</li><li><a href="#bigIdea"><b>The Big Idea</b></a></li>
+</li><li><a href="#examples"><b>Examples</b></a>
+<ol>
+<li><a href="#sequentialNestingComp"><b>Sequences, Nesting, and Composition</b><br></a></li>
+<li><a href="#builtins"><b>Python Builtins</b><br></a></li>
+<li><a href="#isPrime"><b>isPrime vs fasterIsPrime</b><br></a></li>
+</li><li><a href="#linearAndBinarySearch"><b>Linear Search vs Binary Search</b></a></li>
+</li><li><a href="#sorting"><b>Sorting</b></a>
+<ol>
+</li><li><a href="#sorting1"><b>Sorting Examples</b></a></li>
+</li><li><a href="#sorting2"><b>SelectionSort vs MergeSort</b></a></li>
+</ol></li>
+</li><li><a href="#sumOfSquares"><b>sumOfSquares Examples</b><br></a></li>
+</ol></li>
+</ol>
+
+<hr>
+
+<ol>
+
+<li><a name="bigOh"></a><b>Big-Oh</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/yuy9kM32lWY"></span>
+<ol>
+<li>Describes asymptotic behavior of a function
+</li><li>Informally (for 15112):  ignore all lower-order terms and constants
+</li><li>Formally (after 15112):  see
+      <a target="_blank" href="https://en.wikipedia.org/wiki/Big_O_notation#Formal_definition">here</a>
+</li><li>A few examples:
+  <ul>
+  <li>3n<sup>2</sup> - 2n + 25 is O(n<sup>2</sup>)
+  </li><li>30000n<sup>2</sup> + 2n - 25 is O(n<sup>2</sup>)
+  </li><li>0.00000000001n<sup>2</sup> + 123456789n is O(n<sup>2</sup>)
+  </li><li>10nlog<sub>17</sub>n + 25n - 17 is O(nlogn)
+  </li></ul>
+</ol>
+
+</li><br><li><a name="fnFamilies"></a><b>Common Function Families</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/-N3np7lBtHA"></span>
+<ol>
+<li>Constant O(1)
+</li><li>Logarithmic O(logn)
+</li><li>Square-Root O(n<sup>0.5</sup>)
+</li><li>Linear  O(n)
+</li><li>Linearithmic, Loglinear, or quasilinear  O(nlogn)
+</li><li>Quadratic  O(n<sup>2</sup>)
+</li><li>Exponential  O(k<sup>n</sup>)
+</li></ol>
+</li>
+<br>
+<b>Graphically (Images borrowed from
+<a target="_blank" href="http://science.slc.edu/~jmarshall/courses/2002/spring/cs50/BigO/index.html">here</a>):</b><br>
+<img border="0" src="big-oh1.gif" width="552" height="411"><br>
+<br>
+<img border="0" src="big-oh2.gif" width="547" height="402"><br>
+<br>
+<img border="0" src="big-oh3.gif" width="549" height="400"><br>
+</li>
+
+</li><br><li><a name="efficiency"></a><b>Efficiency</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/xxf3RzXLgd0"></span><br>
+When we say the program runs in O(f(N)), we mean...
+<ul>
+<li>N is the size of our input
+<ul>
+<li>For a string s, N = len(s)</li>
+<li>For a list L, N = len(L) (also true for sets, dictionaries, and other collections)</li>
+<li>For an integer n, N = numberOfDigits(n) = log<sub>b</sub>(n), so n = b<sup>N</sup> (where b is the base, and you can use any base b >= 2).</li>
+<li>In the literature, N is often written in lowercase n, but we use that often to represent an integer n, which is different from the size of that integer.  So in 112, we use uppercase N for the size of the input.
+</li>
+</ul>
+</li><li>f(N) = resource consumption of our program
+  <ul><li>Resource can be time, space, bandwidth, ...
+      </li><li>For 15112, we mainly care about time
+      </li></ul>
+</li><li>For time, we usually measure algorithmic steps rather than elapsed time
+(These share the same big-oh, but algorithmic steps are easier to precisely describe and reason over)
+</li><li>Note that you can measure worst-case or average case, or even other
+cases such as best case (which often is trivial to compute and not very useful in practice).  For 15-112, we often omit this term (which is a notable simplification
+that you will not see in future courses), and we nearly always mean worst-case,
+which is quite useful and generally easier to compute than average-case.
+<ul>
+<li>Count steps in a written algorithm, or comparisons and swaps in a list, etc
+</li><li>Can verify by timing your code's execution with:  time.time()
+</li></ul></li></ul>
+ 
+</li><br><li><a name="bigIdea"></a><b>The Big Idea</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/gEDvl3v5d5w"></span>
+<ul>
+<li>Each function family grows much faster than the one before it!
+</li><li>And: on modern computers, any function family is usually efficient enough on small n, so we only care about large n
+</li><li>So...  Constants do not matter nearly as much as function families
+</li><li>Practically...
+   <ul><li>Do not prematurely or overly optimize your code
+   </li><li>Instead:  <b>think algorithmically!!!</b>
+   </li></ul>
+</li></ul>
+
+</li><br><li><a name="examples"></a><b>Examples</b>
+<ol>
+
+<li><a name="sequentialNestingComp"></a><b>Sequences, Nesting, and Composition</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/n6LeHpTColY"></span>
+<ul>
+  <li><b>Sequencing</b><br>
+  <div class="python-code">
+# what is the total cost here?
+L = [ 52, 83, 78, 9, 12, 4 ]   # assume L is an arbitrary list of length N 
+L.sort()                       # This is O(NlogN)
+L.sort(reverse=True)           # This is O(NlogN)
+L[0] -= 5                      # This is O(1)
+print(L.count(L[0]) + sum(L))  # This is O(N) + O(N)
+  </div>
+
+  </li><br><li><b>Nesting</b><br>
+  <div class="python-code">
+# what is the total cost here?
+L = [ 52, 83, 78, 9, 12, 4 ]   # assume L is an arbitrary list of length N 
+for c in L:                    # This loop's body is executed O(N) times
+    L[0] += c                  # This is O(1)
+    L.sort()                   # This is O(NlogN)
+print(L)                       # This is O(N) (why?)
+  </div>
+  </li><br><li><b>Composition</b><br>
+  <div class="python-code">
+# what is the total cost here?
+def f(L):             # assume L is an arbitrary list of length N 
+    L1 = sorted(L)    # This is O(NlogN)
+    return L1         # This is O(1)
+
+def g(L):             # assume L is an arbitrary list of length N
+    L1 = L * len(L)   # This is O(N**2) (why?)
+    return L1         # This is O(1)
+
+L = [ 52, 83, 78, 9, 12, 4 ]   # assume L is an arbitrary list of length N 
+L = f(g(L))                    # What is the big-oh of this?
+print(L)                       # This is O(N**2) (why?)
+  </div>
+  </li>
+</ul>
+</li>
+
+</li><br><li><a name="builtins"></a><b>Python Builtins</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/eI_PYaGhtFo"></span><br>
+Here we use S for a set and L for a list:
+<ul>
+<li>Some are O(1), including len(L), (val in S), L.append(item)
+</li><li>Some are O(N), including max(L), min(L), (val in L), L.count(val), set(L)
+</li><li>Sorting is O(NlogN)
+</li><li>For a more complete list, see
+  <a target="_blank" href="https://wiki.python.org/moin/TimeComplexity">here</a>
+</li></ul>
+
+</li><br><li><a name="isPrime"></a><b>isPrime vs fasterIsPrime</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/_UmUUvKZZPY"></span><br>
+<ul>
+<li>
+From
+<a href="http://www.cs.cmu.edu/~112/notes/notes-loops.html#isPrime">
+  these examples</a>,
+we see that isPrime tests O(n) factors whereas fasterIsPrime 
+tests O(n<sup>0.5</sup>) factors.</li>
+<li>But the size of the input is N=log<sub>2</sub>(n), so we substitute n=2<sup>N</sup>.</li>
+<li>And we conclude that our isPrime is O(2<sup>N</sup>) and fasterIsPrime is O((2<sup>N</sup>)<sup>0.5</sup>)) = O(2<sup>N/2</sup>).</li>
+<li>And so: isPrime(n) is exponential, and hopelessly slow on large inputs.</li>
+<li>And: fasterIsPrime, while much faster, is also exponential and so also hopelessly slow on large inputs.
+<li>Much faster primality tests exist.  For example, the
+<a target="_blank" href="https://en.wikipedia.org/wiki/AKS_primality_test">AKS Primality Test</a> is polynomial not exponential!
+</ul>
+
+</li><br><li><a name="linearAndBinarySearch"></a><b>Linear Search vs Binary Search</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/GgASMq61lWo"></span>
+<ul>
+<li><b>Linear search</b>
+  <ul><li>Basic idea: check each element in turn
+  </li><li>Use: find an element in an unsorted list
+  </li><li>Cost: O(N)
+  </li></ul>
+</li><li><b>Binary search</b>
+  <ul><li>Basic idea: in a <b>sorted list</b>, check middle element, eliminate half on each pass
+  </li><li>Uses:
+    <ul><li>Find an element in a sorted list
+    </li><li>Number-guessing game (eg: guess a random number between 1 and 1000)
+    </li><li>Find a root (zero) of a function with bisection (adapted binary search)
+    </li></ul>
+    </li><li>Cost: O(logN)
+    </li></ul>
+</li></ul>
+
+</li><br><li><a name="sorting"></a><b>Sorting</b>
+<ol>
+<li><a name="sorting1"></a><b>Sorting Examples</b><br>
+See <a href="notes-1d-lists-examples.html#sorting">here</a>.
+
+</li><br><li><a name="sorting2"></a><b>SelectionSort vs MergeSort</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/LeHPgNn28us"></span>
+<ul>
+
+<li><b>Definitions</b>
+<ul>
+  <li>selectionsort: repeatedly select largest remaining element and swap it into sorted position
+  </li><li>mergesort:  sort blocks of 1's into 2's, 2's into 4's, etc, on each pass merging sorted blocks into sorted larger blocks
+  </li></ul>
+
+
+</li><li><b>Sorting Links</b><br>
+<ul>
+<li><a target="_blank" href="http://en.wikipedia.org/wiki/Sorting_algorithm">Wikipedia page on Sorting</a></li>
+<li><a target="_blank" href="http://math.hws.edu/TMCM/java/xSortLab/index.html">David Eck's xSortLab applet</a>
+(or you might try
+<a target="_blank" href="http://math.hws.edu/TMCM/java/classes/xSortLab.jar">this jar file</a>
+)</li>
+<li><a target="_blank" href="notes-1d-lists-examples.html#sorting">Our sorting sample code</a>
+(You need to be able to write all of this (except bubblesort) from scratch!)</li>
+<li><a target="_blank" href="http://sorting.at/">Excellent sorting animation website</a></li>
+<li><a target="_blank" href="https://www.youtube.com/watch?v=kPRA0W1kECg">Sorting algorithm animation video (15 algorithms in 6 minutes)</a></li>
+<li><a target="_blank" href="http://www.sorting-algorithms.com/">Even more sorting algorithm animations</a></li>
+</ul>
+</li>
+
+</li><li><b>Analysis</b><br>
+This is mostly informal, and all you need to know for a 112-level analysis of these algorithms.  You can easily find much more detailed and rigorous proofs on the web.
+<ul>
+  <li><b>selectionsort</b><br>
+  On the first pass, we need N compares and swaps (N-1 compares and 1 swap).<br>
+  On the second pass, we need only N-1 (since one value is already sorted).<br>
+  On the third pass, only N-2.<br>
+  So, total steps are about 1 + 2 + ... + (N-1) + N = N(N+1)/2 = O(N<sup>2</sup>).
+  </li><br><li><b>mergesort</b><br>
+  On each pass, we need about 3N compares and copies (N compares, N copies down, N copies back).<br>
+  So total cost = (3N steps per pass) x (# of passes)<br>
+  After pass 0, we have sorted lists of size 2<sup>0</sup> (1)<br>
+  After pass 1, we have sorted lists of size 2<sup>1</sup> (2)<br>
+  After pass 2, we have sorted lists of size 2<sup>2</sup> (4)<br>
+  After pass k, we have sorted lists of size 2<sup>k</sup> <br>
+  So we need k passes, where N = 2<sup>k</sup><br>
+  So # of passes = k = log<sub>2</sub>N<br>
+  Recall that total cost = (3N steps per pass) x (# of passes)<br>
+  So total cost = (3N)(log<sub>2</sub>N) = O(NlogN).<br>
+  Note: This is the theoretical best-possible O() for comparison-based sorting!
+</li></ul></li>
+</ul>
+</ol>
+</li>
+
+</li><br><li><a name="sumOfSquares"></a><b>sumOfSquares Examples</b>
+<!--
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/yZhJaFaClTM"></span>
+-->
+      <br>
+Note: Run this code in Standard Python, as it will timeout if you run it in brython.
+<div class="python-code no-viz no-run">
+# The following functions all solve the same problem:
+# Given a non-negative integer n, return True if n is the sum
+# of the squares of two non-negative integers, and False otherwise.
+
+def f1(n):
+    for x in range(n+1):
+        for y in range(n+1):
+            if (x**2 + y**2 == n):
+                return True
+    return False
+
+def f2(n):
+    for x in range(n+1):
+        for y in range(x,n+1):
+            if (x**2 + y**2 == n):
+                return True
+    return False
+
+def f3(n):
+    xmax = int(n**0.5)
+    for x in range(xmax+1):
+        for y in range(x,n+1):
+            if (x**2 + y**2 == n):
+                return True
+    return False
+
+def f4(n):
+    xyMax = int(n**0.5)
+    for x in range(xyMax+1):
+        for y in range(x,xyMax+1):
+            if (x**2 + y**2 == n):
+                return True
+    return False
+
+def f5(n):
+    xyMax = int(n**0.5)
+    for x in range(xyMax+1):
+        y = int((n - x**2)**0.5)
+        if (x**2 + y**2 == n):
+            return True
+    return False
+
+def testFunctionsMatch(maxToCheck):
+    # first, verify that all 5 functions work the same
+    print("Verifying that all functions work the same...")
+    for n in range(maxToCheck):
+        assert(f1(n) == f2(n) == f3(n) == f4(n) == f5(n))
+    print("All functions match up to n =", maxToCheck)
+
+testFunctionsMatch(100) # use larger number to be more confident
+
+import time
+def timeFnCall(f, n):
+    # call f(n) and return time in ms
+    # Actually, since one call may require less than 1 ms,
+    # we'll keep calling until we get at least 1 secs,
+    # then divide by # of calls we had to make
+    calls = 0
+    start = end = time.time()
+    while (end - start < 1):
+        f(n)
+        calls += 1
+        end = time.time()
+    return float(end - start)/calls*1000 #(convert to ms)
+
+def timeFnCalls(n):
+    print("***************")
+    for f in [f1, f2, f3, f4, f5]:
+        print ("%s(%d) takes %8.3f milliseconds" %
+               (f.__name__, n, timeFnCall(f, n)))
+
+timeFnCalls(1001)  # use larger number, say 3000, to get more accurate timing
+</div>
+</li>
+</ol>
+</li>
+</li>
+</ol>
+<hr>
+</div>
+</body>
+</html>

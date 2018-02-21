@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Testing and Exceptions<br>
+</h1>
+<hr>
+
+<ol>
+  <li><a href="#writingTests"><b>Writing Test Cases</b></a></li>
+  <li><a href="#consoleTests"><b>Testing Console Functions</b></a></li>
+  <li><a href="#graphicsTests"><b>Testing Graphics Functions</b></a></li>
+  <li><a href="#exceptions"><b>Exception Handling</b></a></li>
+</ol>
+
+<hr>
+
+<ol>
+
+<li><a name="writingTests"></a><b>Writing Test Cases</b>
+  <ul>
+    <li>Writing test cases is part of the process of understanding a problem; if you don't know what the result of an example input should be, you can't know how to solve the problem.</li>
+    <li>Test cases are also used to verify that a solution to a problem is correct, that it works as expected. Without a good set of test cases, we have no idea whether our code actually works!</li>
+    <li>Needed test cases vary based on the problem, but you generally want to ensure that you have at least one or two of each of the following test case types.
+      <ul>
+        <li><b>Normal Cases</b>: Typical input that should follow the main path through the code.</li>
+        <li><b>Large Cases</b>: Typical input, but of a larger size than usual. This ensures that bugs don't appear after multiple iterations.</li>
+        <li><b>Edge Cases</b>: Pairs of inputs that test different choice points in the code. For example, if a condition in the problem checks whether n < 2, two important edge cases are 2 and 3, which trigger different behaviors. Other edge cases include the first/last characters in a string or items in a list.</li>
+        <li><b>Special Cases</b>: Some inputs need to be special-cased for many problems. This includes negative numbers/0/1 for integers, the empty string/list/dictionary, and (when needed) input values of different types than are expected</li>
+        <li><b>Varying Results</b>: Finally, test cases should cover multiple possible results. This is especially important for boolean functions; make sure that you have both True and False among your results!</li>
+      </ul>
+    </li><br>
+
+    <li><b>Example:</b>
+    <div class="python-code">
+# Sample code for our discussion on writing good test functions.
+# Your test functions should include as many tests as necessary,
+# but not more.  Each test should have a reason to be there,
+# covering some interesting edge case or scenario.
+
+def testIsPrime():
+    print("Testing isPrime()...")
+    assert(isPrime(-1) == False)  # negative
+    assert(isPrime(0) == False)   # zero
+    assert(isPrime(1) == False)   # 1 is quite the special case
+    assert(isPrime(2) == True)    # 2, only even prime
+    assert(isPrime(3) == True)    # 3, smallest odd prime
+    assert(isPrime(4) == False)   # 4, smallest even non-prime
+    assert(isPrime(9) == False)   # 9, perfect square of odd prime
+    assert(isPrime(987) == False) # somewhat larger non-prime
+    assert(isPrime(997) == True)  # somewhat larger prime
+    print("Passed!")
+
+def workingIsPrime1(n):
+    if (n < 2): return False
+    for factor in range(2, n):
+        if (n % factor == 0):
+            return False
+    return True
+
+def workingIsPrime2(n):
+    if (n == 2): return True
+    if ((n < 2) or (n % 2 == 0)): return False
+    for factor in range(2, int(round(n**0.5))+1):
+        if (n % factor == 0): return False
+    return True
+
+def brokenIsPrime1(n):
+    # if (n < 2): return False # broken (commented out)
+    for factor in range(2, n):
+        if (n % factor == 0):
+            return False
+    return True
+
+def brokenIsPrime2(n):
+    if (n < 1): return False # broken: 2 -> 1
+    for factor in range(2, n):
+        if (n % factor == 0):
+            return False
+    return True
+
+def brokenIsPrime3(n):
+    if (n < 2): return False
+    for factor in range(2, n+1): # broken: n -> n+1
+        if (n % factor == 0):
+            return False
+    return True
+
+def brokenIsPrime4(n):
+    if (n < 2): return False
+    for factor in range(2, n):
+        if (n % factor == 0):
+            return False
+        else:                   # broken: no "else", should be after loop
+            return True
+
+def brokenIsPrime5(n):
+    if (n == 2): return True
+    if ((n < 2) or (n % 2 == 0)): return False
+    for factor in range(2, int(round(n**0.5))): # broken, omitted +1
+        if (n % factor == 0): return False
+    return True
+
+def raisesAssertion(f, *args):
+    # Helper fn for testing test function.  You are responsible
+    # for what this function does, but not how it does it.
+    try: f(*args)
+    except AssertionError: return True
+    return False
+
+def testTestIsPrime():
+    print("Testing testIsPrime()...")
+    global isPrime
+    # Store the "real" function so we can restore it after our tests
+    try: realIsPrime = isPrime
+    except: realIsPrime = None
+    # Now test our working and broken versions
+    isPrime = workingIsPrime1
+    assert(raisesAssertion(testIsPrime) == False)
+    isPrime = workingIsPrime2
+    assert(raisesAssertion(testIsPrime) == False)
+    isPrime = brokenIsPrime1
+    assert(raisesAssertion(testIsPrime) == True)
+    isPrime = brokenIsPrime2
+    assert(raisesAssertion(testIsPrime) == True)
+    isPrime = brokenIsPrime3
+    assert(raisesAssertion(testIsPrime) == True)
+    isPrime = brokenIsPrime4
+    assert(raisesAssertion(testIsPrime) == True)
+    isPrime = brokenIsPrime5
+    assert(raisesAssertion(testIsPrime) == True)
+    # And restore the "real" version
+    isPrime = realIsPrime
+    print("Passed!")
+
+testTestIsPrime()
+</div></li>
+</ul>
+</li><br>
+
+<li><a name="consoleTests"></a><b>Testing Console Functions</b>
+  <ul>
+    <li>When we write functions that use console input and/or output instead of traditional argument input/output, we have to use special test functions. After all, we can't assert that a function's returned value matches expectations when it doesn't return!</li>
+    <li>To test console functions we intercept the system input and output streams, providing the input of the test case and checking that the output matches what we expect. You are not responsible for understanding how this code works, but you will occasionally need to use it on homework assignments.</li><br>
+    <li><b>Console Test Code:</b>
+
+  <div class="python-code">
+def ioTest(testInput):
+    import sys, io
+    myOut = io.StringIO()
+    myIn = io.StringIO(testInput)
+    sys.stdout = myOut
+    sys.stdin = myIn
+    foo()
+    return myOut.getvalue()
+
+def testFoo():
+    import sys
+    print("Testing foo()...", end="")
+    tmpOut = sys.stdout
+    tmpIn = sys.stdin
+    resultOne = ioTest("Test One Input\n")
+    resultTwo = ioTest("Test Two Input\n")
+    sys.stdout = tmpOut
+    sys.stdin = tmpIn
+    assert(resultOne == "Test One Expected Output\n")
+    assert(resultTwo == "Test Two Expected Output\n")
+    print("Passed.")
+</div></li>
+  </ul>
+</li><br>
+
+<li><a name="graphicsTests"></a><b>Testing Graphics Functions</b>
+  <ul>
+    <li>For now, it is too difficult for us to write test cases that can verify whether graphics functions work correctly. A single pixel being out of place might not bother us, but it will bother the computer!</li>
+    <li>Instead, test your graphics functions by running them and seeing if they look right. Does the appearance translate correctly when the width or height is changed? What if the window is really big, or really small?</li>
+    <li>When testing animations, you must also test multiple kinds of input. What happens when you click on various parts of the screen, or type varying keys? What happens if you close the program quickly, or let it run for 5+ minutes? Testing animations in various scenarios will help you catch bugs.</li>
+  </ul>
+</li><br>
+
+<li><a name="exceptions"></a><b>Exception Handling</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/DGAZOIPZ2Vk"></span>
+  <ul>
+    <li><b>Basic Try/Except Structure:</b>
+<div class="python-code">
+# The basic try/except structure catches exceptions from a block of code by 
+# putting it in a try statement. The except block tells you what to do when 
+# an exception is caught.
+print("This is a demonstration of the basics of try/except.")
+try:
+    print("Here we are just before the error!")
+    print("1/0 equals:", (1/0))
+    print("This line will never run!")
+except:
+    print("*** We just caught an error. ***")
+print("And that concludes our demonstration.")
+</div></li><br>
+    
+    <li><b>Using Exceptions:</b>
+<div class="python-code">
+# If you want to gather more information about the exceptions that are caught, 
+# you can include them in the except statement and print the exception object 
+# to learn more.
+print("This is a demonstration of an exception object:")
+try:
+    print("Here we are just before the error!")
+    print("1/0 equals:", (1/0))
+    print("This line will never run!")
+except Exception as e:
+    print("Here's the error: ", e)
+print("And that concludes our demonstration.")
+</div></li><br>
+
+    <li><b>Catching Specific Exceptions:</b>
+<div class="python-code">
+# If you only want to catch certain exceptions, 
+# you can limit the type of the except statement.
+print("This is a demonstration of an exception object:")
+try:
+    shouldCrash = True
+    print("Here we are just before the error!")
+    if shouldCrash:
+        print("1/0 equals:", (1/0))
+    else:
+        assert(False)
+except AssertionError as e:
+    print("Here's the error: ", e)
+print("And that concludes our demonstration.")
+</div></li><br>
+
+<li><b>Raising Exceptions:</b>
+<div class="python-code">
+# We can also raise our own homemade errors, 
+# if we want to give information to the user.
+def lastChar(s):
+    if (len(s) == 0):
+        # This is (a simple form of) how you raise your own custom exception:
+        raise Exception('String must be non-empty!')
+    else: return s[-1]
+
+print(lastChar('abc'))
+print(lastChar(''))
+print("This line will never run!")</div>
+</li>
+</ul>
+</li>
+</ol>
+
+<hr>
+</div>
+</body>
+</html>

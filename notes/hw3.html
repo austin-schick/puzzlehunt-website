@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112 Spring 2018: Fundamentals of Programming and Computer Science<br>
+Homework 3 (Due Saturday 03-Feb, at 8pm)
+</h1>
+
+<hr>
+
+<ul>
+<li>This assignment is <span class="solo">SOLO</span>. This means you may not look at other student's code or let other students look at your code for these problems. See the syllabus for details.
+</li><br>
+<li><b>Starting with this assignment, we will be grading style.</b> Style violations lead to deductions on the assignment score, with deductions capped at -10. Style is graded by hand after the assignment deadline.</li>
+<br>
+
+<li>To start:
+<ol>
+<li>Go to your folder named 'week3'</li>
+<li>Download both
+    <a href="hw3.py" download>hw3.py</a>
+    and
+    <a href="cs112_s18_week3_linter.py" download>cs112_s18_week3_linter.py</a>
+    to that folder</li>
+<li>Edit hw3.py using Pyzo</li>
+<li>When you are ready, submit hw3.py to Autolab. For this hw, you may submit up to 8 times, but only your last submission counts.</li>
+</ol>
+</li>
+<li>Do not use lists or recursion this week.</li>
+<li>Do not hardcode the test cases in your solutions.</li>
+</ul>
+
+<hr>
+
+<ol>
+
+<br><li><b>Lab Problems</b> [10pts]<br>
+Attend your scheduled lab on Friday. While there, complete the basic problem and make a real attempt at the advanced problem. One of the TAs will record your participation by hand.</li>
+
+<br><li><b>testPigLatin()</b> [20pts]<br>
+<a href="https://en.wikipedia.org/wiki/Pig_Latin">Pig Latin</a> is a language game that translates English words into alternate versions of themselves. To translate an English word into Pig Latin, you follow one of two simple rules. If the word you're translating starts with one or more consonants, you move the consonents up to the first vowel to the back of the word, then follow them with 'ay'. For example, 'monkey' becomes 'onkeymay', and 'thanks' becomes 'anksthay'. If the word starts with a vowel, you simply add 'yay' to the end. For example, 'apple' becomes 'appleyay'.<br><br>
+
+We wanted to write a program, pigLatin(s), which takes a string as an argument, translates each of the words in the string's sentence (where a words are separated by spaces) into Pig Latin, and returns the resulting sentence. For example, pigLatin('how are they') should return 'owhay areyay eythay'. For now we're not worried about capital letters, digits, or punctuation; we only care about strings that contain only lowercase letters and spaces. <b>Note: we also don't care about words that do not have vowels, like 'why' or 'rhythm'. It's too hard to detect vowel-y for now!</b><br><br>
+
+We've made several attempts to solve pigLatin, each included in the starter file. We've given each a number (pigLatin1, pigLatin2, pigLatin3...) to distinguish them. Only one of these implementations is correct according to the specification we've given above. Your task is to write a test function, testPigLatin(pigLatin), which only passes when called on the correct function. On all other functions, it should raise an assertion error. The argument pigLatin is actually a function; our own test function, testTestPigLatin, provides the different versions of pigLatin for you to test (we'll go over how this actually works closer to the end of the semester). You can call the argument pigLatin as you would a normal function name. For example, we would implement our example from before as:<br><br>
+
+<div class="python-code no-run no-viz">
+def testPigLatin(pigLatin):
+    assert(pigLatin('how are they') == 'owhay areyay eythay')
+</div></li>
+<br><li><b>Debug the Programs</b> [25pts]<br>
+Each of the following three programs has one bug in it somewhere. Your task is to find and fix that bug <b>without</b> substantially rewriting the program. Specifically, each bug can be fixed by modifying only one of the program lines; if you modify more than one line, you'll only get partial credit.<br><br>
+
+<b>Note:</b> for each of these problems, you'll need to remove the triple-string quotes before debugging the program.
+
+<ol>
+  <br><li><b>hasLetterC(s)</b> [5pts]<br>
+  This program is supposed to return True if the letter 'C' appears in the string and False otherwise. 
+  <div class="python-code no-run no-viz">
+"""def hasLetterC(s):
+    s = s.lower()
+    for i in range(len(s)):
+        if s[i] = 'c':
+            return True
+    return False"""
+</div></li>
+
+  <br><li><b>findShortFruits(fruits)</b> [10pts]<br>
+  This program is supposed to return the number of fruits (words) in the string which are less than six letters long. Fruits must be at least one character long (they cannot be the empty string) are separated by dashes. For example, findShortFruits("apple-banana-kiwi") would return 2, since apple and kiwi are both short fruits. Note: you do not need to check that the word is actually a fruit. :)
+  <div class="python-code no-run no-viz">
+"""def findShortFruits(fruits):
+    count = 0
+    for fruit in fruits.split("-"):
+        if len(friut) < 6 and len(fruit) > 0:
+            count += 1
+    return count"""
+</div></li>
+
+  <br><li><b>hasConsecutiveDigits(n)</b> [10pts]<br>
+  This program is supposed to return True if there are at least two identical consecutive digits, and False otherwise.
+  <div class="python-code no-run no-viz">
+"""def hasConsecutiveDigits(n):
+    if n < 0:
+        return hasConsecutiveDigits(-n)
+    while n > 0:
+        nextN = n / 10
+        if n % 10 == nextN % 10:
+            return True
+        n = nextN
+    return False"""
+</div></li>
+  </ol>
+</li>
+
+
+<br><li><b>Fix the Style</b> [20pts]<br>
+We've written a program, nthUndulatingNumber, that returns the nth undulating number. A number is undulating if it has at least three digits and has the form aba[bababab...] where a does not equal b. The program is functionally correct, but we've written this program with <b>terrible</b> style.<br><br>
+
+Fix this program so that it meets the 112 style guidelines without rewriting the main logic. Then, in a comment above the fixed program, write out a list of the changes you made to fix the style. You must make valid changes that cover at least five different style rules to get full credit. This problem is not autograded; we will hand-grade it instead.
+
+  <div class="python-code no-run no-viz">
+def is_undulating(n):
+    if n < 100:
+        return False
+    a = n % 10
+    b = (n // 10) % 10
+    n = n // 100
+    blah = True
+    while n > 0:
+        digit = n % 10
+        if blah:
+          if digit != a:
+              return False
+        if (not blah):
+            if digit != b:
+                return False
+        blah = not blah
+        n = n // 10
+    return a - b != 0
+
+def nthUndulatingNumber(n):
+    f= 0
+    g =0
+    while f<= n :
+        g+=1
+        if is_undulating(g):
+            f += 1
+    return g
+</div></li>
+
+<br><li><b>nthPradishNumber</b> [10pts]<br>
+A pradish number (coined term) is a number with all of the following properties:
+<ul>
+  <li>The number has an even number of digits.</li>
+  <li>The sum of the digits of the number is equal to the number of digits of the number.</li>
+  <li>The sum of the first half of the digits is equal to the sum of the second half of the digits.</li>
+</ul><br>
+For example, 102003 is pradish. It has 6 digits, which is even. Its digits also sum to 6 (1+0+2+0+0+3 = 6). The sum of the first half of the digits is equal to the sum of the second half of the digits (1 + 0 + 2 = 0 + 0 + 3). Write the function nthPradish(n) that takes an integer value n and returns the nth pradish number. For example, nthPradish(0) returns 11.</li>
+
+<br><li><b>longestSubpalindrome(s)</b> [15pts]<br>
+Write the function longestSubpalindrome(s), that takes a string s and returns the longest palindrome that occurs as consecutive characters (not just letters, but any characters) in s. So: 
+<pre>
+   longestSubpalindrome("ab-4-be!!!") 
+</pre>
+returns "b-4-b". If there is a tie, return the lexicographically larger value -- in Python, a string s1 is lexicographically greater than a string s2 if (s1 > s2). So: 
+<pre>
+   longestSubpalindrome("abcbce") 
+</pre>
+returns "cbc", since ("cbc" > "bcb"). Note that unlike the previous functions, this function is case-sensitive (so "A" is not treated the same as "a" here). Also, from the explanation above, we see that longestSubpalindrome("aba") is "aba", and longestSubpalindrome("a") is "a". </li>
+
+<br><li><b>Bonus/Optional: getEvalSteps(expr)</b> [3 pts]<br>
+Write the function getEvalSteps(expr), that takes a string containing a simple arithmetic expression, and returns a multi-line string containing the step-by-step (one operator at a time) evaluation of that expression. For example, this call: 
+<pre>
+getEvalSteps("2+3*4-8**3%3") 
+</pre>
+produces this result (which is a single multi-line string):
+<pre>
+2+3*4-8**3%3 = 2+3*4-512%3
+             = 2+12-512%3
+             = 2+12-2
+             = 14-2
+             = 12
+</pre>
+Here are some considerations and hints:
+<ul>
+<li>You are only responsible for legal input as described below. 
+Numbers are limited to non-negative integers. 
+</li><li>Operators are limited to +, -, *, /, //, %, and **. 
+</li><li>All operators are binary, so they take two operands. So there are no unary operators, meaning "-5" is not a legal input. For that, you'd need "0-5". 
+</li><li>In fact, the previous restriction is even stronger: no intermediate value of expr can be negative! So "1-2+3" is not legal, since it would be converted first into "-1+3" which is not legal. So you can safely ignore all such cases. 
+</li><li>There are no parentheses. 
+</li><li>Operators must be evaluated by precedence (** first, then *,/,//,%, then +,-). 
+</li><li>Equal-precedence operators are evaluated left-to-right. 
+</li><li>Evaluation proceeds until a single integer with no operators remains after the equals sign. 
+</li><li>The equal signs must all be stacked directly over each other. 
+</li><li>You may write this however you wish, though you may want to write a helper function that finds the next operator to be applied, and another helper function that just applies a single operator. Something like that. In any case, top-down design is crucial here. And don't forget to thoroughly test your helper functions before using them! 
+</li><li>In our sample solution, we used very few string methods, just "find" and "isdigit". You may use others, but you should not spin your wheels trying to find that awesome string method that will make this problem remarkably easier, as that method does not exist. 
+</li><li>For this function, as any other function, you may not use the eval function, so you will have to write your own equivalent just for the kinds of simple expressions you will deal with here. Eval is dangerous and should be avoided, as it can lead to serious bugs or security holes. 
+</li></ul>
+</li>
+<br>
+
+
+</ol>
+</div>
+</body>
+</html>

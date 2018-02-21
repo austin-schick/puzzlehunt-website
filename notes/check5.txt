@@ -1,0 +1,49 @@
+check5.txt
+
+Edit this file and then submit it to autolab.
+
+Be sure to watch the videos very carefully, and not just
+skip ahead to the parts required to answer these questions!
+
+Be *very brief* in your answers!  Seriously.  Brief.
+
+---------------------------------------------------------------------
+
+1. Your full name and andrew id:
+
+2. The full names and andrew id's of your groupmates (if you worked collaboratively).
+
+
+3. 2d Lists
+
+3.1: Describe why "[ [0] * cols ] * rows" is not a good way to allocate a 2d list.
+
+3.2: if a = [ [ 1, 2, 3 ] , [ 4, 5, 6] ] what is len(a)? len(a[1])?
+
+3.3: Why do we use two loops (nested) in order to iterate through a 2d list? (As opposed to one loop.)
+
+3.4: In the context of a 2d list, describe the difference between a shallow copy and a deep copy.  What is a situation where deep copy still isn't good enough?
+
+3.5: Why did we write a custom version of print2dList(a) instead of just calling print(a)?
+
+3.6: Why does accessing a whole column require a loop, but accessing a whole row does not?
+
+3.7: if a = [ [ 1, 2 ] , [ 4, 5, 6], [7, 8, 9, 10] ] what is len(a)? len(a[2])?
+
+3.8: Describe a problem scenario that a 3d list would help you solve.
+
+
+4. Animation Part 1: Event-Based Animation
+
+4.1: Which animation functions are associated with the Model, the View, and the Controller?
+
+4.2: Write a single line of code that could add the variable circleRadius to the model, and set it to the value 50.
+
+4.3: Rewrite the following draw function from graphics to instead be a redrawAll function from animations (which doesn't take width and height as parameters).
+
+def draw(canvas, width, height):
+    canvas.create_rectangle(0, 0, width, height, fill="green")
+
+4.4: Try out the mousePressed sample code. What happens when you click on the edge of the window? What happens when you click outside the window?
+
+4.5: Identify three keys that have different event.char values than event.keysym values, and list their values here.

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Week2 Practice (Due never)
+</h1>
+
+
+<hr>
+
+<ul>
+<li>These problems will help you prepare for colab2, hw2, and quiz2.</li>
+<li>To start:
+<ol>
+<li>Go to your folder named 'week2'</li>
+<li>Download both
+    <a href="wk2_practice.py" download>wk2_practice.py</a>
+    and
+    <a href="cs112_s18_week2_linter.py" download>cs112_s18_week2_linter.py</a>
+    to that folder</li>
+<li>Edit wk2_practice.py using pyzo</li>
+</ol>
+</li>
+<li>Do not use lists or recursion this week.</li>
+<li>Do not hardcode the test cases in your solutions.</li>
+</ul>
+
+<hr>
+
+<b>Code Tracing</b><br>
+What will this code print? Figure it out by hand, then run the code to confirm.  Then slightly edit the code and try again.<br><br>
+<b>Loops:</b>
+<ul>
+<li><b>Trace #1 of 3:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/MOybYhryCMo"></span>
+<br><div class="python-code">
+def ct1(m, n):
+    total = 0
+    for x in range(m, n+1, 3): 
+        print('x =', x)
+        total += x
+    for y in range(m, m+2):
+        print('y = ', y)
+        total += y
+    return total
+
+print(ct1(1,9))
+</div></li>
+
+<br><li><b>Trace #2 of 3:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/1gIucWZVUqE"></span>
+<br><div class="python-code">
+def ct2(n):
+    k = 0
+    total = 0
+    while (n >= k):
+        print('k =', k)
+        for i in range(k):
+            total += n%10
+            n //= 10
+            print(i, n%10, total)
+        k += 1
+    print('total =', total)
+
+print(ct2(1234))
+</div></li>
+
+<br><li><b>Trace #3 of 3:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/2CLViaCLTck"></span>
+<br><div class="python-code">
+def ct3(z):
+    total = 0 
+    for y in range(z,1,-1):
+        if (y % 2 == 0):
+            print('skip y =', y)
+            continue
+        total += y
+        if (total > 20):
+            print('break at y =', y)
+            break
+    return total
+print(ct3(10))
+</div></li>
+</ul>
+
+<b>Strings:</b>
+<ul>
+<li><b>Trace #1 of 3:</b>
+<br><div class="python-code">
+def ct1(s, t):
+    result = ""
+    for c in  s:
+        if (c.upper() not in  "NO!!!"):
+            i = t.find(c)
+            if (result != ""): result += ":"
+            result += "%d%s%s%s" % (i, c, s[i], t[i])
+    return result
+print(ct1("net",   "two"))
+</div></li>
+
+<br><li><b>Trace #2 of 3:</b>
+<br><div class="python-code">
+def ct2(s):
+    result = ""
+    d = ord("a")
+    for c in s.lower():
+        if  (c.isalpha() and (ord(c) >= d)):
+            result += str(ord(c) - d) + chr(d)
+            d += 1
+    return result
+print(ct2("Be a CA?!?"))
+</div></li>
+
+<br><li><b>Trace #3 of 3:</b>
+<br><div class="python-code">
+def ct3(s):
+    result = ""
+    while (len(s) > 1):
+        result += s[:1] + s[2:4] + "."
+        s = s[1:-1:2]
+    return result + s
+print(ct3("abcdefghi"))
+</div></li>
+</ul>
+</li>
+
+<hr>
+
+<b>Reasoning Over Code</b><br>
+Find parameter(s) to the following functions so that they
+return True. Figure it out by hand, then run the code to confirm.
+There may be more than one correct answer for each function, and
+you can provide any one of them.<br><br>
+<b>Loops:</b>
+<ul>
+<li><b>RC #1 of 2:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/iokRXFrRNwY"></span>
+<br><div class="python-code">
+def rc1(n):
+    if ((not isinstance(n, int)) or (n > 100)): return False
+    total = 0
+    while (n > 0):
+        total = 10*total + n%10
+        n //= 10
+    return (total == 42)
+</div></li>
+
+<br><li><b>RC #2 of 2:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/IXbsB5qkyfY"></span>
+<br><div class="python-code">
+def f(n):
+    if (n == 0): return 1
+    n = abs(n)
+    count = 0
+    while (n > 0):
+        count += 1
+        n //= 10
+    return count
+
+def rc2(m):
+    if (not(isinstance(m, int)) or (m < 0)): return False
+    start = 0
+    while True:
+        count = 0
+        for n in range(start, start+3):
+            count += f(n)
+        if (count > 9): break
+        start += 1
+    return (m == start)
+</div></li>
+
+</ul>
+
+<b>Strings:</b>
+
+<ul>
+<li><b>RC #1 of 2:</b>
+<br><div class="python-code">
+def rc1(s):
+    if (not isinstance(s, str)): return  False
+    if ('0' in  s): return  False
+    t,n = s[1:-1], int(s[0]+s[-1])
+    return (t.isalpha() and (t == t[0]*(n//2)))
+</div></li>
+
+<br><li><b>RC #2 of 2:</b>
+<br><div class="python-code">
+def rc2(s, t):
+    assert((s !=  "") and (t != "") and (s in t) and (s != t))
+    result =  ""
+    for i in range(len(s)):
+        if ((i % 2) == 0): result += t[i]
+        else: result += t[-1-i]
+    return (result == s)
+</div></li>
+</ul>
+
+
+<hr>
+
+<b>Free Response (Problem-Solving)</b>
+<br><br>
+<b>Tue Lecture</b>
+
+<ol>
+
+<br><li><b>digitCount(n)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/zzwlH7bJqyQ"></span>
+<br>
+Write the function digitCount(n) that takes a possibly-negative int and returns the number of digits in it. So, digitCount(12323) returns 5, digitCount(0) returns 1, and digitCount(-111) returns 3. One way you could do this would be to return len(str(abs(n))), but you cannot do that, since you may not use strings here! This can be solved with logarithms, but seeing as this is "loops week", you should instead simply repeatedly remove the ones digit until you cannot.
+</li>
+
+<br><li><b>hasConsecutiveDigits(n)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/8EMWfkU0QH8"></span>
+<br>
+Write the function hasConsecutiveDigits(n) that takes a possibly- negative int value n and returns True if that number contains two consecutive digits that are the same, and False otherwise.
+</li>
+
+<br><li><b>gcd(m, n)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/BRXcAQMYy4w"></span>
+<br>
+[Note: to receive any credit, you must solve this problem
+using Euclid's algorithm, and by no other means.
+In particular, do not just loop through all integers
+less than min(m,n) and find the common factors that way --
+it is much too slow!]<br>
+According to Euclid, the greatest
+common divisor, or gcd, can be found like so:
+<br><font class="snippet">
+&nbsp;&nbsp;&nbsp;gcd(x,y) == gcd(y, x%y)
+</font><br>
+We can use that to quickly find gcd's. For example:
+<br><font class="snippet">
+   &nbsp;&nbsp;&nbsp;
+   gcd(270,250) == gcd(250, 20) # 270 % 250 == 20
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                == gcd(20, 10)  # 250 % 20 == 10
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                == gcd(10, 0)   # 20 % 10 == 0
+</font><br>
+When we get to gcd(x,0), the answer is x.  So gcd(270, 250)
+is 10.  With this in mind, write the function gcd(x,y) that
+takes two positive integers x and y and returns their gcd
+using Euclid's gcd algorithm.
+</li>
+
+<br><li><b>countingPrimes</b><br>
+Do the "Counting Primes" problem
+<a target="_blank" href="http://www.kosbie.net/cmu/fall-13/15-112/handouts/hw2.html#Counting_Primes">here</a>.
+
+</li>
+
+<br><li><b>nthAdditivePrime(n)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/WyNDXIj7vBg"></span>
+<br>
+Write the function nthAdditivePrime(n) that takes a non-negative
+int n and returns the nth Additive Prime, which is a prime number
+such that the sum of its digits is also prime.  For example,
+113 is prime and 1+1+3==5 and 5 is also prime, so 113 is an Additive
+Prime.
+</li>
+
+<br><li><b>nthPerfectNumber(n)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/yCp1eHYOA3w"></span>
+<br>
+Write the function nthPerfectNumber(n) that takes a non-negative
+integer n and returns the nth perfect number, starting at n=0,
+where a number is perfect if it is the sum of its positive
+divisors less than itself.  For example, 6 is perfect because
+6 = 1 + 2 + 3.  Also, 28 is perfect because
+28 = 1 + 2 + 4 + 7 + 14.  The next one is 496, then 8128.
+For full credit, you need to use a faster version, which uses
+the same observation that sped up isPrime, so that you
+only have to search for factors up to the square root of n.
+</li>
+
+<br><li><b>vowelCount(s)</b><br>
+Write the function vowelCount(s), that takes a string s, and returns the number of vowels in s, ignoring case, so "A" and "a" are both vowels. The vowels are "a", "e", "i", "o", and "u". So, for example, ("Abc def!!! a? yzyzyz!") returns 3 (two a's and one e).
+</li>
+
+<br><li><b>interleave(s1, s2)</b><br>
+Write the function interleave(s1, s2) that takes two strings, s1 and s2, and interleaves their characters starting with the first character in s1. For example, interleave('pto', 'yhn') would return the string "python". If one string is longer than the other, concatenate the rest of the remaining string onto the end of the new string. For example ('a#', 'cD!f2') would return the string "ac#D!f2".   Assume that both s1 and s2 will always be strings.</li>
+
+<br><li><b>hasBalancedParentheses(s)</b><br>
+Write the function hasBalancedParentheses, which takes a string and returns True if that code has balanced parentheses and False otherwise (ignoring all non-parentheses in the string).  We say that parentheses are balanced if each right parenthesis closes (matches) an open (unmatched) left parenthesis, and no left parentheses are left unclosed (unmatched) at the end of the text.  So, for example, "( ( ( ) ( ) ) ( ) )" is balanced, but "( ) )" is not balanced, and "( ) ) (" is also not balanced.  Hint: keep track of how many right
+parentheses remain unmatched as you iterate over the string.</li>
+
+</ol>
+
+<hr>
+
+<b>Wed Recitation</b>
+
+<ol start="10">
+
+<br><li><b>longestDigitRun(n)</b><br>
+Write the function longestDigitRun(n) that takes a possibly-negative int value n and returns the digit that has the longest consecutive run, or the smallest such digit if there is a tie. So, longestDigitRun(117773732) returns 7 (because there is a run of 3 consecutive 7's), as does longestDigitRun(-677886).
+</li>
+
+<br><li><b>longestIncreasingRun(n)</b><br>
+Write the function longestIncreasingRun that takes in a positive int value n and returns the longest increasing run of digits. For example longestIncreasingRun(1232) would return 123 and longestIncreasingRun(27648923679) returns 23679. If there is a tie in run length, the larger of the two runs should be returned. So longestIncreasingRun(123345) would return 345.
+</li>
+
+<br><li><b>nthPalindromicPrime(n)</b><br>
+Write the function nthPalindromicPrime(n). See
+<a target="_blank" href="https://en.wikipedia.org/wiki/Palindromic_prime">here</a>
+for details. So nthPalindromicPrime(0) returns 2, and nthPalindromicPrime(10) returns 313.
+</li>
+
+<br><li><b>nthLeftTruncatablePrime(n)</b><br>
+Write the function nthLeftTruncatablePrime(n). See
+<a target="_blank" href="http://en.wikipedia.org/wiki/Truncatable_prime">here</a>
+for details. So nthLeftTruncatablePrime(0) returns 2, and nthLeftTruncatablePrime(10) returns 53.
+</li>
+
+<br><li><b>nthCarolPrime(n)</b><br>
+Write the function nthCarolPrime(n), which takes a non-negative int and returns the nth Carol Prime, which is a prime number of the form ((2**k - 1)**2 - 2) for some value positive int k. For example, if k equals 3, ((2**3 - 1)**2 -2) equals 47, which is prime, and so 47 is a Carol Prime. The first several Carol primes are: 7, 47, 223, 3967, 16127, 1046527, 16769023,... As such, nthCarolPrime(0) returns 7.
+<br><br>
+Note: You must use a reasonably efficient approach that quickly works up to n==9, which will return a 12-digit answer! In particular, this means you cannot just edit isPrime. Hint: you may need to generate only Carol numbers, and then test those as you go for primality (and you may need to think about that hint for a while for it to make sense!).
+</li>
+<br><li><b>rotateStringLeft(s, k)</b><br>
+Write the function rotateStringLeft that takes a string s and a non-negative
+integer k, and returns the string s rotated k places to the left.</li>
+
+<br><li><b>rotateStringRight(s, k)</b><br>
+Write the function rotateStringRight that takes a string s and a non-negative
+integer k, and returns the string s rotated k places to the right.</li>
+
+<br><li><b>
+<a name="wordWrap"></a>wordWrap(text, width)
+</b><br>
+Write the function  wordWrap(text,  width)  that  takes a string  of  text  (containing only  lowercase letters or  spaces) 
+and a positive  integer width, and  returns a possibly-multiline  string  that  matches the original  string, only  with  line
+wrapping  at  the given width.    So  wordWrap("abc", 3)  just  returns "abc",  but wordWrap("abc",2) returns a 2-line  
+string, with  "ab"  on  the first line  and "c" on  the second  line.   After you complete word wrapping  in  this  way,  only  
+then:   All spaces at the start and end of  each  resulting line  should  be  removed, and  then  all remaining spaces  should  
+be  converted to  dashes  ("-"), so they  can be  easily  seen  in  the resulting string. Here  are some  test  cases for you:
+<pre>
+        assert(wordWrap("abcdefghij", 4)  ==  """\
+abcd
+efgh
+ij""")
+        assert(wordWrap("a b c de fg",  4)  ==  """\
+a-b
+c-de
+fg""")
+</pre></li>
+
+<br><li><b></a>largestNumber(text)</b><br>
+largestNumber:  Write the function largestNumber(text) that takes a string of text and returns the largest int value that occurs within that text, or None if no such value occurs.  You may assume that the only numbers in the text are non-negative integers and that numbers are always composed of consecutive digits (without commas, for example).  For example:
+<pre>
+    largestNumber("I saw 3 dogs, 17 cats, and 14 cows!")
+</pre>
+returns 17 (the int value 17, not the string "17").  And
+<pre>
+    largestNumber("One person ate two hot dogs!")
+</pre>
+returns None (the value None, not the string "None").</li>
+
+</ol>
+<hr>
+
+<b>Thu Lecture</b>
+
+<ol start="19">
+
+<br><li><b>Happy Primes</b><br>
+Background:  read the first paragraph from
+<a target="_blank" href="https://en.wikipedia.org/wiki/Happy_number">the Wikipedia page on happy numbers</a>.
+After some thought, we see that no matter what number we start with, when we keep replacing the number by the sum of the squares of its digits, we'll always either arrive at 4 (unhappy) or at 1 (happy).  With that in mind, we want to write the function nthHappyNumber(n).  However, to write that function, we'll first need to write isHappyNumber(n) (right?).  And to write that function, we'll first need to write sumOfSquaresOfDigits(n).  And that's top-down design!  Here we go....
+<br><br>
+Note: the autograder will grade each of the following functions, so they are required. However, they also are
+here specifically because they are just the right helper
+functions to make nthHappyNumber(n) easier to write!
+<ol type="a">
+<br>
+<li><b>sumOfSquaresOfDigits(n)</b><br>
+Write the function sumOfSquaresOfDigits(n) which takes a non-negative integer and returns the sum of the squares of its digits.  Here are some test assertions for you
+(note that in the hw2.py starter file, instead
+of assert, these use assertEqual):
+<pre>
+assert(sumOfSquaresOfDigits(5) == 25)   # 5**2 = 25
+assert(sumOfSquaresOfDigits(12) == 5)   # 1**2 + 2**2 = 1+4 = 5
+assert(sumOfSquaresOfDigits(234) == 29) # 2**2 + 3**2 + 4**2 = 4 + 9 + 16 = 29
+</pre>
+</li>
+
+<li><b>isHappyNumber(n)</b><br>
+Write the function isHappyNumber(n) which takes a possibly-negative integer and returns True if it is happy and False otherwise.  Note that all numbers less than 1 are not happy.  Here are some test assertions for you:
+<pre>
+assert(isHappyNumber(-7) == False)
+assert(isHappyNumber(1) == True)
+assert(isHappyNumber(2) == False)
+assert(isHappyNumber(97) == True)
+assert(isHappyNumber(98) == False)
+assert(isHappyNumber(404) == True)
+assert(isHappyNumber(405) == False)
+</pre>
+</li>
+
+<li><b>nthHappyNumber(n)</b><br>
+Write the function nthHappyNumber(n) which takes a non-negative integer and returns the nth happy number (where the 0th happy number is 1).  Here are some test assertions for you:
+<pre>
+assert(nthHappyNumber(0) == 1)
+assert(nthHappyNumber(1) == 7)
+assert(nthHappyNumber(2) == 10)
+assert(nthHappyNumber(3) == 13)
+assert(nthHappyNumber(4) == 19)
+assert(nthHappyNumber(5) == 23)
+assert(nthHappyNumber(6) == 28)
+assert(nthHappyNumber(7) == 31)
+</pre>
+</li>
+
+<li><b>nthHappyPrime(n)</b><br>
+A happy prime is a number that is both happy and prime.  Write the function nthHappyPrime(n) which takes a non-negative integer and returns the nth happy prime number (where the 0th happy prime number is 7). 
+</li>
+</ol>
+</li>
+
+<br><li><b>mostFrequentDigit(n)</b><br>
+Write the function mostFrequentDigit(n), that takes a non-negative integer n and returns the digit from 0 to 9 that occurs most frequently in it, with ties going to the smaller digit.
+</li>
+
+<br><li><b>nthPowerfulNumber(n)</b><br>
+Write the function nthPowerfulNumber(n). See
+<a target="_blank" href="https://en.wikipedia.org/wiki/Powerful_number">here</a>
+for details. So nthPowerfulNumber(0) returns 1, and nthPowerfulNumber(10) returns 64.
+</li>
+
+<br><li><b>nthCircularPrime(n)</b><br>
+Write the function nthCircularPrime that takes a non-negative int n and returns the nth Circular prime, which is a prime number that does not contain any 0's and such that all the numbers resulting from rotating its digits are also prime.  The first Circular primes are 2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73, 79, 97, 113, 131, 197...  To see why 197 is a Circular prime, note that 197 is prime, as is 971 (rotated left), as is 719 (rotated left again).
+</li>
+
+<br><li><b>findZeroWithBisection(f, x0, x1, epsilon)</b><br>
+Write the function findZeroWithBisection(f, x0, x1, epsilon) as described <a target="_blank" href="http://www.kosbie.net/cmu/spring-13/15-112/handouts/hw3.html#findZeroWithBisection">here</a>.
+</li>
+<br><li><b>longestSubpalindrome(s)</b><br>
+Write the function longestSubpalindrome(s), that takes a string s and returns the longest palindrome that occurs as consecutive characters (not just letters, but any characters) in s. So: 
+<pre>
+   longestSubpalindrome("ab-4-be!!!") 
+</pre>
+returns "b-4-b". If there is a tie, return the lexicographically larger value -- in Python, a string s1 is lexicographically greater than a string s2 if (s1 > s2). So: 
+<pre>
+   longestSubpalindrome("abcbce") 
+</pre>
+returns "cbc", since ("cbc" > "bcb"). Note that unlike the previous functions, this function is case-sensitive (so "A" is not treated the same as "a" here). Also, from the explanation above, we see that longestSubpalindrome("aba") is "aba", and longestSubpalindrome("a") is "a".</li>
+
+</li><br><li><b>leastFrequentLetters(s)</b><br>
+Write the function leastFrequentLetters(s), that takes a string s, and ignoring case (so "A" and "a" are treated the same), returns a lowercase string containing the least-frequent alphabetic letters that occur in s, each included only once in the result and then in alphabetic order. So: 
+<pre>
+   leastFrequentLetters("aDq efQ? FB'daf!!!") 
+</pre>
+returns "be". Note that digits, punctuation, and whitespace are not letters! Also note that seeing as we have not yet covered lists, sets, maps, or efficiency, you are not expected to write the most efficient solution. Finally, if s does not contain any alphabetic characters, the result should be the empty string ("").</li>
+
+</ol>
+<hr>
+
+
+<b>Extra Practice</b>
+
+<ol start="26">
+
+<br><li><b>sameChars(s1, s2)</b><br>
+Write the function sameChars(s1, s2) that takes two strings and returns True if the two strings are composed of the same characters (though perhaps in different numbers and in different orders) -- that is, if every character that is in the first string, is in the second, and vice versa -- and False otherwise. This test is case-sensitive, so "ABC" and "abc" do not contain the same characters. The function returns False if either parameter is not a string, but returns True if both strings are empty (why?).</li>
+
+
+<br><li><b>mostFrequentLetters(s)</b><br>
+Write the function mostFrequentLetter(s) that takes a string s and returns the letter that occurs the most frequently in it. Your test should be case-insensitive, to "A" and "a" are the same, though your return value should always be uppercase. And if there is a tie, you should return a string with all the most frequent letters in alphabetic order. You should ignore non-letters. And if there are no letters, you should return the empty string.</li>
+
+<br><li><b>areAnagrams(s1, s2)</b><br>
+Write the function areAnagrams(s1, s2) that takes two strings, s1 and s2,
+that you may assume contain only upper and/or lower case letters, and returns True if the strings are anagrams, and False otherwise. Two strings are
+anagrams if each can be reordered into the other.  Treat "a" and "A" as
+the same letters (so "Aba" and
+"BAA" are anagrams).  You may not use sort() or sorted() or any other
+list-based functions or approaches.  Hint: you may use s.count(), which
+could be quite handy here.</li>
+
+<br><li><b>collapseWhitespace(s)</b><br>
+Without using the s.replace() method, write the function collapseWhitespace(s), that takes a string s and returns an equivalent string except that each occurrence of whitespace in the string is replaced by a single space.  So, for example, collapseWhitespace("a\t\t\tb\n\nc") replaces the three tabs with a single space, and the two newlines with another single space , returning "a b c".   Here are a few more test cases for you:
+<pre>
+    assert(cw("a\nb") == "a b")
+    assert(cw("a\n   \t    b") == "a b")
+    assert(cw("a\n   \t    b  \n\n  \t\t\t c   ") == "a b c ")
+</pre>
+Once again, do not use s.replace() in your solution.
+</li>
+
+<br><li><b>replace(s1, s2, s3)</b><br>
+Without using the builtin method s.replace(), write its equivalent.  Specifically, write the function replace(s1, s2, s3) that returns a string equal to s1.replace(s2, s3), but again without calling s.replace().</li>
+
+<br><li><b>encodeOffset(s, d)</b><br>
+Write the function encodeOffset(s, d) that takes a string and a possibly-negative int offset d (for "delta"), and returns the string formed by replacing each letter in s with the letter d steps away in the alphabet. So: encodeOffset("ACB", 1) return "BDC" encodeOffset("ACB", 2) return "CED" This works with wraparound, so: encodeOffset("XYZ", 1) returns "YZA" And with negative offsets, so: encodeOffset("ABC", -1) returns "ZAB" And the wraparound repeats with d>26, so: encodeOffset("ABC", -27) returns "ZAB" And it is case-preserving, so: encodeOffset("Abc", -27) returns "Zab" And it does not affect non-alphabetic characters (non-letters), so: encodeOffset("A2b#c", -27) returns "Z2a#b" 
+</li>
+
+<br><li><b>decodeOffset(s, d)</b><br>
+Write the function decodeOffset(s, d) that takes a string that was encoded by encodeOffset using the given offset d, and returns the original string. 
+</li>
+
+<br><li><b>encrypt and decrypt</b><br>
+Write the encrypt and decrypt functions described
+in part 6 (Simple Encryption)
+<a target="_blank" href="http://www.kosbie.net/cmu/spring-14/15-112/handouts/hw3.html">here</a>.</li>
+
+<br><li><b>Mastermind</b><br>
+Write the Mastermind functions described
+<a target="_blank" href="http://www.kosbie.net/cmu/spring-11/15-110/notes/recitation3.html">here</a>. (Note: this exercise is not in the starter file.) </li>
+
+</ol>
+
+<hr>
+</div>
+</body>
+</html>

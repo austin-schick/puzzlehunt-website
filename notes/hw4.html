@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112 Spring 2018: Fundamentals of Programming and Computer Science<br>
+Homework 4 (Due Saturday 10-Feb, at 8pm)
+</h1>
+
+<hr>
+
+<ul>
+<li>This assignment is <span class="solo">SOLO</span>. This means you may not look at other student's code or let other students look at your code for these problems. See the syllabus for details.
+</li><br>
+<br>
+
+<li>To start:
+<ol>
+<li>Go to your folder named 'week4'</li>
+<li>Download both
+    <a href="hw4.py" download>hw4.py</a>
+    and
+    <a href="cs112_s18_week4_linter.py" download>cs112_s18_week4_linter.py</a>
+    to that folder</li>
+<li>Edit hw4.py using Pyzo</li>
+<li>When you are ready, submit hw4.py to Autolab. For this hw, you may submit up to 7 times, but only your last submission counts.</li>
+</ol>
+</li>
+<li>Do not use recursion this week.</li>
+<li>Do not hardcode the test cases in your solutions.</li>
+</ul>
+
+<hr>
+
+<ol>
+
+<br><li><b>Lab Problems</b> [10pts]<br>
+Attend your scheduled lab on Friday. While there, complete the basic problem and make a real attempt at the advanced problem. One of the TAs will record your participation by hand.</li>
+
+<br><li><b>Style + TP Meetings</b> [10pts]<br>
+Sign up for and attend a ten-minute meeting with one of your recitation TAs where you will discuss a) how to improve your programming style (based on your hw3 submission) and b) early ideas you have for your term project. To make the best use of this time, come prepared by reading the feedback you received on style from hw3 and spend at least a few minutes ideating on term project ideas before the meeting. You must have this meeting by the main assignment deadline, <b>Saturday at 8pm</b>.</li>
+
+<br><li><b>List Function Table</b> [10pts]<br>
+There are many different list functions that exist in Python which change the contents of the list. Some of these functions are destructive (changing the list they're called on), others are nondestructive (creating a new list as a result). Next to each of the functions listed below, write whether the function is destructive or non-destructive to the list a. Include your table in a triple-string comment in hw4.py.<br><br>
+
+<pre>"""
+a = a + b
+a += b
+a.append(x)
+a.insert(0, x)
+a.extend(b)
+a.remove(x)
+a.pop(0)
+del a[0]
+a.reverse()
+reversed(a)
+a.sort()
+sorted(a)
+copy.copy(a)
+"""</pre></li>
+
+<br><li><b>inverseLookAndSay(a)</b> [15pts]<br>
+Write the function inverseLookAndSay(a) that does the inverse of the function lookAndSay from the colab, so that, in general:
+<pre>
+  inverseLookAndSay(lookAndSay(a)) == a
+</pre>
+Or, in particular:
+<pre>
+  inverseLookAndSay([(2,3),(1,8),(3,-10)]) == [3,3,8,-10,-10,-10]
+</pre></li>
+
+<br><li><b>bestScrabbleScore(dictionary, letterScores, hand)</b> [25pts]<br>
+Background: In a Scrabble-like game, players each have a hand, which is a list of lowercase letters.  There is also a dictionary, which is a list of legal words (all in lowercase letters).  And there is a list of letterScores, which is length 26, where letterScores[i] contains the point value for the ith character in the alphabet (so letterScores[0] contains the point value for 'a').  Players can use some or all of the tiles in their hand and arrange them in any order to form words.  The point value for a word is 0 if it is not in the dictionary, otherwise it is the sum of the point values of each letter in the word, according to the letterScores list (pretty much as it works in actual Scrabble).
+<br><br>
+In case you are interested, here is a list of the actual letterScores for Scrabble:
+<pre>
+   letterScores = [
+   #  a, b, c, d, e, f, g, h, i, j, k, l, m
+      1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3,
+   #  n, o, p, q, r, s, t, u, v, w, x, y, z
+      1, 1, 3,10, 1, 1, 1, 1, 4, 4, 8, 4,10
+   ]
+</pre>
+Note that your function must work for any list of letterScores as is provided by the caller.
+<br><br>
+With this in mind, write the function bestScrabbleScore(dictionary, letterScores, hand) that takes 3 lists -- dictionary (a list of lowercase words), letterScores (a list of 26 integers), and hand (a list of lowercase characters) -- and returns a tuple of the highest-scoring word in the dictionary that can be formed by some arrangement of some subset of letters in the hand, followed by its score.  In the case of a tie, the first element of the tuple should instead be a list of all such words in the order they appear in the dictionary.  If no such words exist, return None.<br><br>
+Note: you should definitely write helper functions for this problem! In fact, try to think of at least two helper functions you could use before writing any code at all.<br><br>
+Another note: there is no fixed dictionary here.  Each time we call the function, we may provide a different dictionary!  It may contain 100 words or perhaps 100,000 words.
+</li>
+
+<br><li><b>drawChessboard(winWidth, winHeight)</b> [30pts]<br>
+Write the function drawChessboard which draws the chessboard shown below. Chess pieces are represented as letters inside of circles (R for rook, H for horse/knight, B for bishop, Q for queen, and K for king), and pawns are represented as triangles. The top pieces are black, the bottom pieces are white, and the board itself is alternating squares of off-white and off-black (we used beige and dimgray to get the appropriate colors). Your chessboard does not have to be pixel-perfect identical to our example, but it should be fairly similar, and it should adjust in size based on the provided winWidth and winHeight.<br><br>
+
+<img src="hw4-drawChessboard.png" style="border:1px solid black" width="500"></li>
+
+<br><li><b>Bonus/Optional: drawSpiral(winWidth, winHeight)</b> [3pts]<br>
+Write a function named drawSpiral(winWidth, winHeight) that takes two ints and
+creates a window of the given dimensions, and then draws this picture
+(to fill the window as completely as possible):<br>
+<img border="0" src="hw4-drawSpiral.png" width="749" height="498"><br>
+Here, you will draw both sides of the picture (the larger and smaller
+spirals), along with the title text (drawSpiral) and the boxes around
+the spirals.
+<br><br>
+As for the image, each side will be a spiral (or really a series of spiral arms).
+The spiral arms must be created by drawing a series of circles (the only thing drawn to create the spirals in this exercise are small circles).  There should be 28 arms, each arm composed of 32 circles.  Each arm spirals, or bends, such that the outermost circle in the arm is drawn pi/4 radians (45 degrees) beyond the innermost circle in that same arm. Hint: You will have to use basic trigonometry here!  Also, try to make the color gradients work as indicated (think rgbString).
+</li>
+
+
+</ol>
+</div>
+</body>
+</html>

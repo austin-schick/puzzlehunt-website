@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112 Spring 2018: Fundamentals of Programming and Computer Science<br>
+Homework 1 (Due Saturday 20-Jan, at 8pm)
+</h1>
+
+<hr>
+
+<ul>
+<li>This assignment is <span class="solo">SOLO</span>. This means you may not look at other student's code or let other students look at your code for these problems. See the syllabus for details.
+</li>
+<br>
+
+<li>To start:
+<ol>
+<li>Create a folder named 'week1'</li>
+<li>Download both
+    <a href="hw1.py" download>hw1.py</a>
+    and
+    <a href="cs112_s18_week1_linter.py" download>cs112_s18_week1_linter.py</a>
+    to that folder</li>
+<li>Edit hw1.py using Pyzo</li>
+<li>When you are ready, submit hw1.py to Autolab. For this hw, you may submit up to 20 times
+(which is way more than you should require),
+but only your last submission counts.</li>
+</ol>
+</li>
+<li>Do not use string indexing, loops, lists, or recursion this week.</li>
+<li>Do not hardcode the test cases in your solutions.</li>
+</ul>
+
+<hr>
+
+<ol>
+
+<br><li><b>Lab Problems</b> [10pts]<br>
+Attend your scheduled lab on Friday. While there, complete the basic problem and make a real attempt at the advanced problem. One of the TAs will record your participation by hand.</li>
+
+<br><li><b>Reasoning over Code</b> [15pts]<br>
+Given the function roc1 (shown below), find a value that will make roc1 return True. You should then modify the function roc1Answer() to return that value so that the autograder will accept your work.<br><br>
+
+<div class="python-code no-run no-viz">
+def roc1(x):
+    a = x % 42
+    b = x // 42
+    return a == b and x > 450
+</div><br>
+
+Note: yes, you could try every possible value in this function until you find one that works. That won't help you learn, though. Instead, try working through the problem on paper, to see if you can figure out what a correct answer should look like without going through all the possibilities.<br>
+
+<br><li><b>getTheCents(n)</b> [25pts]<br>
+Write the function getTheCents(n) which takes a value n (which represents a payment in US dollars) as input and returns the number of cents in the payment. If n is an int, the function should return 0, as it has 0 cents; otherwise, if it isn't a float, it should return None, because a non-number payment make no cents (ha!). If the payment has partial cents (for example, 3.959), it should be rounded up to the nearest cent.</li>
+
+<br><li><b>playGuessingGame()</b> [25pts]<br>
+Write the function playGuessingGame() which runs a short guessing game with the user. The program should ask the user two Yes-or-No questions, then guess what the user is thinking based on their answers. You must use the specific prompts shown in the example exchanges below to pass the test cases (where the bolded words are user input), so you should copy the prompts directly into your code to avoid typos. <br><br>
+
+<div class="python-code no-run no-viz">
+Let's play a guessing game! Think of a type of pet.
+Does it have fur?<b>Yes</b>
+Can you teach it to play fetch?<b>Yes</b>
+It's a dog!
+</div>
+
+<div class="python-code no-run no-viz">
+Let's play a guessing game! Think of a type of pet.
+Does it have fur?<b>Yes</b>
+Can you teach it to play fetch?<b>No</b>
+It's a cat!
+</div>
+
+<div class="python-code no-run no-viz">
+Let's play a guessing game! Think of a type of pet.
+Does it have fur?<b>No</b>
+Can it swim?<b>Yes</b>
+It's a fish!
+</div>
+
+<div class="python-code no-run no-viz">
+Let's play a guessing game! Think of a type of pet.
+Does it have fur?<b>No</b>
+Can it swim?<b>No</b>
+It's a bird!
+</div>
+
+<br><li><b>isRightTriangle(x1, y1, x2, y2, x3, y3)</b> [25pts]<br>
+Write the function isRightTriangle(x1, y1, x2, y2, x3, y3) that takes 6 int or float values that represent the vertices (x1,y1), (x2,y2), and
+(x3,y3) of a triangle, and returns True if that is a right triangle and False otherwise. You must also write a helper function, distance(x1,
+y1, x2, y2), which should be used by isRightTriangle. This function takes four int or float values representing
+two points and returns the distance between those points. Remember to use almostEqual (instead of ==) when comparing floats!
+</li>
+
+<br><li><b>Bonus/optional: bonusFindIntRootsOfCubic(a,b,c,d)</b> [3 pts]<br>
+Write the function bonusFindIntRootsOfCubic(a,b,c,d) that takes the int or float
+coefficients a, b, c, d of a cubic equation of this form:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; y = ax<sup>3</sup> + bx<sup>2</sup> + cx + d<br>
+You are guaranteed the function has 3 real roots, and in fact that the roots are 
+all integers.&nbsp; Your function should return these 3 roots in increasing 
+order.&nbsp; How does a function return multiple values?&nbsp; Like so:<br>
+&nbsp;&nbsp;&nbsp; return root1, root2, root3<br>
+To get started, you'll want to read about Cardano's cubic formula
+<a target="_blank" href="http://www.math.vanderbilt.edu/~schectex/courses/cubic/">here</a> 
+(great stuff!).&nbsp; Then, from that page, use this formula:<br>
+&nbsp;<center>x &nbsp; = &nbsp; {q + [q<sup>2</sup> + (r-p<sup>2</sup>)<sup>3</sup>]<sup>1/2</sup>}<sup>1/3</sup> 
+&nbsp; + &nbsp; {q - [q<sup>2</sup> + (r-p<sup>2</sup>)<sup>3</sup>]<sup>1/2</sup>}<sup>1/3</sup> 
+&nbsp; + &nbsp; p</center>
+<p>where:</p>
+<center>p = -b/(3a), &nbsp; q = p<sup>3</sup> + (bc-3ad)/(6a<sup>2</sup>), &nbsp; r = 
+c/(3a)</center>
+<p>This isn't quite as simple as it seems, because your 
+solution for x will not only be approximate (and not exactly an int, so you'll 
+have to do something about that), but it may not even be real!&nbsp; Though the 
+solution is real, the intermediate steps may include some complex values, and in 
+these cases the solution will include a (possibly-negligibly-small) imaginary 
+value.&nbsp; So you'll have to convert from complex to real (try c.real if c is complex), 
+and then convert from real to int.<br>
+<br>
+Great, now you have one root.&nbsp; What about the others?&nbsp; Well, we can 
+divide the one root out and that will leave us with a quadratic equation, which 
+of course is easily solved.&nbsp; A brief, clear explanation of this step is 
+provided 
+<a target="_blank" href="http://en.wikipedia.org/wiki/Cubic_function#Factorization">here</a>.&nbsp; Don't forget to convert these to int values, too!<br>
+<br>
+So now you have all three int roots.&nbsp; Great job!&nbsp; All that's left is 
+to sort them.&nbsp; Now, if this were later in the course, you could put them in 
+a list and call a built-in function that will sort for you.&nbsp; But it's not, 
+so you can't.&nbsp; Instead, figure out how to sort these values using the 
+limited built-in functions and arithmetic available this week.&nbsp; Then just 
+return these 3 values and you're done.<br>
+</li>
+
+
+</ol>
+</div>
+</body>
+</html>

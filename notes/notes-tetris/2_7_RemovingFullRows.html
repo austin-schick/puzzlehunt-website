@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html><head><title>Tetris for Intro/Intermediate Programmers (Fall 2017 update)</title></head>
+<body bgcolor="#ADDEFA">
+
+<hr color="#e88100">
+<font face="Arial"><b>Tetris for Intro/Intermediate Programmers (Fall 2017 update)<br>
+Step 7:&nbsp; Removing Full Rows and Keeping Score</b></font><hr color="#e88100">
+<ul>
+	<li>
+	<p align="left">Our game is close to being complete -- or at least complete 
+	enough that it can be fun to play.&nbsp; All that remains is removing full 
+	rows (since filling rows is the object of Tetris) and keeping score.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Writing removeFullRows:<br>
+	This function will clear any full rows (rows that do not contain the empty color)
+	from the board, move the rows above them down, and fill the top with empty rows.
+	To do this, we'll create a new board and will only copy into it rows from the old board
+	that are not full (in the correct order, of course). We'll also keep track of
+	the number of full rows that are removed in a variable, fullRows. Once all the non-full
+	rows are copied over, we'll add empty-color rows to the top of the new board until
+	it's the right size. We then call removeFullRows in placeFallingPiece, so that full rows are cleared at the first possible opportunity.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Now that we are removing rows, we should keep score.&nbsp; 
+	To do that, we will introduce a data value "score" (which is set to 
+	zero in the init function).&nbsp; In our removeFullRows function, we will 
+	increment the score by the <i>square</i> of total number of full rows 
+	removed in order to reward removing 
+	multiple lines at once.&nbsp; And now that we are keeping score, we should 
+	also display the score, which involves adding a function drawScore which is 
+	called by our draw function.<br>
+	&nbsp;</p></li>
+
+<li>At the end of this stage, your Tetris board should be complete!<br><br>
+	<img src="pix/step-7.gif" border="0" width="250">
+</li>
+</ul>
+
+<hr style="text-decoration: line-through; color: rgb(153, 153, 153);" color="#e88100">
+<table style="border-collapse: collapse;" id="table2" border="0" cellpadding="0" width="100%">
+	<tbody><tr>
+		<td width="33%">&nbsp;</td>
+		<td width="33%">
+		<p align="center">
+<a href="2_6_PlacingTheFallingPiece.html"><img src="pix/previous.gif" border="0" height="15" width="73"></a>
+<a href="TetrisForIntroIntermediateProgrammers.html"><img src="pix/home.gif" border="0" height="16" width="19"></a>
+<a href="2_8_MoreIdeas.html"><img src="pix/next.gif" border="0" height="16" width="73"></a></p></td>
+		<td width="33%">
+		<p align="right"><font face="Arial" size="2">David Kosbie<br>
+Carnegie Mellon University<br>
+<a href="mailto:koz@cmu.edu">koz@cmu.edu</a></font></p></td>
+	</tr>
+</tbody></table>
+
+<hr color="#e88100">
+
+</body></html>

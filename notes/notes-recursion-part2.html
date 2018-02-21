@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Recursion Part 2<br>
+</h1>
+<hr>
+
+<ol>
+<li><b><a href="#callWithLargeStack">Expanding the Stack Size and Recursion Limit (callWithLargeStack)</a></b></li>
+<li><b><a href="#memoization">Improving Efficiency with Memoization</a></b></li>
+<li><b><a href="#examples">Advanced Worked Examples Using Recursion</a></b>
+<ol>
+<li><a href="#powerset"><b>powerset (all subsets)</b></a></li>
+<li><a href="#permutations"><b>permutations</b></a></li>
+<li><a href="#printFiles"><b>printFiles (with os module)</b></a></li>
+<li><a href="#listFiles"><b>listFiles (with os module)</b></a></li>
+<li><a href="#floodFill"><b>floodFill (grid-based)</b></a></li>
+<li><a href="#Fractals"><b>Fractals</b></a>
+  <ol>
+  <li><a href="#kochSnowflake"><b>kochSnowflake (with Turtle)</b></a></li>
+  <li><a href="#sierpinskiTriangle"><b>sierpinskiTriangle (with Tkinter)</b></a></li>
+  </ol>
+</li>
+<li><a href="#Sorting"><b>Recursive Sorting</b></a>
+<ol>
+  <li><a href="#selectionsort"><b>selection sort</b></a></li>
+  <li><a href="#insertionsort"><b>insertion sort</b></a></li>
+  <li><a href="#mergesort"><b>merge sort</b></a></li>
+  <li><a href="#quicksort"><b>quick sort</b></a></li>
+  <li><a href="#radixsort"><b>radix sort</b></a></li>
+  <li><a href="#allsorts"><b>all these sorts with timing</b></a></li>
+</ol>
+<li><a href="#Backtracking"><b>Backtracking</b></a>
+<ol>
+  <li><a href="#mazeSolving"><b>maze solving</b></a></li>
+  <li><a href="#nQueens"><b>nQueens</b></a></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<hr>
+
+<ol>
+
+<li><a name="callWithLargeStack"></a><b>Expanding the Stack Size and Recursion Limit (callWithLargeStack)</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/aTTfIG0IkU4"></span><br>
+<ol>
+<li><b>The problem:</b>
+<div class="python-code no-viz">
+def rangeSum(lo, hi):
+    if (lo > hi):
+        return 0
+    else:
+        return lo + rangeSum(lo+1, hi)
+
+print(rangeSum(1,1234))  # RuntimeError: maximum recursion depth exceeded
+</div>
+
+</li><br><li><b>The solution (on most platforms):</b>
+<div class="python-code no-viz no-run">
+def rangeSum(lo, hi):
+    if (lo > hi):
+        return 0
+    else:
+        return lo + rangeSum(lo+1, hi)
+
+def callWithLargeStack(f,*args):
+    import sys
+    import threading
+    threading.stack_size(2**27)  # 64MB stack
+    sys.setrecursionlimit(2**27) # will hit 64MB stack limit first
+    # need new thread to get the redefined stack size
+    def wrappedFn(resultWrapper): resultWrapper[0] = f(*args)
+    resultWrapper = [None]
+    #thread = threading.Thread(target=f, args=args)
+    thread = threading.Thread(target=wrappedFn, args=[resultWrapper])
+    thread.start()
+    thread.join()
+    return resultWrapper[0]
+
+print(callWithLargeStack(rangeSum,1,123456)) # prints 7620753696
+</div>
+
+</li><br><li><b>The "solution" (on some Macs):</b>
+<div class="python-code no-viz no-run">
+def rangeSum(lo, hi):
+    if (lo > hi):
+        return 0
+    else:
+        return lo + rangeSum(lo+1, hi)
+
+def callWithLargeStack(f,*args):
+    import sys
+    import threading
+    sys.setrecursionlimit(2**14) # max recursion depth of 16384
+    isWindows = (sys.platform.lower() in ["win32", "cygwin"])
+    if (not isWindows): return f(*args) # sadness...
+    threading.stack_size(2**27)  # 64MB stack
+    # need new thread to get the redefined stack size
+    def wrappedFn(resultWrapper): resultWrapper[0] = f(*args)
+    resultWrapper = [None]
+    #thread = threading.Thread(target=f, args=args)
+    thread = threading.Thread(target=wrappedFn, args=[resultWrapper])
+    thread.start()
+    thread.join()
+    return resultWrapper[0]
+
+print(callWithLargeStack(rangeSum,1,123456)) # prints 7620753696
+</div>
+
+</li>
+</ol>
+
+</li><br><li><a name="memoization"></a><b>Improving Efficiency with Memoization</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/6aHcIA4SEfQ"></span><br>
+<ol>
+<li><b>The problem:</b>
+<div class="python-code no-viz no-run">
+def fib(n):
+    if (n < 2):
+        return 1
+    else:
+        return fib(n-1) + fib(n-2)
+
+import time
+def testFib(maxN=40):
+    for n in range(maxN+1):
+        start = time.time()
+        fibOfN = fib(n)
+        ms = 1000*(time.time() - start)
+        print("fib(%2d) = %8d, time =%5dms" % (n, fibOfN, ms))
+
+testFib() # gets really slow!
+</div>
+
+</li><br><li><b>A solution:</b>
+<div class="python-code no-viz no-run">
+fibResults = dict()
+
+def fib(n):
+    if (n in fibResults):
+        return fibResults[n]
+    if (n < 2):
+        result = 1
+    else:
+        result = fib(n-1) + fib(n-2)
+    fibResults[n] = result
+    return result
+
+import time
+def testFib(maxN=40):
+    for n in range(maxN+1):
+        start = time.time()
+        fibOfN = fib(n)
+        ms = 1000*(time.time() - start)
+        print("fib(%2d) = %8d, time =%5dms" % (n, fibOfN, ms))
+
+testFib() # ahhh, much better!
+</div>
+
+</li><br><li><b>A more elegant solution:</b>
+<div class="python-code no-viz no-run">
+def memoized(f):
+    # You are not responsible for how this decorator works
+    # on the inside, just how to use it!
+    import functools
+    cachedResults = dict()
+    @functools.wraps(f)
+    def wrapper(*args):
+        if args not in cachedResults:
+            cachedResults[args] = f(*args)
+        return cachedResults[args]
+    return wrapper
+
+@memoized
+def fib(n):
+    if (n < 2):
+        return 1
+    else:
+        return fib(n-1) + fib(n-2)
+
+import time
+def testFib(maxN=40):
+    for n in range(maxN+1):
+        start = time.time()
+        fibOfN = fib(n)
+        ms = 1000*(time.time() - start)
+        print("fib(%2d) = %8d, time =%5dms" % (n, fibOfN, ms))
+
+testFib() # ahhh, much better!
+</div>
+
+</li>
+</ol>
+
+</li><br><li><a name="examples"></a><b>Advanced Worked Examples Using Recursion</b></a>
+<span class="play-video1"
+      data-src="https://www.youtube.com/embed/TBDTBDTBD"></span><br>
+
+<ol>
+<li><a name="powerset"></a><b>powerset (all subsets)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/yjfXmay-vdI"></span>
+<div class="python-code">
+def powerset(a):
+    # returns a list of all subsets of the list a
+    if (len(a) == 0):
+        return [[]]
+    else:
+        allSubsets = [ ]
+        for subset in powerset(a[1:]):
+            allSubsets += [subset]
+            allSubsets += [[a[0]] + subset]
+        return allSubsets
+ 
+print(powerset([1,2,3]))
+</div>
+
+</li><br><li><a name="permutations"></a><b>permutations</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/MfewBQQgtUU"></span>
+<div class="python-code">
+def permutations(a):
+    # returns a list of all permutations of the list a
+    if (len(a) == 0):
+        return [[]]
+    else:
+        allPerms = [ ]
+        for subPermutation in permutations(a[1:]):
+            for i in range(len(subPermutation)+1):
+                allPerms += [subPermutation[:i] + [a[0]] + subPermutation[i:]]
+        return allPerms
+ 
+print(permutations([1,2,3]))
+</div>
+
+</li><br><li><a name="printFiles"></a><b>printFiles (with os module)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/SorTgSgDiaA"></span>
+<div class="python-code no-run no-viz">
+import os
+def printFiles(path):
+    if (os.path.isdir(path) == False):
+        # base case:  not a folder, but a file, so print its path
+        print(path)
+    else:
+        # recursive case: it's a folder
+        for filename in os.listdir(path):
+            printFiles(path + "/" + filename)
+
+# To test this, download and expand this zip file in the same directory
+# as the Python file you are running:  <a href="sampleFiles.zip" download>sampleFiles.zip</a>
+# Note: if you see .DS_Store files in the sampleFiles folders, or in the
+# output of your function (as often happens with Macs, in particular),
+# download <a href="removeDsStore.py" download>removeDsStore.py</a>, place it in the same directory, and run it,
+# and you should see your .DS_Store files removed.
+
+printFiles("sampleFiles")
+</div>
+
+</li><br><li><a name="listFiles"></a><b>listFiles (with os module)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/4ATOxJ-Msk8"></span>
+<div class="python-code no-run no-viz">
+import os
+def listFiles(path):
+    if (os.path.isdir(path) == False):
+        # base case:  not a folder, but a file, so return singleton list with its path
+        return [path]
+    else:
+        # recursive case: it's a folder, return list of all paths
+        files = [ ]
+        for filename in os.listdir(path):
+            files += listFiles(path + "/" + filename)
+        return files
+
+# To test this, download and expand this zip file in the same directory
+# as the Python file you are running:  <a href="sampleFiles.zip" download>sampleFiles.zip</a>
+
+print(listFiles("sampleFiles"))
+</div>
+
+</li><br><li><a name="floodFill"></a><b>floodFill (grid-based)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/JDJuLKugf7Y"></span>
+<br>
+Python code:
+<a href="floodFill-grid-based.py">floodFill-grid-based.py</a>
+<br>
+Key excerpt:
+<div class="python-code no-run no-viz">
+def floodFill(data, row, col, depth=0):
+    if ((row < 0) or (row >= data.rows) or
+        (col < 0) or (col >= data.cols)):
+        return # off-board!
+    cell = data.cells[row][col]
+    if (cell.isWall == True):
+        return # hit a wall
+    if (cell.depth >= 0):
+        return # already been here
+
+    # "fill" this cell
+    cell.depth = depth
+    cell.ordinal = len(data.floodFillOrder)
+    data.floodFillOrder.append(cell)
+
+    # then recursively fill its neighbors
+    floodFill(data, row-1, col,   depth+1)
+    floodFill(data, row+1, col,   depth+1)
+    floodFill(data, row,   col-1, depth+1)
+    floodFill(data, row,   col+1, depth+1)
+</div>
+
+</li><br><li><a name="Fractals"></a><b>Fractals</b></a>
+  <ol>
+  <li><a name="kochSnowflake"></a><b>kochSnowflake (with Turtle)</b>
+  <span class="play-video"
+      data-src="https://www.youtube.com/embed/EUpg5GXpNSE"></span>
+<br>
+Python code:
+<a href="koch-snowflake.py">koch-snowflake.py</a>
+<br>
+Key excerpt:
+<div class="python-code no-run no-viz">
+def kochSide(length, n):
+    if (n == 1):
+        turtle.forward(length)
+    else:
+        kochSide(length/3.0, n-1)
+        turtle.left(60)
+        kochSide(length/3.0, n-1)
+        turtle.right(120)
+        kochSide(length/3.0, n-1)
+        turtle.left(60)
+        kochSide(length/3.0, n-1)
+</div>
+
+  </li><br><li><a name="sierpinskiTriangle"></a><b>sierpinskiTriangle (with Tkinter)</b>
+  <span class="play-video"
+      data-src="https://www.youtube.com/embed/MW1ik1hAoX8"></span>
+<br>
+Python code:
+<a href="sierpinsky-triangle.py">sierpinsky-triangle.py</a>
+<br>
+Key excerpt:
+<div class="python-code no-run no-viz">
+def drawSierpinskyTriangle(canvas, x, y, size, level):
+    # (x,y) is the lower-left corner of the triangle
+    # size is the length of a side
+    if (level == 0):
+        canvas.create_polygon(x, y,
+                              x+size, y,
+                              x+size/2, y-size*(3**0.5)/2,
+                              fill="black")
+    else:
+        drawSierpinskyTriangle(canvas, x, y, size/2, level-1)
+        drawSierpinskyTriangle(canvas, x+size/2, y, size/2, level-1)
+        drawSierpinskyTriangle(canvas, x+size/4, y-size*(3**0.5)/4, size/2, level-1)
+</div>
+
+  </li></ol>
+</li><br><li><a name="Sorting"></a><b>Recursive Sorting</b></a>
+  <ol>
+    <li><a name="selectionsort"></a><b>selection sort</b>
+    <span class="play-video"
+      data-src="https://www.youtube.com/embed/zPUWe2u-gY4"></span>
+<div class="python-code">
+def selectionsort(L):
+    if (len(L) < 2):
+        return L
+    else:
+        i = L.index(min(L))
+        return [L[i]] + selectionsort(L[:i] + L[i+1:])
+
+print(selectionsort([1,5,3,4,2,0]))
+</div>
+
+    </li><br><li><a name="insertionsort"></a><b>insertion sort</b>
+    <span class="play-video"
+      data-src="https://www.youtube.com/embed/sgRxjxrjWuU"></span>
+<div class="python-code">
+def insertionsort(L):
+    if (len(L) < 2):
+        return L
+    else:
+        first = L[0]
+        rest = insertionsort(L[1:])
+        lo = [x for x in rest if x < first]
+        hi = [x for x in rest if x >= first]
+        return lo + [first] + hi
+
+print(insertionsort([1,5,3,4,2,0]))
+</div>
+
+    </li><br><li><a name="mergesort"></a><b>merge sort</b>
+    <span class="play-video"
+      data-src="https://www.youtube.com/embed/A-uh7WlWi00"></span>
+<div class="python-code">
+def merge(A, B):
+    # beautiful, but impractical for large N
+    if ((len(A) == 0) or (len(B) == 0)):
+        return A+B
+    else:
+        if (A[0] < B[0]):
+            return [A[0]] + merge(A[1:], B)
+        else:
+            return [B[0]] + merge(A, B[1:])
+
+def merge(A, B):
+    # iterative (ugh) and destructive (double ugh), but practical...
+    C = [ ]
+    i = j = 0
+    while ((i < len(A)) or (j < len(B))):
+        if ((j == len(B)) or ((i < len(A)) and (A[i] <= B[j]))):
+            C.append(A[i])
+            i += 1
+        else:
+            C.append(B[j])
+            j += 1
+    return C
+
+def mergesort(L):        
+    if (len(L) < 2):
+        return L
+    else:
+        mid = len(L)//2
+        left = mergesort(L[:mid])
+        right = mergesort(L[mid:])
+        return merge(left, right)
+
+print(mergesort([1,5,3,4,2,0]))
+</div>
+
+    </li><br><li><a name="quicksort"></a><b>quick sort</b>
+    <span class="play-video"
+      data-src="https://www.youtube.com/embed/C2r1a6O_VIc"></span>
+<div class="python-code">
+def quicksort(L):
+    if (len(L) < 2):
+        return L
+    else:
+        first = L[0]  # pivot
+        rest = L[1:]
+        lo = [x for x in rest if x < first]
+        hi = [x for x in rest if x >= first]
+        return quicksort(lo) + [first] + quicksort(hi)
+
+print(quicksort([1,5,3,4,2,0]))
+</div>
+
+    </li><br><li><a name="radixsort"></a><b>radix sort</b>
+    <span class="play-video"
+      data-src="https://www.youtube.com/embed/fm3YQOYxxHE"></span>
+<div class="python-code">
+def radixsort(L):
+    # Only works for lists of non-negative integers!
+    maxValue = max(L)
+    def rsort(L, digitSelector):
+        if (digitSelector > maxValue):
+            return L
+        else:
+            zeroes = [x for x in L if (x & digitSelector == 0)]
+            ones = [x for x in L if (x & digitSelector != 0)]
+            return rsort(zeroes + ones, digitSelector << 1)
+    return rsort(L, 1)
+
+print(radixsort([1,5,3,4,2,0]))
+</div>
+
+    </li><br><li><a name="allsorts"></a><b>all these sorts with timing</b>
+    <span class="play-video1"
+      data-src="https://www.youtube.com/embed/TBDTBDTBD"></span><br>
+See <a href="recursive-sorts.py">recursive-sorts.py</a>.
+
+  </li></ol>
+</li><br><li><a name="Backtracking"></a><b>Backtracking</b></a>
+  <ol>
+    <li><a name="mazeSolving"></a><b>maze solving</b>
+    <span class="play-video"
+      data-src="https://www.youtube.com/embed/ycqCv3xuZS8"></span>
+<br>
+Python code:
+<a href="maze-solver.py">maze-solver.py</a>
+<br>
+Key excerpt:
+<div class="python-code no-run no-viz">
+    def solve(row,col):
+        # base cases
+        if (row,col) in visited: return False
+        visited.add((row,col))
+        if (row,col)==(targetRow,targetCol): return True
+        # recursive case
+        for drow,dcol in [NORTH,SOUTH,EAST,WEST]:
+            if isValid(data, row,col,(drow,dcol)):
+                if solve(row+drow,col+dcol): return True
+        visited.remove((row,col))
+        return False
+</div>
+
+    </li><br><li><a name="nQueens"></a><b>nQueens</b>
+    <span class="play-video"
+      data-src="https://www.youtube.com/embed/0BiVVvZX_cI"></span>
+<br>
+Python code:
+<a href="nQueens.py">nQueens.py</a>
+<br>
+Key excerpt:
+<div class="python-code no-run no-viz">
+    def solve(col):
+        if (col == n):
+            return make2dSolution(queenRow)
+        else:
+            # try to place the queen in each row in turn in this col,
+            # and then recursively solve the rest of the columns
+            for row in range(n):
+                if isLegal(row,col):
+                    queenRow[col] = row # place the queen and hope it works
+                    solution = solve(col+1)
+                    if (solution != None):
+                        # ta da! it did work
+                        return solution
+                    queenRow[col] = -1 # pick up the wrongly-placed queen
+            # shoot, can't place the queen anywhere
+            return None
+</div>
+
+  </li></ol>
+</li>
+
+</ol></li></ol></li></ol>
+<hr>
+</div>
+</body>
+</html>

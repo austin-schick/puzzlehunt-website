@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Strings
+</h1>
+<hr>
+
+<ol>
+<li><b><a href="#stringLiterals">String Literals</a></b></li>
+<li><b><a href="#stringConstants">Some String Constants</a></b></li>
+<li><b><a href="#stringOperators">Some String Operators</a></b></li>
+<li><b><a href="#looping">Looping over Strings</a></b></li>
+<li><b><a href="#isPalindrome">Example: isPalindrome</a></b></li>
+<li><b><a href="#immutable">Strings are Immutable</a></b></li>
+<li><b><a href="#stringBuiltinFns">Some String-related Built-In Functions</a></b></li>
+<li><b><a href="#stringMethods">Some String Methods</a></b></li>
+<li><b><a href="#stringFormatting">String Formatting</a></b></li>
+<li><b><a href="#basicFileIO">Basic File IO</a></b></li>
+</ol>
+
+<hr>
+
+<ol>
+
+<li><a name="stringLiterals"></a><b>String Literals</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/ufzSyQYclQk"></span>
+<ol>
+
+<li><a name="quotes"><b>Four kinds of quotes</b></a><br>
+<div class="python-code">
+# single-quoted or double-quoted strings are the most common
+print('single-quotes')
+print("double-quotes")
+
+# triple-qouted strings are less common (though see next section for a typical use)
+print('''triple single-quotes''')
+print("""triple double-quotes""")
+</div>
+</li>
+
+<br><li><a name="newlines"><b>Newlines in strings</b></a><br>
+<div class="python-code">
+print("abc\ndef")  # \n is a single newline character
+print("""abc
+def""")
+
+print("""\
+You can use a backslash at the end of a line in a string to exclude
+the newline after it. This should almost never be used, but one good
+use of it is in this example, at the start of a multi-line string, so
+the whole string can be entered with the same indentation (none, that is).
+""")
+</div>
+</li>
+
+<br><li><a name="escapeSequences"><b>More Escape Sequences</b></a><br>
+<div class="python-code">
+print("Double-quote: \"")
+print("Backslash: \\")
+print("Newline (in brackets): [\n]")
+print("Tab (in brackets): [\t]")
+
+print("These items are tab-delimited, 3-per-line:")
+print("abc\tdef\tg\nhi\tj\\\tk\n---")
+</div>
+<br>
+<b>An escape sequence produces a single character:</b><br>
+<div class="python-code">
+s = "a\\b\"c\td"
+print("s =", s)
+print("len(s) =", len(s))
+</div>
+</li>
+
+<br><li><a name="multilineComments"><b>String Literals as Multi-line Comments</b></a><br>
+<div class="python-code">
+"""
+Python does not have multiline comments, but you can do something similar
+by using a top-level multiline string, such as this. Technically, this is
+not a comment, and Python will evaluate this string, but then ignore it
+and garbage collect it!
+"""
+print("wow!")
+</div>
+</li>
+
+</ol>
+</li>
+
+<br><li><a name="stringConstants"></a><b>Some String Constants</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/F287_F3ygPg"></span>
+<div class="python-code">
+import string
+print(string.ascii_letters)   # abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+print(string.ascii_lowercase) # abcdefghijklmnopqrstuvwxyz
+print("-----------")
+print(string.ascii_uppercase) # ABCDEFGHIJKLMNOPQRSTUVWXYZ
+print(string.digits)          # 0123456789
+print("-----------")
+print(string.punctuation)     # '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+print(string.printable)       # digits + letters + punctuation + whitespace
+print("-----------")
+print(string.whitespace)      # space + tab + linefeed + return + ...
+</div>
+</li>
+
+
+<br><li><a name="stringOperators"></a><b>Some String Operators</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/3441emNGGEw"></span>
+<ol>
+<li><a name="plusAndTimes"><b>String + and *</b></a><br>
+<div class="python-code">
+print("abc" + "def")
+print("abc" * 3)
+print("abc" + 3)  # error
+</div>
+</li>
+
+<br><li><a name="inOperator"><b>The in operator</b></a><br>
+<div class="python-code">
+print("ring" in "strings")
+print("wow" in "amazing!")
+print("Yes" in "yes!")
+print("" in "No way!")
+</div>
+</li>
+
+<br><li><a name="slicing"><b>String indexing and slicing</b></a><br>
+<ol>
+<li><b>Indexing a single character</b><br>
+<div class="python-code">
+s = "abcdefgh"
+print(s)
+print(s[0])
+print(s[1])
+print(s[2])
+
+print("-----------")
+print(s[len(s)-1])
+print(s[len(s)])  # crashes (string index out of range)
+</div></li>
+
+<br><li><b>Negative indexes</b><br>
+<div class="python-code">
+s = "abcdefgh"
+print(s)
+print(s[-1])
+print(s[-2])
+</div></li>
+
+<br><li><b>Slicing a range of characters</b><br>
+<div class="python-code">
+s = "abcdefgh"
+print(s)
+print(s[0:3])
+print(s[1:3])
+print("-----------")
+print(s[2:3])
+print(s[3:3])
+</div></li>
+
+<br><li><b>Slicing with default parameters</b><br>
+<div class="python-code">
+s = "abcdefgh"
+print(s)
+print(s[3:])
+print(s[:3])
+print(s[:])
+</div></li>
+
+<br><li><b>Slicing with a step parameter</b><br>
+<div class="python-code">
+print("This is not as common, but perfectly ok.")
+s = "abcdefgh"
+print(s)
+print(s[1:7:2])
+print(s[1:7:3])
+</div></li>
+
+<br><li><b>Reversing a string</b><br>
+<div class="python-code">
+s = "abcdefgh"
+
+print("This works, but is confusing:")
+print(s[::-1])
+
+print("This also works, but is still confusing:")
+print("".join(reversed(s)))
+
+print("Best way: write your own reverseString() function:")
+
+def reverseString(s):
+    return s[::-1]
+
+print(reverseString(s)) # crystal clear!
+</div></li>
+
+</ol>
+</li>
+</ol>
+
+<br><li><a name="looping"></a><b>Looping over Strings</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/_Hys8BHfC7c"></span>
+<ol>
+<li><a name="forWithIndexes"><b>"for" loop with indexes</b></a><br>
+<div class="python-code">
+s = "abcd"
+for i in range(len(s)):
+    print(i, s[i])
+</div>
+</li>
+
+<br><li><a name="forWithoutIndexes"><b>"for" loop without indexes</b></a><br>
+<div class="python-code">
+s = "abcd"
+for c in s:
+    print(c)
+</div>
+</li>
+
+<br><li><a name="forWithSplit"><b>"for" loop with split</b></a><br>
+<div class="python-code">
+names = "fred,wilma,betty,barney"
+for name in names.split(","):
+    print(name)
+</div>
+</li>
+
+<br><li><a name="forWithSplitlines"><b>"for" loop with splitlines</b></a><br>
+<div class="python-code">
+# quotes from brainyquote.com
+quotes = """\
+Dijkstra: Simplicity is prerequisite for reliability.
+Knuth: If you optimize everything, you will always be unhappy.
+Dijkstra: Perfecting oneself is as much unlearning as it is learning.
+Knuth: Beware of bugs in the above code; I have only proved it correct, not tried it.
+Dijkstra: Computer science is no more about computers than astronomy is about telescopes.
+"""
+for line in quotes.splitlines():
+    if (line.startswith("Knuth")):
+        print(line)
+</div>
+</li>
+</ol>
+
+<br><li><a name="isPalindrome"></a><b>Example: isPalindrome</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/PoHlsj3WQUc"></span>
+<div class="python-code">
+# There are many ways to write isPalindrome(s)
+# Here are several.  Which way is best?
+
+def reverseString(s):
+    return s[::-1]
+
+def isPalindrome1(s):
+    return (s == reverseString(s))
+
+def isPalindrome2(s):
+    for i in range(len(s)):
+        if (s[i] != s[len(s)-1-i]):
+            return False
+    return True
+
+def isPalindrome3(s):
+    for i in range(len(s)):
+        if (s[i] != s[-1-i]):
+            return False
+    return True
+
+def isPalindrome4(s):
+    while (len(s) > 1):
+        if (s[0] != s[-1]):
+            return False
+        s = s[1:-1]
+    return True
+
+print(isPalindrome1("abcba"), isPalindrome1("abca"))
+print(isPalindrome2("abcba"), isPalindrome2("abca"))
+print(isPalindrome3("abcba"), isPalindrome3("abca"))
+print(isPalindrome4("abcba"), isPalindrome4("abca"))
+</div>
+</li>
+
+<br><li><a name="immutable"></a><b>Strings are Immutable</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/e8pkjN4OWdk"></span>
+<ol>
+<li><b>You cannot change strings!  They are immutable.</b><br>
+<div class="python-code">
+s = "abcde"
+s[2] = "z"  # Error! Cannot assign into s[i]
+</div>
+</li>
+
+<br><li><b>Instead, you must create a new string</b><br>
+<div class="python-code">
+s = "abcde"
+s = s[:2] + "z" + s[3:]
+print(s)
+</div>
+</li>
+</li>
+</ol>
+
+<br><li><a name="stringBuiltinFns"></a><b>Some String-related Built-In Functions</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/zZPeIwqp9E8"></span>
+<ol>
+
+<li><b>str() and len()</b><br>
+<div class="python-code">
+name = input("Enter your name: ")
+print("Hi, " + name + ". Your name has " + str(len(name)) + " letters!")
+</div></li>
+
+<br><li><b>chr() and ord()</b><br>
+<div class="python-code">
+print(ord("A")) # 65
+print(chr(65))  # "A"
+print(chr(ord("A")+1)) # ?
+</div></li>
+
+<br><li><b>eval()</b><br>
+<div class="python-code">
+# eval() works but you should not use it!
+s = "(3**2 + 4**2)**0.5"
+print(eval(s))
+
+# why not? Well...
+s = "reformatMyHardDrive()"
+print(eval(s)) # no such function!  But what if there was?
+
+</div></li>
+
+</ol>
+</li>
+
+
+<br><li><a name="stringMethods"></a><b>Some String Methods</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/LGdVWGx2hZw"></span>
+
+<ol>
+
+<li><b>Character types: isalnum(), isalpha(), isdigit(), islower(), isspace(), isupper()</b><br>
+<div class="python-code">
+# Run this code to see a table of isX() behaviors
+def p(test):
+    print("True     " if test else "False    ", end="")
+def printRow(s):
+    print(" " + s + "  ", end="")
+    p(s.isalnum())
+    p(s.isalpha())
+    p(s.isdigit())
+    p(s.islower())
+    p(s.isspace())
+    p(s.isupper())
+    print()
+def printTable():
+    print("  s   isalnum  isalpha  isdigit  islower  isspace  isupper")
+    for s in "ABCD,ABcd,abcd,ab12,1234,    ,AB?!".split(","):
+        printRow(s)
+printTable()
+</div>
+</li>
+
+<br><li><b>String edits:  lower(), upper(), replace(), strip()</b><br>
+<div class="python-code">
+print("This is nice. Yes!".lower())
+print("So is this? Sure!!".upper())
+print("   Strip removes leading and trailing whitespace only    ".strip())
+print("This is nice.  Really nice.".replace("nice", "sweet"))
+print("This is nice.  Really nice.".replace("nice", "sweet", 1)) # count = 1
+
+print("----------------")
+s = "This is so so fun!"
+t = s.replace("so ", "")
+print(t)
+print(s) # note that s is unmodified (strings are immutable!)
+</div>
+</li>
+
+<br><li><b>Substring search: count(), startswith(), endswith(), find(), index()</b><br>
+<div class="python-code">
+print("This is a history test".count("is")) # 3
+print("This IS a history test".count("is")) # 2
+print("-------")
+print("Dogs and cats!".startswith("Do"))    # True
+print("Dogs and cats!".startswith("Don't")) # False
+print("-------")
+print("Dogs and cats!".endswith("!"))       # True
+print("Dogs and cats!".endswith("rats!"))   # False
+print("-------")
+print("Dogs and cats!".find("and"))         # 5
+print("Dogs and cats!".find("or"))          # -1
+print("-------")
+print("Dogs and cats!".index("and"))        # 5
+print("Dogs and cats!".index("or"))         # crash!
+</div>
+</li>
+
+</ol>
+</li>
+
+<br><li><a name="stringFormatting"></a><b>String Formatting</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/sej9__-gnRA"></span>
+<br><b>format a string with %s</b><br>
+<div class="python-code">
+breed = "beagle"
+print("Did you see a %s?" % breed)
+</div>
+
+<br><b>format an integer with %d</b><br>
+<div class="python-code">
+dogs = 42
+print("There are %d dogs." % dogs)
+</div>
+
+<br><b>format a float with %f</b><br>
+<div class="python-code">
+grade = 87.385
+print("Your current grade is %f!" % grade)
+</div>
+
+<br><b>format a float with %.[precision]f</b><br>
+<div class="python-code">
+grade = 87.385
+print("Your current grade is %0.1f!" % grade)
+</div>
+
+<br><b>format multiple values</b><br>
+<div class="python-code">
+dogs = 42
+cats = 18
+exclamation = "Wow"
+print("There are %d dogs and %d cats. %s!!!" % (dogs, cats, exclamation))
+</div>
+
+<br><b>format right-aligned with %[minWidth]</b><br>
+<div class="python-code">
+dogs = 42
+cats = 3
+print("%10s %10s" % ("dogs", "cats"))
+print("%10d %10d" % (dogs, cats))
+</div>
+
+<br><b>format left-aligned with %-[minWidth]</b><br>
+<div class="python-code">
+dogs = 42
+cats = 3
+print("%-10s %-10s" % ("dogs", "cats"))
+print("%-10d %-10d" % (dogs, cats))
+</div>
+</li>
+
+<br><li><a name="basicFileIO"></a><b>Basic File IO</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/mjWLLC7V2kg"></span>
+<div class="python-code">
+# Note: As this requires read-write access to your hard drive,
+#       this will not run in the browser in Brython.
+
+def readFile(path):
+    with open(path, "rt") as f:
+        return f.read()
+
+def writeFile(path, contents):
+    with open(path, "wt") as f:
+        f.write(contents)
+
+contentsToWrite = "This is a test!\nIt is only a test!"
+writeFile("foo.txt", contentsToWrite)
+
+contentsRead = readFile("foo.txt")
+assert(contentsRead == contentsToWrite)
+
+print("Open the file foo.txt and verify its contents.")
+</div>
+
+</ol>
+</div>
+</body>
+</html>

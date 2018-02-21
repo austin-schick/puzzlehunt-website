@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html><head><title>Tetris for Intro/Intermediate Programmers (Fall 2017 update)</title></head>
+<body bgcolor="#ADDEFA">
+
+<hr color="#e88100">
+<font face="Arial"><b>Tetris for Intro/Intermediate Programmers (Fall 2017 update)<br>
+Step 2:&nbsp; Creating and Drawing the Board</b></font>
+
+<hr color="#e88100">
+<ul>
+	<li>
+	<p align="left">For our purposes, a "board" is a
+2-dimensional list of color names (strings like "red").&nbsp; Our goal
+here is to allocate the board in the init function (init), and then to draw
+the board in our draw functions (which will be called by redrawAll).<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">To help us
+test our code, we will add a few lines in the init function (init) to pre-load
+a few cells in the board with some colors.&nbsp; This code will be
+removed after this step.&nbsp; In particular, we will paint the
+top-left cell red, the top-right cell white, the bottom-left cell
+green, and bottom-right cell gray.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Here is how our code should paint the board at this point:<br>
+	<br>
+	<img src="pix/corners.png" border="0" height="383" width="255"><br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Writing the playTetris() function:<br>
+We'll set up the dimensions for the game in a function playTetris(), which will
+call run(width, height). playTetris() can then be called from the main body of the code.
+We'll have the playTetris() function take no parameters. First, it
+will set the rows and columns ("cols") to 15 and 10, respectively, and it will set 
+cellSize to be 20. It will then use these values to determine the window size so the board just
+fits with the appropriate margins.  Once the window
+size is computed, playTetris() will call run() providing
+the appropriate window size.  Unfortunately, in the current
+framework, we cannot also provide the rows and cols as extra parameters.
+Thus, we have to separately set data.rows, data.cols, and data.cellSize in
+our init function, as noted below.
+
+	</li><li><p align="left">Writing the init function:<br>
+
+	With that, there are several tasks we need to do in the init
+function.
+    <br>
+	<br>
+	First, we need to set data.rows, data.cols, data.margin, and data.cellSize
+	to the same values
+	that we used in our playTetris() function, as noted above.
+    <br>
+	<br>
+	Next, we need to
+allocate our board as a 2-dimensional list of names of colors, and fill
+it with our emptyColor ("blue"), as all cells are empty to start the
+game. We also need to store this board, and the emptyColor, in the
+data object (data.board, data.emptyColor).<br>
+	<br>
+	Finally, we add the temporary code to pre-load the 4 corner cells 
+	with colors for testing purposes:<br>
+<font color="#800000"><font face="Courier New" size="2">
+<pre>    # pre-load a few cells with known colors for testing purposes
+    data.board[0][0] = "red" # top-left is red
+    data.board[0][data.cols-1] = "white" # top-right is white
+    data.board[data.rows-1][0] = "green" # bottom-left is green
+    data.board[data.rows-1][data.cols-1] = "gray" # bottom-right is gray</pre>
+	</font></font></p></li>
+	<li>
+	<p align="left">Writing the draw functions:<br>
+Our main draw function, redrawAll(canvas, data),
+will draw the background of the entire game (orange in the picture
+above), then it will use top-down design and call a new function,
+drawBoard, to draw the board.<br>
+	<font color="#800000"><br>
+	</font>To
+draw the board in the drawBoard function, we simply iterate over every
+cell (with two variables running over every row and column), and
+repeatedly call the drawCell function, which takes 4 parameters: the
+canvas, the data, the row of the cell, and the col of the cell.<br><br>Finally,
+the drawCell function must draw the given cell using the color stored
+in the board list corresponding to that cell (that is,
+in&nbsp;board[row][col]). We'll draw the cell with a rectangle in the cell's color and an extra-large outline.</p></li>
+
+<li>At the end of this stage, you should have a board that looks identical to the one pictured above.</li>
+</ul>
+
+<hr color="#e88100">
+<table style="border-collapse: collapse;" id="table2" border="0" cellpadding="0" width="100%">
+	<tbody><tr>
+		<td width="33%">&nbsp;</td>
+		<td width="33%">
+		<p align="center">
+<a href="2_1_DesignOverview.html"><img src="pix/previous.gif" border="0" height="15" width="73"></a>
+<a href="TetrisForIntroIntermediateProgrammers.html"><img src="pix/home.gif" border="0" height="16" width="19"></a>
+<a href="2_3_CreatingTheFallingPiece.html"><img src="pix/next.gif" border="0" height="16" width="73"></a></p></td>
+		<td width="33%">
+		<p align="right"><font face="Arial" size="2">David Kosbie<br>
+Carnegie Mellon University<br>
+<a href="mailto:koz@cmu.edu">koz@cmu.edu</a></font></p></td>
+	</tr>
+</tbody></table>
+
+<hr color="#e88100">
+
+</body></html>

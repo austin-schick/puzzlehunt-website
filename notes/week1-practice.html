@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Week1 Practice (Due never)
+</h1>
+
+
+<hr>
+
+<ul>
+<li>These problems will help you prepare for lab1, hw1, and quiz1.</li>
+<li>To start:
+<ol>
+<li>Create a folder named 'week1'</li>
+<li>Download both
+    <a href="wk1_practice.py" download>wk1_practice.py</a>
+    and
+    <a href="cs112_s18_week1_linter.py" download>cs112_s18_week1_linter.py</a>
+    to that folder</li>
+<li>Edit wk1_practice.py using pyzo</li>
+</ol>
+</li>
+<li>Do not use strings, loops, lists, or recursion this week.</li>
+<li>Do not hardcode the test cases in your solutions.</li>
+</ul>
+
+<hr>
+
+<b>Code Tracing</b><br>
+What will this code print? Figure it out by hand, then run the code to confirm.  Then slightly edit the code and try again.<br><br>
+<ul>
+<li><b>Trace #1 of 4:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/qGf-uNGS6CY"></span>
+<br><div class="python-code">
+import math
+def p(x): print(x, end='   ') # prints and stays on same line
+p(3 - 1 + 2 * 6 // 5)
+p(3 - 1 + 2 * 6 / 5)
+p(2**4/10 + 2**4//10)
+p(max(8/3,math.ceil(8/3)))
+print()
+</div></li>
+
+<br><li><b>Trace #2 of 4:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/9Y1ScSgFJZI"></span>
+<br><div class="python-code">
+# Note: we provide roundHalfUp and roundHalfEven for you. 
+# Use these instead of the builtin round function, since that
+# function may not behave as you expect.
+
+import decimal
+def roundHalfUp(d):
+   # Round to nearest with ties going away from zero.
+   rounding = decimal.ROUND_HALF_UP
+   return int(decimal.Decimal(d).to_integral_value(rounding=rounding))
+
+def roundHalfEven(d):
+   # Round to nearest with ties going to nearest even integer.
+   rounding = decimal.ROUND_HALF_EVEN
+   return int(decimal.Decimal(d).to_integral_value(rounding=rounding))
+
+def p(x): print(x, end='   ') # prints and stays on same line
+p(round(1.5))
+p(roundHalfUp(1.5))
+p(roundHalfEven(1.5))
+print()
+p(round(2.5))
+p(roundHalfUp(2.5))
+p(roundHalfEven(2.5))
+print()
+</div></li>
+
+<br><li><b>Trace #3 of 4:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/HjvTKU1IlAk"></span>
+<br><div class="python-code">
+def p(x): print(x, end='   ') # prints and stays on same line
+def f(x, y):
+  if (x > y):
+    if (x > 2*y): p('A')
+    else: p('B')
+  else:
+    p('C')
+def g(x, y):
+  if (abs(x%10 - y%10) < 2): p('D')
+  elif (x%10 > y%10): p('E')
+  else:
+    if (x//10 == y//10): p('F')
+    else: p('G')
+f(4,2)
+f(2,3)
+f(5,2)
+print()
+g(11,14)
+g(11,24)
+g(207,6)
+g(207,5)
+print()
+</div></li>
+
+<br><li><b>Trace #4 of 4:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/RNdSzooSSDo"></span>
+<br><div class="python-code">
+def f(x): return 4*x + 2
+def g(x): return f(x//2 + 1)
+def h(x):
+   print(f(x-3))
+   x -= 1
+   print(g(x)+x)
+   x %= 4
+   return g(f(x) % 4) // 2
+print(1 + h(6))
+</div></li>
+</ul>
+</li>
+
+<hr>
+
+<b>Reasoning Over Code</b><br>
+Find parameter(s) to the following functions so that they
+return True. Figure it out by hand, then run the code to confirm.
+There may be more than one correct answer for each function, and
+you can provide any one of them.<br><br>
+<ul>
+<li><b>RC #1 of 2:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/hn2OGpoburk"></span>
+<br><div class="python-code">
+def rc1(n):
+    if ((n < 0) or (n > 99)): return False
+    d1 = n%10
+    d2 = n//10
+    m = 10*d1 + d2
+    return ((m < n) and (n < 12))
+</div></li>
+
+<br><li><b>RC #2 of 2:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/qgHXftVDY14"></span>
+<br><div class="python-code">
+def rc2(n):
+    if ((n <= 0) or (n > 99)): return False
+    if (n//2*2 != n): return False
+    if (n//5*5 != n): return False
+    return (n//7*7 == n)
+</div></li>
+</ul>
+
+<hr>
+
+<b>Free Response (Problem-Solving)</b>
+<br><br>
+<b>Tue Lecture</b>
+<br><br>
+
+<ol>
+<li><b>distance(x1, y1, x2, y2)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/K-nsRzQIuUU"></span>
+<br>
+Write the function distance(x1, y1, x2, y2) that takes four int or float values x1, y1, x2, y2 that represent the two points (x1, y1) and (x2, y2), and returns the distance between those points as a float.
+</li>
+
+<br><li><b>circlesIntersect(x1, y1, r1, x2, y2, r2)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/N89SE8J5NZo"></span>
+<br>
+ Write the function circlesIntersect(x1, y1, r1, x2, y2, r2) that takes 6 numbers (ints or floats) -- x1, y1, r1, x2, y2, r2 -- that describe the
+ circle centered at (x1,y1) with radius r1, and the circle centered at (x2,y2) with radius r2, and returns True if the two circles intersect and
+ False otherwise.
+</li>
+
+<br><li><b>getInRange(x, bound1, bound2)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/AZz4yYAW-W8"></span>
+<br>
+Write the function getInRange(x, bound1, bound2) which takes 3 int or
+float values -- x, bound1, and bound2, where bound1 is not necessarily less than bound2. If x is between the two bounds, just return it unmodified.  Otherwise, if x is less than the lower bound, return the lower bound, or if x is greater than the upper bound, return the upper bound.
+For example:
+<ul>
+<li>getInRange(1, 3, 5) returns 3 (the lower bound, since 1 lies to the left of the range [3,5])</li>
+<li>getInRange(4, 3, 5) returns 4 (the original value, since 4 is in the range [3,5])</li>
+<li>getInRange(6, 3, 5) returns 5 (the upper bound, since 6 lies to the right of the range [3,5])</li>
+<li>getInRange(6, 5, 3) also returns 5 (the upper bound, since 6 lies to the right of the range [3,5])</li>
+</ul>
+</li>
+
+<br><li><b>eggCartons(eggs)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/amXjfgoOlyE"></span>
+<br>
+Write the function eggCartons(eggs) that takes a non-negative integer number of eggs, and returns the smallest integer number of
+ cartons required to hold that many eggs, where a carton may hold up to 12 eggs.
+</li>
+
+<br><li><b>pascalsTriangleValue(row, col)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/u4CXjVRCo4s"></span>
+<br>
+Write the function pascalsTriangleValue(row, col) that takes
+int values row and col, and returns the value in the given row and column of Pascal's Triangle where the triangle starts at row 0, and each row starts at column 0. If either row or col are not legal values, return None, instead of crashing.  Hint: math.factorial may be helpful!
+</li>
+
+</ol>
+
+<b>Wed Recitation</b>
+
+<ol start="6">
+
+<br><li><b>isFactor(f, n)</b><br>
+ Write the function isFactor(f, n) that takes two int values f and n, and returns True if f is a factor of n, and False otherwise. Note that
+ every integer is a factor of 0.
+</li>
+
+<br><li><b>isMultiple(m,n)</b><br>
+ Write the function isMultiple that takes two int values m and n and returns True if m is a multiple of n and False otherwise. Note that 0
+ is a multiple of every integer other than itself.  Also, you should
+ make constructive use of the isFactor function you just wrote above.
+</li>
+
+<br><li><b>distance(x1, y1, x2, y2)</b><br>
+Write the function distance(x1, y1, x2, y2) that takes four int or float values x1, y1, x2, y2 that represent the two points (x1, y1) and (x2, y2), and returns the distance between those points as a float.
+</li>
+
+<br><li><b>isLegalTriangle(s1, s2, s3)</b><br>
+Write the function isLegalTriangle(s1, s2, s3) that takes three int or float values representing the lengths of the sides of a triangle, and
+returns True if such a triangle exists and False otherwise. Note from the triangle inequality that the sum of each two sides must be
+greater than the third side, and further note that all sides of a legal triangle must be positive. Hint: how can you determine the longest side,
+and how might that help?
+</li>
+
+<br><li><b>triangleArea(s1, s2, s3)</b><br>
+Write the function triangleArea(s1, s2, s3) that takes 3 floats and
+returns the area of the triangle that has those lengths of its side.
+If no such triangle exists, return 0.  Hint:  you will probably wish to
+use <a href="https://en.wikipedia.org/wiki/Heron%27s_formula">Heron's Formula</a>.
+</li>
+
+<br><li><b>triangleAreaByCoordinates(x1, y1, x2, y2, x3, y3)</b><br>
+ Write the function triangleAreaByCoordinates(x1, y1, x2, y2, x3, y3) that takes 6 int or float values that represent the three points (x1,y1),
+ (x2,y2), and (x3,y3), and returns as a float the area of the triangle formed by those three points.  Hint: you should make constructive use
+ of the triangleArea function you just wrote above.
+</li>
+
+</ol>
+<hr>
+
+<b>Thu Lecture</b>
+
+<ol start="12">
+
+<br><li><b>lineIntersection(m1, b1, m2, b2)</b><br>
+Write the function lineIntersection(m1, b1, m2, b2) that takes four int or float values representing the 2 lines:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y = m1*x + b1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y = m2*x + b2<br>
+This function returns the x value of the point of intersection of
+the two lines. If the lines are parallel, or identical, the function should return None.
+</li>
+
+<br><li><b>threeLinesArea(m1, b1, m2, b2, m3, b3)</b><br>
+Write the function threeLinesArea(m1, b1, m2, b2, m3, b3) that takes six int or float values representing the 3 lines:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y = m1*x + b1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y = m2*x + b2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y = m3*x + b3<br>
+First find where each pair of lines intersects, then return the area of the triangle formed by connecting these three points of intersection. If no such triangle exists (if any two of the lines are parallel), return 0.
+To do this, use three helper functions: one to find where two lines intersect (which you will call three times), a second to find the distance between two points, and a third to find the area of a triangle given its side lengths.
+</li>
+
+<br><li><b>nthFibonacciNumber(n)</b><br>
+Background: The Fibonacci numbers are defined by F(n) = F(n-1) + F(n-2). There are different conventions on whether 0 is a Fibonacci
+number, and whether counting starts at n=0 or at n=1. Here, we will assume that 0 is not a Fibonacci number, and that counting starts at
+n=0, so F(0)=F(1)=1, and F(2)=2. With this in mind, write the function nthFibonacciNumber(n) that takes a non-negative int n and returns the nth
+Fibonacci number. Some test cases are provided for you. You can use 
+<a href="http://mathworld.wolfram.com/BinetsFibonacciNumberFormula.html">Binet's Fibonacci Number Formula</a> which (amazingly) uses the
+ golden ratio to compute this result, though you may have to make some small change to account for the assumptions noted above.
+</li>
+
+<br><li><b>isEvenPositiveInt(x)</b><br>
+Write the function isEvenPositiveInt(x) that takes 
+an arbitrary value x, return True if it is an integer, and it is positive, and it is even (all 3 must be True), or False otherwise. Do not crash if the value is not an integer. So, isEvenPositiveInt("yikes!") returns False (rather than crashing), and isEvenPositiveInt(123456) returns True.
+</li>
+
+<br><li><b>nearestBusStop(street)</b><br>
+Write the function nearestBusStop(street) that takes a non-negative int street number, and returns the nearest bus stop to the given street, where buses stop every 8th street, including street 0, and ties go to the lower street, so the nearest bus stop to 12th street is 8th street, and the nearest bus stop to 13 street is 16th street.
+</li>
+
+</ol>
+<hr>
+
+<b>Extra Practice</b>
+
+<ol start="17">
+
+<br><li><b>numberOfPoolBalls(rows)</b><br>
+Pool balls are arranged in rows where the first row contains 1 pool ball and each row contains 1 more pool ball than the previous row.
+Thus, for example, 3 rows contain 6 total pool balls (1+2+3).
+With this in mind,
+write the function numberOfPoolBalls(rows) that takes a non-negative int
+value, the number of rows, and returns another int value, the number of pool balls in that number of full rows. For example,
+numberOfPoolBalls(3) returns 6. We will not limit our analysis to a "rack" of 15 balls. Rather, our pool table can contain an unlimited
+number of rows. For this problem and the next, you should research
+<a href="https://en.wikipedia.org/wiki/Triangular_number">Triangular Numbers</a>.
+</li>
+
+<br><li><b>numberOfPoolBallRows(balls)</b><br>
+This problem is the inverse of the previous problem. Write the function numberOfPoolBallRows(balls) that takes a non-negative int
+number of pool balls, and returns the smallest int number of rows required for the given number of pool balls. Thus,
+numberOfPoolBallRows(6) returns 3. Note that if any balls must be in a row, then you count that row, and so numberOfPoolBallRows(7)
+returns 4 (since the 4th row must have a single ball in it).
+</li>
+
+</ol>
+</div>
+</body>
+</html>

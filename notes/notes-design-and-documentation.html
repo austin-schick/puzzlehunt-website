@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Large Project Design and Documentation
+</h1>
+<hr>
+
+<ol>
+    <li><a href="#design"><b>Design</b></a>
+    <ol>
+        <li><a href="#competitiveAnalysis"><b>Competitive Analysis</b></a></li>
+        <li><a href="#storyboarding"><b>Storyboarding</b></a></li>
+        <li><a href="#prototyping"><b>Prototyping</b></a></li>
+    </ol></li>
+    <li><a href="#documentation"><b>Documentation</b></a>
+    <ol>
+        <li><a href="#planning"><b>Structural and Algorithmic Planning</b></a></li>
+        <li><a href="#citation"><b>Citing Code</b></a></li>
+    </ol></li>
+    <li><a href="#practical"><b>Practical Concerns</b></a>
+    <ol>
+        <li><a href="#versionControl"><b>Version Control</b></a></li>
+        <li><a href="#deliverables"><b>Deliverables</b></a></li>
+    </ol>
+    </li>
+
+</ol>
+
+<hr>
+
+<ol>
+
+    <li><a name="design"></a><b>Design</b><br>
+        When you're working on a large project, you can't jump straight into coding. First, you need to determine <b>what your project should do</b>. Design is the process of purposefully planning what a project should look like, and can greatly help in guiding coding later on. We'll cover a few design methods that can help you plan your projects.<br>
+
+        <ol><br>
+            <li><a name="competitiveAnalysis"></a><b>Competitive Analysis</b><br>
+                <a href="https://en.wikipedia.org/wiki/Competitor_analysis">Competitive Analysis</a> is a method most often used in marketing, but it can also help you generate a project idea by comparing similar projects that already exist. Looking at the competition will help you identify what's already been done, which should help you identify what can make your own project unique.<br><br>
+
+                When performing a competitive analysis, the main steps are:<br>
+                <ol>
+                    <li>Decide what the main idea of your project is.</li><br>
+                    <li>Identify 2-3 competitors that have a similar idea or similar features to your project. These should all be projects that you can interactively explore.</li><br>
+                    <li>Identify 5+ dimensions or features that you can compare across the competitors. You should choose the dimensions based on variation; for example, if all of your competitor games include a pause button, it isn't interesting to compare on that dimension.</li><br>
+                    <li>Make a table of competitors x dimensions, and fill it in based on your analysis of the competitors. This can be done with numbers (1 to 10), or with qualitative descriptions (bad to good), or with anything else that makes sense based on the context.</li><br>
+                    <li>Analyze the table, looking for trends and points of interest. Then summarize which features your project will need to have and potential gaps in the market that could make your project unique.</li>
+                </ol><br>
+
+                In this class, you may wish to use our <a href="competitive-analysis-template.docx">Competitive Analysis Template</a> when performing this design method.</li><br>
+
+            <li><a name="storyboarding"></a><b>Storyboarding</b><br>
+                While Competitive Analysis can help you decide what should go into your project, <a href="https://en.wikipedia.org/wiki/Storyboard">Storyboarding</a> can help you decide what the experience of interacting with it should feel like. Storyboarding is another design method, but one focused more on the user experience than the features in the system. Telling the story of your project can answer questions about why people would use it, and what their goals with it would be.<br><br>
+
+                In drawing a storyboard, you want to focus on three main elements: the user's context, the system interaction, and the story being told. The amount of time spent on each of these three elements will vary based on the project you're developing. If you're building an app for a specific purpose, you'll want to focus on why a user would download the app, and when they would interact with it. But if you're planning on building a game, the context is less important than the interaction with the game itself.<br><br>
+
+                The best way to learn how to draw a storyboard is to see examples of storyboards. You can find general guides to them <a href="https://uxplanet.org/storyboarding-in-ux-design-b9d2e18e5fab">here</a> and <a href="http://uxmag.com/articles/book-excerpt-the-user-experience-team-of-one">here</a>. When you make your own storyboard, you might want to use our <a href="storyboard.pdf">Storyboarding Template</a> to begin.</li><br>
+
+            <li><a name="prototyping"></a><b>Prototyping</b><br>
+                Once you know what you want your project to feel like, you need to decide how to actually set up the system for user interaction. <a href="https://en.wikipedia.org/wiki/Software_prototyping">Prototyping</a> is a good way to try out several variations on a system's design without actually needing to build the whole thing. This can save you plenty of time when prototypes demonstrate clear problems that need to be fixed.<br><br>
+
+                Prototyping can be done at varying levels of fidelity. At the lowest level, you can make <a href="https://en.wikipedia.org/wiki/Paper_prototyping">paper prototypes</a> to try out different system layouts with no coding at all. At a higher level, <a href="https://en.wikipedia.org/wiki/Website_wireframe">wireframing</a> lets you add more structure to a prototype, but with a drag-and-drop interface instead of functioning code. You can also make functional prototypes with basic graphics, like a Mario game where Mario is replaced by a red rectangle. This can help you get the core functionality working without having to worry about the visual appeal.</li>
+    </ol></li><br>
+    <li><a name="documentation"></a><b>Documentation</b>
+        <ol>
+            <li><a name="planning"></a><b>Structural and Algorithmic Planning</b><br>
+            	When working on a large project, it helps to plan out how you'll organize your code before actually writing the code. This avoids time-consuming refactoring later down the road.<br><br>
+
+            	First, think about how you can separate out the different elements of your project. Is there anything that could be naturally organized as a class/object? Are there a set of functions that are naturally used together? Classes/objects and groups of functions can be moved into <b>individual files</b>, which can then be imported and called from each other. In Python, the main file is traditionally called __init__.py, while other files are named based on their purpose.<br><br>
+
+				Each file you create should be properly documented with a comment at the top explaining what that file does. In particularly large projects, you may also want to organize your files into directories based on their different purposes. Files in different directories can also be imported from each other!<br><br>
+
+<div class="python-code no-viz no-run">
+# The main file, __init__.py
+# This file runs the whole game by calling playGame
+
+# In this directory, we have a file named heroClass.py, a file named monster.py, and a folder named gui which contains the file displayGame.py
+
+import heroClass
+from monster import *
+from gui import displayGame
+
+def playGame():
+    # When we import a file normally, we have to reference that file name before
+    # the functions/classes in it
+    mainPlayer = heroClass.Hero("Fred")
+
+    # When we use from file import *, all the functions/classes from that file
+    # get imported directly into our current namespace!
+    monsters = spawnMonsters()
+
+    # We can also use from directory import file to organize files nicely
+    displayGame.runGame(mainPlayer, monsters)
+</div><br>
+
+				While planning, it also makes sense to start by identifying what the most algorithmically complex parts of the project will be. This can help you write out approaches for algorithms in pseudocode early on, so that you aren't stuck trying to code a complex algorithm from scratch near the deadline. Algorithmic plans can be fairly high-level, as they will mainly serve as a roadmap for later work. These plans (as well as your plan for file organization) should be included in your project proposal.<br><br>
+
+<div class="python-code no-viz no-run">
+#########################################################
+# Algorithmic plan for populating the field with monsters
+#########################################################
+#
+# First: generate a set of monsters with varying attack levels
+# 	- number of monsters should be determined by field size
+# 	- level should be determined by hero level at beginning: half should be at
+#     hero level, 1/4 one level above, 1/4 two levels above, and 1 five levels above
+#	- distinguish monsters based on fill color?
+#
+# Second: determine where monsters should be placed on the field
+#	- use random library to randomly place them
+#	- but weight the placement so that easier monsters mostly appear closer to the hero
+#	- non-randomly place the boss monster at the end
+#
+# Third: don't start monster movement until the gameplay starts
+#	- have a class method to pause/unpause all monsters? or put a block in timerFired?
+#########################################################
+</div><br>
+</li>
+            <li><a name="citation"></a><b>Citing Code</b><br>
+            	Using code that already exists online is a great way to make an awesome project without having to do all the work from scratch! But it's HIGHLY important to cite any code that you get from an outside source. Doing otherwise counts as plagiarism, and can also violate copyright laws in some cases.<br><br>
+
+            	Where the citation is placed varies depending on how the code is used. If you're using a whole library, citations can be included in the readme/design docs of the project, to make it clear that this is a large contribution. If you're only using a small block of code (or even a single line), citations can be included in-line instead:<br><br>
+
+<div class="python-code no-viz no-run">
+message = "Now we're thinking with colors!"
+
+# CITATION: I got the bcolors class from https://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+print(bcolors.HEADER + message + bcolors.ENDC)
+</div><br>
+
+				Also, please remember that you should always cite ALL code that you get from an external resource, and that includes the course notes! You should basically always give credit where credit is due.<br>
+            </li>
+        </ol></li><br>
+    <li><a name="practical"></a><b>Practical Concerns</b>
+        <ol>
+            <li><a name="versionControl"></a><b>Version Control</b><br>
+            	When you're working on a large project, it is almost ESSENTIAL that you regularly create backups of your work. There is absolutely nothing worse than having your computer die and losing three solid weeks of work. Additionally, you'll sometimes find that you've added a bug to your code that you know didn't exist in a previous iteration, and you may find that you want to go back to the code you had before.<br><br>
+
+            	In this class, version control can be fairly simple. We recommend that you start by storing all of your term project code in your Google Drive provided by the university, since it gives you plenty of storage space. Then, if you ever need to recover work, you can right-click on the file, go to 'Manage Versions', and grab an older version from there. Emailing code to yourself also helps you keep track of work.<br><br>
+
+            	If you want to do more advanced version control, you can use Github, which gives you fine-grained control of the edits you make to your files. But be warned: it's possible to mess up with these forms of version control and accidentally delete all your files!<br><br>
+            </li>
+            <li><a name="deliverables"></a><b>Deliverables</b><br>
+            	Working on a three-week project can be intimidating, because it's not always clear how you should start. Organizing your work into deliverables can make it easier to break up your project into achievable tasks.<br><br>
+
+            	A deliverable is basically a smaller chunk of the project, like a feature or a single page of a GUI, which you can complete separate from the rest. If you can break your project up into deliverables, you can then set yourself due dates for those deliverables separate from the due dates in the course. Setting up a calendar of deliverable due dates at the beginning of your project will help you reduce your stress and get your project done on time!<br><br>
+            </li>
+        </ol></li>
+</ol>
+</div>
+</body>
+</html>

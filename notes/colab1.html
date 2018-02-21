@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112 Spring 2018: Fundamentals of Programming and Computer Science<br>
+Colab 1 (Due Thursday 18-Jan, at 10pm)
+</h1>
+
+<hr>
+
+<ul>
+<li>This assignment is <span class="collaborative">collaborative</span>.
+That means you may work with other students enrolled in the course, and you may even help each other write code and debug. However, you must still type all of your own work, and you must fully understand the code that you submit. Even though this is collaborative, you may not directly copy any code from anyone, and you may not electronically share your code with anyone. See the syllabus for more details.</li>
+
+<li>List your collaboration partners (name and andrew id) in a comment on the first line of this file. If you collaborate with another student and do not include their name in a comment, it will be considered cheating. You may work alone if you want to, but we recommend working with others, as it generally leads to better learning.</li>
+
+<li>Be a good collaborator!  Help everyone in your group, and accept
+their help if you need it.  Don't be in a hurry to finish the problems.
+Instead, take your time and be sure that everyone in the group is
+following and understanding.  The goal is to learn, not just to finish.
+</li>
+<br>
+<li>To start:
+<ol>
+<li>Create a folder named 'week1'</li>
+<li>Download both
+    <a href="colab1.py" download>colab1.py</a>
+    and
+    <a href="cs112_s18_week1_linter.py" download>cs112_s18_week1_linter.py</a>
+    to that folder</li>
+<li>Edit colab1.py using Pyzo</li>
+<li>When you are ready, submit colab1.py to Autolab.  For this colab, you may submit up to 20 times
+(which is way more than you should require),
+but only your last submission counts.</li>
+</ol>
+</li>
+<li>Do not use strings, loops, lists, or recursion this week.</li>
+<li>Do not hardcode the test cases in your solutions.</li>
+</ul>
+
+<hr>
+
+<ol>
+
+<br><li><b>isPerfectSquare(n)</b> [15pts]<br>
+Write the function isPerfectSquare(n) that takes a possibly-non-int value, and returns True if it is an int that is a perfect square (that is, if there exists an integer m such that m**2 == n), and False otherwise.  Do not crash on non-ints nor on negative ints.
+</li>
+
+<br><li><b>perfectSquareHandler()</b> [15pts]<br>
+Write the function perfectSquareHandler() that does not take any parameters and does not return any values. Instead, it asks the user to input a number, then prints whether or not that number is a perfect square. You must use the specific prompts shown in the examples below to pass the test cases (where the bolded numbers are user input), so you should copy the prompts directly into your code to avoid typos. Of course, your program should be able to handle any integer, not just 4 and 7.<br><br>
+
+<div class="python-code no-run no-viz">
+Enter a number:<b>4</b>
+The number 4 is a perfect square
+</div>
+
+<div class="python-code no-run no-viz">
+Enter a number:<b>7</b>
+The number 7 is not a perfect square
+</div>
+</li>
+
+<br><li><b>nearestOdd(n)</b> [25pts]<br>
+Write the function nearestOdd(n) that takes an int or float n, and returns as an int value the nearest odd number to n. In the case of a tie, return the smaller odd value.
+</li>
+
+<br><li><b>rectanglesOverlap(x1, y1, w1, h1, x2, y2, w2, h2)</b> [25pts]<br>
+A rectangle can be described by its left, top, width, and height. This function takes two rectangles described this way, and returns True if the rectangles overlap at all (even if just at a point), and False otherwise.<br><br>
+
+Note: here we will represent coordinates the way they are usually represented in computer graphics, where (0,0) is at the left-top corner of the screen, and while the x-coordinate increases while you head right, the y-coordinate increases while you head down. Yes, up is down! This is quite common in computer graphics, and is how Tkinter and Brython in particular both work.
+</li>
+
+<br><li><b>getKthDigit(n, k)</b> [10pts]<br>
+ Write the function getKthDigit(n, k) that takes a possibly-negative int n and a non-negative int k, and returns the kth digit of n, starting from
+ 0, counting from the right. So:<br>
+ &nbsp;&nbsp;&nbsp;getKthDigit(789, 0) returns 9<br>
+ &nbsp;&nbsp;&nbsp;getKthDigit(789, 2) returns 7<br>
+ &nbsp;&nbsp;&nbsp;getKthDigit(789, 3) returns 0<br>
+ &nbsp;&nbsp;&nbsp;getKthDigit(-789, 0) returns 9
+</li>
+
+<br><li><b>setKthDigit(n, k, d=0)</b> [10pts]<br>
+Write the function setKthDigit(n, k, d=0) that takes three integers -- n, k, and d -- where n is a possibly-negative int, k is a non-negative int, and d is a non-negative single digit (between 0 and 9 inclusive) with a default value of 0. This function returns the number n but with the kth digit replaced with d. Counting starts at 0 and goes right-to-left, so the 0th digit is the rightmost digit. For example:<br>
+&nbsp;&nbsp;&nbsp;setKthDigit(468, 0, 1) returns 461<br>
+&nbsp;&nbsp;&nbsp;setKthDigit(468, 1, 1) returns 418<br>
+&nbsp;&nbsp;&nbsp;setKthDigit(468, 2, 1) returns 168<br>
+&nbsp;&nbsp;&nbsp;setKthDigit(468, 3, 1) returns 1468<br>
+&nbsp;&nbsp;&nbsp;setKthDigit(468, 1) returns 408
+
+</li>
+</ol>
+</div>
+<hr>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Recursion (Getting Started)
+</h1>
+<hr>
+
+<ol>
+
+<li><a name="digitSum"></a><b>digitSum(n)</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/Dt7Ja3_k7ds"></span><br>
+<div class="python-code">
+def digitSum(n):
+    if (n < 0): return digitSum(abs(n))
+    elif (n < 10): return n
+    else: return (n%10) + digitSum(n//10)
+
+assert(digitSum(-12345) == 1+2+3+4+5)
+print("ok!")
+</div>
+
+</li><br><li><a name="fib"></a><b>fib(n)</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/wgiWXU7-qM4"></span><br>
+<div class="python-code">
+def fib(n):
+    if (n < 2): return 1
+    else: return fib(n-1) + fib(n-2)
+
+assert([fib(n) for n in range(10)] == [1, 1, 2, 3, 5, 8, 13, 21, 34, 55])
+print("ok!")
+</div>
+
+</li><br><li><a name="gcd"></a><b>gcd(x, y)</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/E9aIGM_XLyE"></span><br>
+<div class="python-code">
+def gcd(x, y):
+    if (y == 0): return x
+    else: return gcd(y, x%y)
+
+assert(gcd(2**5 * 3**4 * 5**2, 2**3 * 3**8 * 7) == (2**3 * 3**4))
+print("ok!")
+</div>
+
+</li><br><li><a name="factorial"></a><b>factorial(n)</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/yZOwAPBHGCA"></span><br>
+<div class="python-code">
+def factorial(n):
+    if (n == 0): return 1
+    else: return n * factorial(n-1)
+
+assert(factorial(5) == 5*4*3*2*1)
+print("ok!")
+</div>
+
+</li><br><li><a name="vowelCount"></a><b>vowelCount(s)</b></a>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/1LfhEayPiSM"></span><br>
+<div class="python-code">
+def vowelCount(s):
+    if (s == ""): return 0
+    else:
+        thisCount = 1 if (s[0].upper() in "AEIOU") else 0
+        restCount = vowelCount(s[1:])
+        return thisCount + restCount
+
+assert(vowelCount("I am reeeallly happy!!! :-)") == 7)
+print("ok!")
+</div>
+
+<br><b>Once again, dividing in halves:</b><br>
+<div class="python-code">
+def vowelCount(s):
+    if (s == ""): return 0
+    elif (len(s) == 1): return 1 if (s[0].upper() in "AEIOU") else 0
+    else:
+        mid = len(s)//2 
+        return vowelCount(s[:mid]) + vowelCount(s[mid:])
+
+assert(vowelCount("I am reeeallly happy!!! :-)") == 7)
+print("ok!")
+</div>
+</li>
+
+</li><br><li><a name="vowelCount"></a><b>Base Case Blues</b></a>
+<ol>
+<li><b>The problem:</b><br>
+<div class="python-code">
+def vowelCount(s):
+    # same as above...
+    if (s == ""): return 0
+    else:
+        thisCount = 1 if (s[0].upper() in "AEIOU") else 0
+        restCount = vowelCount(s[1:])
+        return thisCount + restCount
+
+s = "This works!"
+print(vowelCount(s)) # 2
+L = list(s)
+print(vowelCount(L)) # crash! IndexError: list index out of range
+</div>
+</li>
+<br><li><b>The solution:</b><br>
+<div class="python-code">
+def vowelCount(s):
+    # notice the change...
+    if (len(s) == 0): return 0
+    else:
+        thisCount = 1 if (s[0].upper() in "AEIOU") else 0
+        restCount = vowelCount(s[1:])
+        return thisCount + restCount
+
+s = "This works!"
+print(vowelCount(s)) # 2
+L = list(s)
+print(vowelCount(L)) # 2 (now lists work, too!)
+</div>
+</li>
+<br><li><b>The problem (once again):</b><br>
+<div class="python-code">
+def mySum(L):
+    # duplicating built-in sum function recursively, but with a problem...
+    if (L == [ ]): return 0
+    else: return L[0] + mySum(L[1:])
+
+print(mySum([0,1,2,3])) # 6 (this works)
+print(mySum(range(4)))  # crash!  IndexError: range object index out of range
+</div>
+</li>
+<br><li><b>The solution:</b><br>
+<div class="python-code">
+def mySum(L):
+    # duplicating built-in sum function recursively, now fixed...
+    if (len(L) == 0): return 0
+    else: return L[0] + mySum(L[1:])
+
+print(mySum([0,1,2,3])) # 6 (this works)
+print(mySum(range(4)))  # 6 (this works, too!)
+</div>
+</li>
+
+</ol>
+<hr>
+</div>
+</body>
+</html>

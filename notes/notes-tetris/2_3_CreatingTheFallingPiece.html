@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html><head><title>Tetris for Intro/Intermediate Programmers (Fall 2017 update)</title></head>
+<body bgcolor="#ADDEFA">
+
+<hr color="#e88100">
+<font face="Arial"><b>Tetris for Intro/Intermediate Programmers (Fall 2017 update)<br>
+Step 3:&nbsp; Creating and Drawing the fallingPiece</b></font>
+
+<hr color="#e88100">
+<ul>
+	<li>
+	<p align="left">The goal for this step is to select a random falling piece 
+	in a random color, to position it in the top-middle of the board, and draw 
+	it over the board.&nbsp; Note that the "falling piece" will not be falling 
+	after this step.&nbsp; That comes later.&nbsp; For now, it will remain at 
+	the top-middle of the board.&nbsp; Also, for testing purposes, we will add 
+	temporary code that changes the falling piece whenever any key is pressed.&nbsp; 
+	This code will be removed after this step.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Recall
+that the falling piece is not part of the board, but drawn over the
+board.&nbsp; It becomes part of the board when it can no longer fall
+and we place it on the board, which will not happen until several steps
+from now in our design process.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Defining the piece types:<br>
+	In this design, the falling piece is represented by a 2-dimensional list of 
+	booleans, indicating whether the given cell is or is not painted in this 
+	piece.&nbsp; For example, here is the definition of an S piece:<br><font color="#800000">
+<pre>    sPiece = [
+        [ False,  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span> ],
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span>, False ]
+    ]</pre></font>
+	This defines a 2-dimensional boolean list with 2 rows and 3 columns.&nbsp; 
+	The "True" values have been highlighted to make it clear that they form an 
+	S 
+	pattern.&nbsp; This is how we know which cells are 
+	part of the falling piece.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Here are all the piece types, with the "True" values 
+	highlighted to make the shapes easier to discern (note that they are 
+	provided in their standard configurations -- how they should enter the board 
+	from the top -- so, for example, the T piece is upside down):</p>
+<pre><font color="#800000">    # Seven "standard" pieces (tetrominoes)
+
+    iPiece = [
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span> ]
+    ]
+
+    jPiece = [
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>, False, False ],
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span> ]
+    ]
+
+    lPiece = [
+        [ False, False,  <span style="background-color: rgb(192, 192, 192);">True</span> ],
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span> ]
+    ]
+
+    oPiece = [
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span> ],
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span> ]
+    ]
+
+    sPiece = [
+        [ False,  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span> ],
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span>, False ]
+    ]
+
+    tPiece = [
+        [ False,  <span style="background-color: rgb(192, 192, 192);">True</span>, False ],
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span> ]
+    ]
+
+    zPiece = [
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span>, False ],
+        [ False,  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span> ]
+    ]</font></pre>
+	</li>
+	<li>
+	<p align="left">For this design, we need to place all 7 of these piece types 
+	into a single list, tetrisPieces.&nbsp; That will be a list of 
+	2-dimensional lists, so it is in fact a 3-dimensional list!&nbsp; Here it 
+	is:<br><font color="#800000">
+<pre>    tetrisPieces = [ iPiece, jPiece, lPiece, oPiece, sPiece, tPiece, zPiece ]</pre>
+	</font></p></li>
+	<li>
+	<p align="left">We also need to define colors corresponding to each of these 
+	pieces, and place them in a list of the same size, which we do as such:<br><font color="#800000">
+<pre>    tetrisPieceColors = [ "red", "yellow", "magenta", "pink", "cyan", "green", "orange" ]</pre>
+	</font></p></li>
+	<li>
+	<p align="left">Store these values in the data fields:<br>We
+should define the pieces and the piece colors in our init function, and
+then we should also store them in the data object, with this code:<br><font color="#800000">
+<pre>    data.tetrisPieces = tetrisPieces
+    data.tetrisPieceColors = tetrisPieceColors</pre>
+	</font></p></li>
+
+	<li><p align="left">Writing newFallingPiece:<br>
+The newFallingPiece function (which takes one parameter, data, and returns nothing) is responsible for randomly choosing a new
+piece, setting its color, and positioning it in the middle of the top
+row.&nbsp; The first step is to randomly choose an index from the
+tetrisPieces list. We haven't learned how to use random numbers yet, but the following lines of code will do it for us.<br><font color="#800000">
+<pre>    import random
+    randomIndex = random.randint(0, len(data.tetrisPieces) - 1)</pre>
+    </font>
+
+    Then we set the
+data values holding the fallingPiece and the fallingPieceColor
+to the indexed elements from the lists of tetrisPieces and
+tetrisPieceColors.<br>
+	<br>
+	Next, we set the top row of the falling piece (fallingPieceRow) to the 
+	top row of the board (that is, to zero).&nbsp; And then we set the left column of the new falling piece 
+	(fallingPieceCol).&nbsp; As we want 
+	the piece to emerge at the top-middle of the board, we might set this to the 
+	center, or&nbsp;cols//2.&nbsp; However, this will place the new falling piece 
+	a bit off to the right, since its full width would extend beyond the middle.&nbsp; 
+	To compensate for this fact, we subtract half the width of the falling 
+	piece, or&nbsp;fallingPieceCols//2, from the middle of the board<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Drawing the falling piece:<br>
+	After calling drawBoard, you should then call drawFallingPiece, so the falling piece is drawn <span style="font-style: italic;">over the board</span>
+(in this way, to the user it looks like the falling piece is on the
+board, but in reality it is stored separately and drawn
+separately).&nbsp; To draw the falling piece (in the drawFallingPiece
+function, which takes both canvas and data), we iterate over each cell in the fallingPiece, and if the
+value of that cell is&nbsp;True, then we should draw it reusing the
+same drawCell function that drawBoard uses, but in the color of the
+fallingPiece (rather than the color stored in the board for that row
+and column).&nbsp; However, we have to add the offset of the left-top
+row and column (that is,&nbsp;fallingPieceRow and&nbsp;fallingPieceCol)
+so that the fallingPiece is properly positioned on the board.
+Also, note that this step requires that we add an additional parameter
+to the drawCell function -- the color to fill the cell.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Initial falling piece:<br>
+	We must add one line to our init function to select the first falling piece of 
+	the game (by calling the newFallingPiece function we just wrote).<br>
+	&nbsp;</p></li>
+	<li>
+	<p align="left">Temporary test code:<br>
+	As noted above, for testing purposes, we will add temporary code that 
+	changes the falling piece whenever any key is pressed.&nbsp; This code will 
+	be removed after this step.&nbsp; This involves the following simple key 
+	event handler:<br><font color="#800000">
+<pre>    def keyPressed(event, data):
+        # for now, for testing purposes, just choose a new falling piece
+        # whenever ANY key is pressed!
+        newFallingPiece(data)</pre>
+	</font></p></li>
+
+<li>At the end of this stage, your Tetris board should be able to do this:<br><br>
+	<img src="pix/step-3.gif" border="0" width="250">
+</li>
+</ul>
+
+<hr color="#e88100">
+<table style="border-collapse: collapse;" id="table2" border="0" cellpadding="0" width="100%">
+	<tbody><tr>
+		<td width="33%">&nbsp;</td>
+		<td width="33%">
+		<p align="center">
+<a href="2_2_CreatingTheBoard.html"><img src="pix/previous.gif" border="0" height="15" width="73"></a>
+<a href="TetrisForIntroIntermediateProgrammers.html"><img src="pix/home.gif" border="0" height="16" width="19"></a>
+<a href="2_4_MovingTheFallingPiece.html"><img src="pix/next.gif" border="0" height="16" width="73"></a></p></td>
+		<td width="33%">
+		<p align="right"><font face="Arial" size="2">David Kosbie<br>
+Carnegie Mellon University<br>
+<a href="mailto:koz@cmu.edu">koz@cmu.edu</a></font></p></td>
+	</tr>
+</tbody></table>
+
+<hr color="#e88100">
+
+</body></html>

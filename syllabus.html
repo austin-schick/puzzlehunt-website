@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<head>
+  <title>15-112 Syllabus (Spring 18)</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/112.css">
+  <link rel="stylesheet" type="text/css" href="css/112-highlight-style.css">
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <script src="js/highlight.pack.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script id="112-script" src="js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="index.html">Home</a>
+<br><br><a target="_self" href="syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="schedule.html">Schedule</a>
+<br><br><a target="_self" href="gallery.html">Gallery</a>
+<br><br><a target="_self" href="staff.html">Staff</a>
+<br><br><a target="_self" href="piazza.html">Piazza</a>
+<br><br><a target="_self" href="autolab.html">Autolab</a>
+<br><br><a target="_blank" href="oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112 Syllabus <br> Spring 2018
+</h1>
+
+<div>
+<ol>
+<li><b><a href="#Overview">Overview</a></b></li>
+<li><b><a href="#Resources">Resources</a></b></li>
+<li><b><a href="#Expectations">Expectations</a></b></li>
+<li><b><a href="#Policies">Policies</a></b></li>
+</ol>
+<table>
+<tbody>
+<tr class="color3" align="center"><td colspan=2><b><a name="Overview"></a>Overview</b></td></tr>
+<tr class="color1">
+<td> <b>Previous<br>Versions:</b></td>
+<td>
+Previous versions of 15-112/15-110/15-100:<br>
+<a href="http://www.krivers.net/15112-f17/">F17</a>,
+<a href="http://www.kosbie.net/cmu/spring-17/15-112/index-s17.html">S17</a>,
+<a href="http://www.kosbie.net/cmu/fall-16/15-112/">F16</a>,
+<a href="http://www.kosbie.net/cmu/spring-16/15-112/">S16</a>,
+<a href="http://www.kosbie.net/cmu/fall-15/15-112/">F15</a>,
+<a href="http://www.kosbie.net/cmu/spring-15/15-112/">S15</a>,
+<a href="http://www.kosbie.net/cmu/fall-14/15-112/">F14</a>,
+<a href="http://www.kosbie.net/cmu/spring-14/15-112/">S14</a>,
+<a href="http://www.kosbie.net/cmu/fall-13/15-112/">F13</a>,
+<a href="http://www.kosbie.net/cmu/spring-13/15-112/">S13</a>,
+<a href="http://www.kosbie.net/cmu/fall-12/15-112/">F12</a>,
+<a href="http://www.kosbie.net/cmu/summer-12/15-112/">M12</a>,
+<a href="http://www.kosbie.net/cmu/spring-12/15-112/">S12</a>,
+<a href="http://www.kosbie.net/cmu/fall-11/15-112/">F11</a>,
+<a href="http://www.kosbie.net/cmu/spring-11/15-110/">S11</a>,
+<a href="http://www.kosbie.net/cmu/fall-10/15-110/">F10</a>,
+<a href="http://www.kosbie.net/cmu/spring-10/15-110/">S10</a>,
+<a href="http://www.kosbie.net/cmu/fall-09/15-110/">F09</a>, 
+<a href="http://www.kosbie.net/cmu/summer-09/15-100/">APEA-09</a>,
+<a href="http://www.kosbie.net/cmu/spring-09/15-100/">S09</a>,
+<a href="http://www.kosbie.net/cmu/fall-08/15-100/">F08</a>,
+<a href="http://www.kosbie.net/cmu/summer-08/15-100/">APEA-08</a>,
+<a href="http://www.kosbie.net/cmu/spring-08/15-100/">S08</a>,
+<a href="http://www.kosbie.net/cmu/fall-07/15-100/">F07</a>
+</td>
+</tr>
+
+<tr class="color2">
+<td><b>Official Description</b></td>
+<td>
+  A technical introduction to the fundamentals of programming with an emphasis 
+  on producing clear, robust, and reasonably efficient code using top-down 
+  design, informal analysis, and effective testing and debugging. Starting 
+  from first principles, we will cover a large subset of the Python 
+  programming language, including its standard libraries and programming 
+  paradigms. We will also target numerous deployment scenarios, including 
+  standalone programs, shell scripts, and web-based applications. This course 
+  assumes no prior programming experience. Even so, it is a fast-paced and 
+  rigorous preparation for 15-122. Students seeking a more gentle introduction 
+  to computer science should consider first taking 15-110. NOTE: students must 
+  achieve a C or better in order to use this course to satisfy the 
+  pre-requisite for any subsequent Computer Science course.
+</td>
+</tr>
+
+<tr class="color1">
+<td><b>Unofficial Description</b></td>
+<td>
+  This course is designed to help you learn how read, write, design, and debug Python programs. Towards that end, you will spend most of the time in the course developing programming as a skill by learning about various programming constructs and techniques and by constantly practicing with code.<br><br>
+
+  Students who take 15-112 generally fall into one of two categories. First, you might be a CS major or a student in another technical major who needs to take a set of CS classes to fulfill requirements. 15-112 will prepare you for the technical challenge of those courses by helping you develop a robust understanding for how to work with code; this skill will be essential in future courses. Alternatively, you might want to learn how to program in depth, but then have no intention of taking further CS courses. For you, 15-112 will help you learn that essential skill, and will also introduce you to some of the big ideas in computer science so that you can bring new ideas back to your own field of study.<br><br>
+
+  In this course, you will primarily do work through completing programming assignments either individually or collaboratively; these assignments will help you develop and practice your coding skills. You will also be assessed with a set of quizzes and exams, to help you measure your understanding of the class's various topics. We will teach you primarily through interactive lectures and recitations, where we will demonstrate how to code using instructions, examples, and live coding. At the end of the semester, you'll demonstrate your mastery of the course's topics by working on a 3-4 week term project, where you can develop and code a project of your own design, based on your own interests.
+</td>
+</tr>
+
+<tr class="color2">
+<td><b>Learning Objectives</b></td>
+<td>At the end of the course, students should be able to:<br><br>
+<ul>
+  <li>Write clear, robust, and efficient code in Python using:</li>
+  <ul>
+    <li>sequential, conditional, and loop statements</li>
+    <li>strings, lists, tuples, sets, and dictionaries</li>
+    <li>objects and classes</li>
+    <li>recursive approaches</li>
+    <li>graphics and interaction</li>
+  </ul><br>
+
+  <li>Develop programs to effectively solve medium-sized tasks by:</li>
+  <ul>
+    <li>employing modular, top-down design in program construction</li>
+    <li>demonstrating an effective programming style based on established standards, practices, and guidelines</li>
+    <li>proactively creating and writing test cases to test and debug code</li>
+    <li>applying computational problem-solving skills to new problems, especially in the student's home academic discipline</li>
+    <li>explaining and analyzing the efficiency of algorithms, particularly by predicting the Big-O running time of small pieces of code</li>
+  </ul><br>
+
+  <li>Describe the difference between programming and computer science by:</li>
+  <ul>
+    <li>defining each and explaining where they are used</li>
+    <li>identifying some of the big ideas in computer science</li>
+    <li>recommending how programming could be applied to their core field of study or an interest area</li>
+  </ul><br>
+
+  <li>Design and write a substantial (500-1500 line) program in Python to implement a project of their choosing over three weeks</li>
+</ul>
+</td>
+</tr>
+
+<tr class="color1">
+<td> <b>Locations and Times</b></td>
+<td>
+<b>Note:</b> Friday labs take place in the Gates computer clusters, not the listed recitation rooms.<br>
+The clusters can be found on the 5th floor of Gates.<br><br>
+<table width="100%" class="color2">
+<tbody>
+<tr align="center">
+  <td> &nbsp;</td>
+  <td><b>Days</b></td>
+  <td><b>Lecturer / TA's</b></td>
+  <td><b>Time</b></td>
+  <td><b>Room</b></td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>Lecture 1</b></td>
+  <td><b>TR</b></td>
+  <td align="left"><b>Kelly Rivers</b></td>
+  <td><b>10:30am - 11:50am</b></td>
+  <td><b>DH 2210</b></td>
+</tr>
+
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section A/J</b></td>
+  <td>WF</td>
+  <td align="left">Jason (jasonh1) and Justyn (oweijin) and Matt (ymkong)</td>
+  <td>8:30am - 9:20am</td>
+  <td>WEH 5320</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section B</b></td>
+  <td>WF</td>
+  <td align="left">Lizzy (ethrashe) and Nick (nviggian) and Roman (rkaufman)</td>
+  <td>9:30am - 10:20am</td>
+  <td>DH 1217</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section C</b></td>
+  <td>WF</td>
+  <td align="left">Kamyar (kghiam) and Sanjna (sbhartiy) and Yongyi (yongyiz)</td>
+  <td>10:30am - 11:20am</td>
+  <td>PH A22</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section D</b></td>
+  <td>WF</td>
+  <td align="left">Alex (yuzhes) and Ike (aykilinc) and Olly (oweiss)</td>
+  <td>11:30am - 12:20pm</td>
+  <td>WEH 5312</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section E</b></td>
+  <td>WF</td>
+  <td align="left">Mina (mnowrooz) and Nick (nawilson)</td>
+  <td>12:30pm - 1:20pm</td>
+  <td>WEH 5320</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section F</b></td>
+  <td>WF</td>
+  <td align="left">Apoorva (ahavanur) and Bulut (ybb) and Fletcher (fmarsh)</td>
+  <td>1:30pm - 2:20pm</td>
+  <td>WEH 5320</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section G</b></td>
+  <td>WF</td>
+  <td align="left">Jason (jxgong) and Madeline (mbgardne) and Pranathi (plocula)</td>
+  <td>2:30pm - 3:20pm</td>
+  <td>DH 1117</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section H</b></td>
+  <td>WF</td>
+  <td align="left">Cathy (mengyinf) and Eugene (eyluo) and Nitya (nraju)</td>
+  <td>3:30pm - 4:20pm</td>
+  <td>DH 1217</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section I</b></td>
+  <td>WF</td>
+  <td align="left">Anne (asilbaug) and Habiba (hshalaby) and Henry (hnelson1)</td>
+  <td>4:30pm - 5:20pm</td>
+  <td>DH 2105</td>
+</tr>
+
+
+
+<tr align="center">
+  <td align="left"><b>Lecture 2</b></td>
+  <td><b>TR</b></td>
+  <td align="left"><b>Martin Carlisle</b></td>
+  <td><b>1:30pm - 2:50pm</b></td>
+  <td><b>DH 2210</b></td>
+</tr>
+
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section A/J</b></td>
+  <td>WF</td>
+  <td align="left">Jason (jasonh1) and Justyn (oweijin) and Matt (ymkong)</td>
+  <td>8:30am - 9:20am</td>
+  <td>WEH 5320</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section K</b></td>
+  <td>WF</td>
+  <td align="left">Austin (aschick) and Judy (judyz)</td>
+  <td>9:30am - 10:20am</td>
+  <td>DH 2122</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section L</b></td>
+  <td>WF</td>
+  <td align="left">Ramgopal (ramgopav) and Rishabh (rishabhc) and Xinhui (xinhuig)</td>
+  <td>10:30am - 11:20am</td>
+  <td>PH 226C</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section M</b></td>
+  <td>WF</td>
+  <td align="left">Ambika (ambikac) and Vishal (vbaskar)</td>
+  <td>11:30am - 12:20pm</td>
+  <td>WEH 5310</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section N</b></td>
+  <td>WF</td>
+  <td align="left">Andrew (aschreff) and Nanaki (nanakis) and Rahul (raahuja)</td>
+  <td>12:30pm - 1:20pm</td>
+  <td>DH 1209</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section O</b></td>
+  <td>WF</td>
+  <td align="left">Lisanne (ldegroot) and Raunak (raunaksg) and Tian (cowarang)</td>
+  <td><b>3:30pm - 4:20pm</b></td>
+  <td>CFA 102</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section P</b></td>
+  <td>WF</td>
+  <td align="left">Kyle (kdchin) and Omkar (ouk)</td>
+  <td><b>1:30pm - 2:20pm</b></td>
+  <td>DH 1117</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section Q</b></td>
+  <td>WF</td>
+  <td align="left">Andrea (arestrad) and Eric (eclinch)</td>
+  <td><b>2:30pm - 3:20pm</b></td>
+  <td>Baker Hall 140C</td>
+</tr>
+
+<tr align="center">
+  <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;Section R</b></td>
+  <td>WF</td>
+  <td align="left">Amy (agwu) and Doug (dzq)</td>
+  <td>4:30pm - 5:20pm</td>
+  <td>WEH 5302</td>
+</tr>
+</tbody>
+</table>
+<br>
+</td>
+</tr>
+
+<tr class="color2">
+<td><b>Topic List<br>and Schedule</b></td>
+<td>
+See the topic list and schedule <a target="_self" href="schedule.html">here</a>
+(includes schedule, notes, video mini-lectures, homeworks, quizzes, and tests).
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<table>
+<tbody>
+<tr class="color3" align="center"><td colspan=2><b><a name="Resources"></a>Resources</b></td></tr>
+<tr class="color1">
+<td><b>Course Resources</b></td>
+<td>
+  15-112 can be an intense course, but it becomes <b>much</b> more manageable if you use the course resources. These resources include:<br>
+  <ul>
+    <li><b>Office Hours</b>: Office hours let you ask questions to TAs and professors directly, and can help you understand concepts and debug programs that you're struggling with alone. Past students swear by office hours as the resource that most helped them pass the course!</li>
+    <li><b>Piazza</b>: Piazza can be used to ask quick questions and receive quick responses without attending office hours in person. Note that we do not make student posts on Piazza public; please only post private questions to the instructors.</li>
+    <li><b>Large Group Sessions</b>: TAs run large group sessions to provide more structured review for quizzes and lecture material. These are offered weekly at a regular time.</li>
+    <li><b>Small Group Sessions</b>: Recitation TAs offer small group sessions to go over personalized material with groups of 2-6 students. These sessions are excellent for students who are struggling and need more individual attention.</li>
+    <li><b>Tutoring</b>: Academic Development offers walk-in tutoring for 15-112. This is a good resource for students who want one-on-one tutoring outside of the course.</li>
+  </ul>
+</td>
+</tr>
+<tr class="color2">
+<td><b>Office Hours</b></td>
+<td>
+<b>Instructor Office Hours:</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp; Kelly Rivers (krivers): GHC 4109, Tue/Thu noon to 1:30pm<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Martin Carlisle (mcarlisl): GHC 4003, Fri 3-4pm and by appointment<br>
+<br>
+<b>Head TAs:</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp; Eddie Dryer (edryer) and Tara Stentz (tstentz): by appointment<br>
+<br>
+<b>Associate Head TAs:</b><br>
+&nbsp;&nbsp;&nbsp;&nbsp; Abhiram Gogate (angogate), Arman Hezarkhani (armanh), and Chaya Wurman (cwurman): by appointment<br>
+
+<br>
+<b>TA Office Hours</b>
+<table>
+<tbody>
+<tr align="center">
+<td width="100">Mon</td>
+<td width="100">Tue</td>
+<td width="100">Wed</td>
+<td width="100">Thu</td>
+<td width="100">Fri</td>
+<td width="100">Sat</td>
+<td width="100">Sun</td>
+</tr>
+<tr align="center">
+<td>6pm-8pm</td>
+<td>6pm-8pm</td>
+<td>6pm-10pm</td>
+<td>6pm-10pm</td>
+<td>6pm-10pm</td>
+<td>10am-8pm</td>
+<td>2pm-8pm</td>
+</tr>
+<tr align="center">
+<td colspan="7">GHC 5th Floor Teaching Commons (and/or nearby clusters)</td>
+</tr>
+</tbody>
+</table>
+
+
+<br><b>Piazza Virtual Office Hours</b>:<br>
+&nbsp;&nbsp; * Daily (7 days/wk):&nbsp; 5pm - 11pm (on most days)<br>
+<br>
+
+<b>Additional Optional Sessions</b><br>
+<table>
+<tbody>
+<tr align="center">
+<td width="175">Sun<br>WEH 7500<br>5:30pm-7pm</td>
+<td width="175">Mon<br>DH 1112<br>7pm-8:30pm</td>
+<td width="175">Tue<br>GHC 4215<br>4:30pm-6pm</td>
+</tr>
+<tr align="center">
+<td>Quiz Review</td>
+<td>Quiz Review Reprise</td>
+<td>Lecture Review</td>
+</tr>
+</tbody>
+</table>
+
+<br><b>Academic Development Walk-in Tutoring</b><br>
+This is a great resource provided not by 15-112 but rather by
+Academic Development in support of 15-112.
+<ul>
+<li>Hours TBD</li>
+</ul>
+
+</td>
+</tr>
+
+<tr class="color1">
+<td><b>Required<br>Software:</b> 
+</td>
+<td>
+Every required software package we use is available for free on the web.  This includes:
+<ul>
+<li><b>Python version 3.x (3.4 or later)</b>, which can be freely downloaded from
+<a href="http://www.python.org/">python.org</a>.</li>
+<li>
+<a href="http://www.pyzo.org/">Pyzo</a>, a free IDE (code editor) for Python. </li>
+<li>
+We may also use <a href="http://www.brython.info/">Brython</a>, which is a version of Python that runs in web browsers.</li>
+</ul>
+</td>
+</tr>
+
+<tr class="color2">
+<td><b>Optional<br>Textbooks<br>and<br>Online<br>Resources:</b></td>
+<td>
+<b>Note that all textbooks/resources are optional. There are no required textbooks for this course.</b>
+<ul>
+  <li>Python Shells (in the browser)
+    <ul>
+    <li><a href="http://repl.it/languages/Python3">repl.it</a></li>
+    <li><a href="https://www.tutorialspoint.com/execute_python3_online.php">codingground</a></li>
+    <li><a href="https://brython.info/tests/editor.html?lang=en">brython</a></li>
+    <li><a href="http://pythontutor.com/">pythontutor.com</a> (step-by-step tracing with visualization)</li>
+    </ul>
+  </li>
+  <li>Python Books
+  <ul>
+    <li><a href="http://interactivepython.org/courselib/static/thinkcspy/index.html">How to Think Like a 
+    Computer Scientist (Interactive Edition)</a></li>
+    <li><a href="https://books.trinket.io/pfe/">Python for Everyone</a>
+        (or see <a href="http://www.pythonlearn.com/book.php">here</a>)</li>
+    <li>Official Python Books
+    <ul>
+      <li><a href="http://docs.python.org/3/tutorial/">The Python Tutorial</a></li>
+      <li><a href="http://docs.python.org/3/reference/index.html">The Python Language Reference</a></li>
+      <li><a href="http://docs.python.org/3/library/index.html">The Python Standard Library</a></li>
+    </ul></li>
+    <li>Python 2 Books
+    <ul>
+      <li><a href="http://www.openbookproject.net/thinkcs/python/english2e/">How to Think Like a Computer Scientist</a> (Python 2, non-interactive)</li>
+      <li><a href="http://www.diveintopython.net/toc/index.html">Dive Into Python</a> (Python 2)</li>
+    </ul></li>
+  </ul></li>
+  <li>Python Courses and/or video lectures
+  <ul>
+    <li><a href="http://www.codecademy.com">Code Academy</a></li>
+    <li><a href="https://www.khanacademy.org/computing/cs/programming">
+        Khan Academy (Javascript, not Python, but nice)</a></li>
+    <li><a href="https://developers.google.com/edu/python/?csw=1">Google's Python Class</a></li>
+  </ul></li>
+  <li>Python Exercises<ul>
+    <li><a href="http://projecteuler.net/">Project Euler</a></li>
+    <li><a href="http://codingbat.com/">codingbat</a>,
+        <a href="http://www.pyschools.com/">pyschools</a>,
+        <a href="http://progzoo.net/wiki/Python:Tutorials">progzoo</a>,
+        <a href="http://trypython.org">trypython</a>,
+        <a href="http://programmingpraxis.com/">programmingpraxis.com</a>,
+        <a href="http://www.pythonchallenge.com/about.php">The Python Challenge</a>,
+        <a href="http://cemclinux1.math.uwaterloo.ca/%7Ecscircles/wordpress/">U of Waterloo's Computer Science Circles</a>
+    </li>
+  </ul></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<table>
+<tbody>
+<tr class="color3" align="center"><td colspan=2><b><a name="Expectations"></a>Expectations</b></td></tr>
+<tr class="color1">
+<td><b>Assignments:</b></td>
+<td>
+<b>Solo Homeworks:</b><br>
+Solo homeworks are generally released on Mondays and are due on Saturdays at 8pm. These homeworks are used primarily to assess learning. As the name implies, these homeworks should not be done collaboratively; see the collaboration policy for more details.
+
+<br><br>These assignments contain a mix of coding exercises (reading, debugging, and writing code) and written exercises. They generally assess the material taught the week they are released, and take several hours to complete. We strongly encourage you to start the homeworks early- Tuesday after lecture is best, and Thursday at the latest!
+
+<br><br>Programming assignments will be graded based on style (modularity, effective use of data abstraction, readability, commenting, etc.) and functionality (correctness and efficiency of the program on all possible test inputs). Your code should be properly annotated with comments that are well-placed, concise, and informative. Your assignments will be graded by your TA, by automated graders, and at times by your instructor.
+
+<br><br><b>Collaborative Labs (Co-Labs):</b><br>
+Collaborative labs are generally released on Mondays and are due Thursday by 10pm. These colabs are primarily used to support learning. For colab assignments you may work with other students; you should work with these students to solve the problems, though you may not copy work from them. You must include the names of all students you collaborate with in a comment at the top of your submission. See the collaboration policy for more details.
+
+<br><br>Collaborative labs contain exercises like those in the solo homeworks, but in simpler forms. They generally contain material taught the week they are released.
+
+<br><br><b>Learning Checks:</b><br>
+Checks occur prior to lectures, and can be done individually or collaboratively. Checks will always be graded on <b>participation</b>, not accuracy; these checks are done to help you learn, not to assess your knowledge. Checks are released Sunday and are due by Tuesday at 10am.
+
+<br><br>Checks may include required reading or videos, and occasionally short exercises. These checks may sometimes contain content the class has not covered yet as a pretest, but again, accuracy will not be measured in grading.
+
+<br><br><b>Attendance</b><br>
+We will take attendance during labs, recitation, and lecture, to ensure that all students are attending and learning. You must be physically in the classroom during your scheduled lecture/recitation to be marked as attending. Of course, you should also be engaging with the material and focusing on learning!<br><br>
+
+Attendance in lectures will be taken during interactive activities that are also used for learning. These activities will often require using a laptop of phone. If you do not have a laptop, tablet, or internet-accessible phone, please contact the course instructors so that you can be excused from lecture attendance.<br><br>
+
+If you have to miss lecture or recitation due to a university-approved event, please contact the relevant lecture instructor or recitation TA <b>before</b> the class time to be excused from lecture/recitation that day.</td>
+</tr>
+
+<tr class="color2">
+<td><b>Exams<br>and<br>Quizzes:</b></td>
+<td><b>Final Exam:</b><br>
+There will be a standard 3-hour final exam during the final exam period at the end of the semester. This exam will cover material from the entire semester.
+
+<br><br><b>Midterm Tests:</b><br>
+There will be two midterm exams given in class as noted in the course schedule. Each exam will cover material presented in the preceding weeks (with Midterm 2 focusing mostly on material not covered in Midterm 1).
+
+<br><br><b>Quizzes:</b><br>
+Quizzes will be given about once weekly, generally at the beginning of lecture on Tuesday. Quizzes generally cover material from the previous week and the previous homework. Quizzes are designed to be extra hard, to demonstrate where additional study is needed.
+
+<br><br><b>Extended-Time Policy:</b><br>
+We gladly accommodate students with university-approved extended time (as approved by the Office of Disability Resources (ODR), as explained <a target="_blank" href="https://www.cmu.edu/hr/eos/disability/students/index.html">here</a>). If you are eligible for university-approved extended time, please deliver the appropriate form to the instructors in the first two weeks of the semester. If you need to acquire the form, contact Catherine Getchell, Director of Disability Resources.<br><br>
+
+For in-lecture quizzes, the extended-time quiz will be administered at a separate location at noon that same day. If you have a university-approved time conflict at that time, please let us know ahead of time and we can arrange another time on the same day as the quiz, or by prior arrangement with the ODR. For in-recitation quizzes, should they occur, the extended time will be provided immediately in the same recitation period. For midterm and final exams, the ODR proctors the extended-time sessions.<br><br>
+
+Important: to obtain extended-time, you must attend the extended-time quiz or exam and not the normal-duration quiz or exam. You do have the option of attending the normal-duration quiz or exam, but then you will have to complete it in the assigned time (without extended-time). If you are attending lecture or recitation and a quiz is commencing that you have already completed (having taken the extended-time version of the quiz that morning), you may remain in the room and work quietly on other materials or you may leave the room for the duration of the quiz (your choice).
+
+<br><br><b>Test Late Policy:</b><br>
+Unfortunately, the scale of this class makes it impossible to allow general flexible time for taking tests. Therefore, <b>no late/make-up quizzes or tests will be administered</b>, except in the case of medical or family emergencies or other university-approved absences. Students who fall into this category should obtain instructor approval <b>before</b> missing the test. Approved missed quizzes will be excused; approved missed exams will be taken in the following week.
+
+</td>
+</tr>
+
+<tr class="color1">
+<td><b>Grading:</b></td>
+<td>
+<table>
+<tbody>
+  <tr align="center">
+    <td width="162">&nbsp;<b>Course Component </b>&nbsp;</td>
+    <td>&nbsp;<b>Weight</b>&nbsp;</td>
+  </tr>
+  <tr align="center"><td>Final Exam</td><td> 20%</td></tr>
+  <tr align="center"><td>Midterm Exams</td><td> 20%</td></tr>
+  <tr align="center"><td>Quizzes</td><td> 10%</td></tr>
+  <tr align="center"><td>Homeworks</td>
+                     <td>30%
+                     <table>
+                     <tbody>
+                     <tr align="center"><td>Lecture/Recitation&nbsp;Attendance</td><td>2%</td></tr>
+                     <tr align="center"><td>Learning&nbsp;Checks</td><td>3%</td></tr>
+                     <tr align="center"><td>Collaborative&nbsp;Labs</td><td>5%</td></tr>
+                     <tr align="center"><td>Solo&nbsp;Homeworks</td><td>20%</td></tr>
+                     </tbody>
+                     </table>
+                     </td>
+  </tr>
+  <tr align="center"><td>Term Project</td><td> 20%</td></tr>
+</tbody>
+</table>
+
+<br>Each homework, colab, check, quiz, midterm, term project, and final will be graded
+on a standard scale:<br>
+&nbsp;&nbsp; A: 90 - 100<br>
+&nbsp;&nbsp; B: 80 - 89<br>
+&nbsp;&nbsp; C: 70 - 79<br>
+&nbsp;&nbsp; D: 60 - 69<br>
+&nbsp;&nbsp; R:&nbsp; 0 - 59<br>
+<br>
+
+The same scale will be used for final grades, though the instructors may choose to change the scales at their discretion. You are guaranteed that your letter grade will never become worse as a result of changing scales.<br><br>
+
+<b>Half-Weight Policy:</b><br>
+The lowest 2 homeworks, lowest 2 colabs, lowest 2 quizzes, lowest 2 checks, and lowest midterm are all half-weighted.
+<br>
+
+
+<br>
+******************************************************************<br>
+<br>
+<b>Alternate Minimum Grading (AMG) Policy</b><br>
+This AMG policy is available to everybody, but is designed specifically for 
+those students who struggle in the first part of the course and then through 
+sustained hard work and dedication manage to elevate their performance in the 
+latter part of the course to a level that merits passing with a C, even if their 
+Standard Grade might be lower than that.<br>
+<br>
+In addition to Standard Grading as described above, we will separately compute 
+your grade using an Alternate Minimum Grading (AMG). Students do not sign up for 
+AMG. Every student will be considered both for Standard Grading and AMG, and 
+their semester grade will be the higher of the two (where the highest grade via 
+AMG is a C).<br>
+<br>
+To compute your Alternate Minimum Grade, first use the following to compute your raw score:
+<table>
+<tbody>
+<tr align="center">
+   <td width="278">&nbsp;<b>AMG CourseComponent</b></td>
+   <td>&nbsp;<b>Weight</b>&nbsp;</td>
+</tr>
+<tr align="center"><td width="278">Final Exam</td><td> 40%</td></tr>
+<tr align="center"><td width="278">Best Midterm Exam</td><td> 20%</td></tr>
+<tr align="center"><td width="278">Best 5 Quizzes</td><td> 10%</td></tr>
+<tr align="center"><td width="278">Best 5 Solo Homeworks</td><td> 15%</td></tr>
+<tr align="center"><td width="278">Term Project</td><td> 15%</td></tr>
+</tbody>
+</table>
+
+<br>The half-weight policy (for the lowest two scores) still applies to the best-5 
+quizzes and homeworks, but it does not apply to the best midterm (since that 
+makes no sense with only one midterm counting towards the AMG).<br>
+<br>
+Unlike the Standard Grade, <b>effort</b> is heavily factored into your AMG 
+score, and in fact you cannot qualify for AMG unless you put forth sustained 
+effort (as judged by the course faculty) on <b><u>every</u> homework, quiz, 
+and exam</b>. If you miss multiple lectures/recitations, miss multiple assignments 
+(including checks), or are penalized for a cheating violation, you will be
+disqualified from AMG status.<br><br>
+In any case, if you qualify for AMG status and your AMG score is 70 or higher, 
+you may qualify for a C as your semester grade. 
+Once again, the highest grade possible via AMG is a C.</p>
+</td>
+</tr>
+
+<tr class="color2">
+<td><b>Course<br>Contract:</b></td>
+<td>
+Learning how to program is exhilarating, but also challenging. To succeed in this course, you will need to do the following things:
+<ul>
+<li><b>Participate.</b> To learn, you must engage with the course. This includes attending and engaging with all lectures and recitations, and reading all the assigned material. Note that, because most material is introduced in lectures and recitations, <b>attendance is required</b>; repeated failure to attend and participate in lectures and/or recitations (as measured by quiz completion and recitation roll call) may result in a lowered semester grade.</li>
+<li><b>Practice.</b> Programming cannot be learning merely by observing; <b>you must practice to master this skill</b>. This includes attempting all the collaborative checks, working collaboratively on all the colabs, and working on all the solo homeworks. This also includes engaging fully with the term project in the last 3-4 weeks of the semester and doing your best to create a project you can take pride in.</li>
+<li><b>Test Yourself.</b> At some point, we will need to assess your knowledge. Therefore, you will need to take all the quizzes, midterms, and the final.</li>
+<li>And above all, you will need to <b>support a positive course culture</b>. In all course activities you should follow the course collaboration policies (more below); in general this means submitting work that you yourself have generated and which you understand. When working collaboratively you should support your teammates and attempt to work productively. When you find yourself struggling or falling behind, you should seek help early instead of submitting work late. And of course, you should treat all classmates and course staff with respect.</li>
+<li>Additional note: 15-112 is a 12-unit course. Therefore, you should expect to spend approximately 12 hours a week on the course, including time spent in lecture, recitation, working on assignments, and studying.</li>
+</ul>
+
+In exchange, the course staff will do their best to support you in your learning process. We promise to do the following things:
+<ul>
+<li><b>Provide Appropriate Instruction.</b> We know that many students only take 15-112 because it is a requirement, and that many other students enter the course with prior programming experience. We will seek to provide instruction that is accessible for students at all levels, with remedial and advanced content for those students who need it. We also promise that all assessed material will be taught adequately in lectures and recitations.</li>
+<li><b>Provide Support.</b> We will provide extensive office hours (in person and online), supplemental learning sessions, and one-on-one tutoring as needed, and we will sincerely attempt to help when you struggle with the learning process.</li>
+<li><b>Provide Feedback.</b> We will attempt to provide you with appropriate feedback in person and on assessments. We will do our best to return feedback to you quickly (and to always return feedback within a week), and will seek to make that feedback accurate, detailed, and helpful.</li>
+<li>And above all, we will also work to <b>support a positive course culture</b>. We will work to provide consistent instruction across sections and to be fair in grading, so that all students have equal opportunity. We will respect your time by avoiding last-minute schedule changes, by starting and ending class on time, and by releasing assignments as early as possible. We will find ways to help any student who needs assistance. And of course, we will treat all students with respect.</li>
+</ul>
+Additional note: We are aware that some students regularly spend more than 12 hours a week on 15-112. We are working to improve this, and welcome any suggestions you may have.
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<table>
+<tbody>
+<tr class="color3" align="center"><td colspan=2><b><a name="Policies"></a>Policies</b></td></tr>
+<tr class="color1">
+<td><b>Homework<br>Policies:</b></td>
+
+<td>
+<b>Late Policy:</b><br>
+In an ideal world, we would be able to support varying submission schedules so that all students could work at their own pace. Unfortunately, given the scale of the course, this is impossible. We need you to submit assignments on time so that we can promptly give feedback to all students, to support the learning process.<br><br>
+
+However, we understand that life can sometimes get in the way. Therefore, we provide <b>2 grace days</b> for solo homework assignments. These can be used to submit solo homeworks up to 24 hours late with no penalty. You may only use one grace day per homework. We strongly urge you not to use these grace days immediately; try to save them for unforeseen events. <b>Grace days are not available for colabs or checks.</b><br><br>
+
+After you have used your grace days, no further extensions are allowed. Therefore if you find that you have not finished an assignment by the deadline and have no grace days left, submit it anyway; often you will get partial credit for the work you've done.<br><br>
+
+<b>Extensions:</b><br>
+Students who have medical or family emergencies or other pre-arranged university-approved absences (such as multi-day athletic or academic trips) may request an extension from the course faculty. You should request these extensions <b>before</b> the assignment due date. These extensions are separate from grace days. Additionally, if a religious day you observe conflicts with an assignment date, let us know <b>in advance</b>; we may be able to provide extensions or move assignment dates in some cases (though in general we urge you to start the assignment early instead).<br><br>
+
+<b>Formatting Errors:</b><br>
+Misformatted homework in general cannot be graded by our autograder, and as such may receive penalties, which can range from -5% to not being accepted at all. Therefore, be sure to submit your homework early -- you can submit repeatedly, we only grade the last submission -- to be sure you do not have obvious formatting errors. Errors can be detected by checking your Autolab grade a few seconds after submitting.<br><br>
+
+<b>Submission Issues:</b><br>
+In <b>exceptional</b> circumstances, like accidentally submitting the wrong file or losing/breaking a computer, submissions may be accepted past the deadline. If you are requesting submission past the deadline, <b>do not modify your file</b>; email Eddie Dryer (edryer@andrew.cmu.edu) and Chaya Wurman (cwurman@andrew.cmu.edu) <b>immediately</b> with an explanation of your situation and, if possible, the file you need to submit. There is no guarantee that late submissions of this nature will be accepted.<br><br>
+
+<b>Regrade Requests:</b><br>
+Regrades are handled by Eddie Dryer (edryer@andrew.cmu.edu) and Chaya Wurman (cwurman@andrew.cmu.edu) on a case by case basis. If you would like to request a regrade, email both Eddie and Chaya. When you email, please include all relevant details (picture of the quiz, relevant file, etc). Regrades must be requested within three weeks of the time when the contested grade was released. This deadline does not apply to exams, as they are returned on a more variable basis.
+
+</td>
+</tr>
+
+<tr class="color2">
+<td><b>Collaboration and Cheating Policies:</b></td>
+<td>
+<b>Solo Homework Policy:</b><br>
+<br>
+Unless otherwise noted, for <b>Solo</b> homework assignments,
+students are encouraged to talk to each other, to the course staff, or
+to anyone else about the assignments. This assistance, though, is
+limited to the discussion of the problems<i> in general</i>.
+Each student must develop their own solutions to the homework.
+Consulting another student's solution is prohibited, and submitted
+solutions may not be copied in whole or in part from any source.
+<br><br>
+Specifically: <b>do not look at other
+students' code or written answers, and do not show them your code or
+written answers, until after the assignment deadline has passed and the 
+assignment has been submitted and graded</b>.
+<br><br>
+And: <b>do not email or otherwise electronically or
+physically transfer your code to other students, and do not receive
+such transmissions from other students, until after
+the assignment deadline has passed and the assignment has been submitted and 
+graded</b>.
+<br><br>
+In particular, this precludes students helping each other 
+debug their code (since you may not even look at their code). Of
+course, students may (and should!) seek debugging assistance (and any other help) from the course staff, who provide <i>extensive</i> support to all
+students via email, office hours, review sessions, and 1-on-1 tutoring
+by appointment.
+<br><br>
+Also, if you find a reference (say, in an optional
+textbook or some online source) that contains code or a written
+solution that is identical or overtly similar to an assigned problem,
+then you are required to not look at that code or written
+solution! You may still refer to supporting figures and
+explanatory text, but <b>you may not look at or copy the code</b>.
+<br><br>
+<b>Collaborative / Group-Based Homework Policy:</b>
+<br><br>
+Note that some assignments (or portions thereof) will be explicitly marked as collaborative 
+or group-based. In those (and 
+only those) assignments, you may work with other students who are enrolled in the class, 
+even writing code together, and certainly debugging each other's code.
+However, you may only work with students currently enrolled in 15-112, 
+and you must include a list of all the students you collaborated with at the top of your submitted file.
+Also, even 
+when working in an approved group, you absolutely may not copy solutions from anyone or anywhere. In 
+all cases, you must be intellectually involved in the authoring of everything 
+you submit.
+<br><br>
+<b>Retaking Course / Reusing Prior Material Policy:</b>
+If you are repeating 112, your prior work in this course is treated just as anyone else's work -- that is, you may not consult it.  This is to promote the best possible learning, and using your prior answers will only hurt in that regard.  So do not refer to your prior work, and solve everything from scratch.  This will result in your best learning experience.
+<br><br>
+<b>Autograder / Decompiling Policy:</b>
+Any attempt to
+decompile solutions, or object code that may help produce solutions,
+or in any way to extract solutions from the autograder, or to "hack" the 
+autograder in any way, will result in your failing the course.
+<br><br>
+<b>Plagiarism Detector Policy:</b>
+In addition to manual checks on homework and exam submissions, we will also 
+routinely use an automated plagiarism detector. Here is a video demonstrating 
+how it works (<a href="http://www.kosbie.net/cmu/spring-13/15-112/automated-plagiarism-detector-demo.avi">AVI</a> or 
+<a href="http://www.kosbie.net/cmu/spring-13/15-112/automated-plagiarism-detector-demo.mp4">MP4</a>).
+<br><br>
+<b>Consequences:</b>
+<br><br>
+Homeworks or portions thereof that are deemed <b>overly similar</b> (as opposed to mostly identical) will face these consequences:
+<ul>
+<li>1st event: no penalty (just a warning).</li>
+<li>2nd event: will be treated like a cheating violation, which will generally result in letter-grade drop at the semester and a letter to the Dean of Student Affairs.</li>
+<li>3nd event: fail the course and another letter to the Dean of Student Affairs.</li>
+</ul>
+By contrast, homeworks or portions thereof that are
+<b>mostly identical</b> (even if they were 
+edited and are somewhat different) are not "overly similar", but are an immediate cheating violation, and
+will face these consequences:
+<ul>
+<li>1st event: letter-grade drop at the semester and a letter to the Dean of Student Affairs</li>
+<li>2nd event: fail the course and another letter to the Dean of Student Affairs</li>
+</ul>
+Finally, regarding <b>proctored events (quizzes, exams)</b>: any copying or collaboration of any kind (no matter how seemingly minor) on any proctored
+event will face these consequences:
+<ul>
+<li>1st event: fail the course and a letter to the Dean of Student Affairs</li>
+</ul>
+These are the general rules, and while we do not anticipate exceptions,
+we respect that they may occur, and so the faculty reserve the right to
+make appropriate adjustments as the particulars of any case require.
+<br><br>
+<b>Online "Help" Policy:</b>
+<br><br>
+Generally: <b>Students may not post any course content, nor any questions related to any assigned material, to any online venue</b><br><br>
+
+Why? There are many online 'help' resources, and while some may be legitimate, many are basically providing a homework outsourcing service, or otherwise violating the spirit (and often also the letter) of our course policies on cheating and collaboration. Importantly, we cannot control the quality of 'help' students receive from such sources, and experience indicates many 'answers' from such sources are of very low quality. Finally, given the truly extensive support this course provides through daily office hours, private and small-group tutoring, email-based help, collaborative assignments, and so forth, not to mention the support of the broader CMU community of learners, there is no compelling reason students should need any external sources. <b>Posting course content online to seek help may result in failing the course on the first offense.</b>
+</td>
+</tr>
+
+<tr class="color1">
+<td><b>General<br>Policies</b></td>
+<td>
+<b>Family/Health/Personal Emergencies:</b> We understand that some of you may have emergencies occur during the semester that will disrupt your ability to focus on learning. If you have a family/personal emergency or if you are too sick to engage with the course, <b>please let us know</b>. We will need to confirm the emergency (with an email from your academic advisor for family/personal emergencies or a note from Student Health Services for illness); once it's confirmed, we're happy to arrange extensions for assignments and tests until you're ready to rejoin the course. Note that we must be notified about emergencies <b>before</b> work is missed to provide extensions.<br><br>
+
+<b>Recording (audio or video):</b> Students may not record lectures or recitations 
+without explicit permission in writing from the instructor. Violations will 
+result in your failing the course. Exceptions will be granted in accordance with 
+university guidelines for accessibility concerns, but even then such recordings 
+may not be shared publicly or privately and must be deleted at the end of the 
+semester.
+<br><br>
+<b>Electronics:</b> Research has shown that devices can greatly detract from student learning. Therefore, <b>students may only use electronic devices in lecture during learning activities which involve those devices</b>, which may involve the use of computers to write programs or phones to submit quiz responses. Outside of these events, students should only use electronic devices with explicit permission from the instructors. Notes may still be taken, of course, but should be done with pen and paper. This policy is meant to help all students focus, as electronic device as distracting not only for the user, but also for the students surrounding them.</td>
+</tr>
+
+<tr class="color2">
+<td><b>Well-being &amp;<br> Happiness</b></td>
+<td>
+We care very much about your well-being and 
+happiness. Yes, CMU students (and faculty) work hard, sometimes very hard.
+But we must keep our balance and always attend to our well-being and happiness.
+That comes first, academics follow. So be sure to get enough sleep, eat 
+right, exercise regularly, and attend to your well-being and happiness.
+<a href="http://www.kosbie.net/cmu/talks/2013-cmu-odyssey-happiness.html">
+Here</a> is a list of ideas that might help.
+<br><br>
+Also, please know that we do care about you and take your well-being seriously. We want to help you learn while minimizing stress. Towards this end, we are working to reduce the workload of the course as much as is possible, while still meeting the learning goals of the course. <b>If you have any ideas or feedback towards reducing the workload or student stress, or improving the course in general, please let us know!</b>
+<br><br>
+Finally, if you are feeling overly stressed, or anxious, or unhappy about your performance or your general experience in this course: <b>please come talk to us</b>. We will listen. We are here for you and we will try to help.<br><br>
+
+Addendum: Here is a great two-page one-stop-shopping summary
+of many
+<a target="_blank" href="notes/CMU-Student-Support-Resources.pdf">CMU Student Support Services</a>.
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</body></html>

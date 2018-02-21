@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112 Spring 2018: Fundamentals of Programming and Computer Science<br>
+Colab 2 (Due Thursday 25-Jan, at 10pm)
+</h1>
+
+<hr>
+
+<ul>
+<li>This assignment is <span class="collaborative">collaborative</span>.
+That means you may work with other students enrolled in the course, and you may even help each other write code and debug. However, you must still type all of your own work, and you must fully understand the code that you submit. Even though this is collaborative, you may not directly copy any code from anyone, and you may not electronically share your code with anyone. See the syllabus for more details.</li>
+
+<li>List your collaboration partners (name and andrew id) in a comment on the first line of this file. If you collaborate with another student and do not include their name in a comment, it will be considered cheating. You may work alone if you want to, but we recommend working with others, as it generally leads to better learning.</li>
+
+<li>Be a good collaborator!  Help everyone in your group, and accept
+their help if you need it.  Don't be in a hurry to finish the problems.
+Instead, take your time and be sure that everyone in the group is
+following and understanding.  The goal is to learn, not just to finish.
+</li>
+<br>
+<li>To start:
+<ol>
+<li>Go to your folder named 'week2'</li>
+<li>Download
+    <a href="colab2.py" download>colab2.py</a>,
+    <a href="cs112_s18_week2_linter.py" download>cs112_s18_week2_linter.py</a>,
+    and
+    <a href="sampleFiles.zip">sampleFiles.zip</a>
+    to that folder. Unzip sampleFiles.zip in that folder.</li>
+<li>Edit colab2.py using Pyzo</li>
+<li>When you are ready, submit colab2.py to Autolab. For this colab, you may submit up to 10 times, but only your last submission counts.</li>
+</ol>
+</li>
+<li>Do not use lists or recursion this week.</li>
+<li>Do not hardcode the test cases in your solutions.</li>
+</ul>
+
+<hr>
+
+<ol>
+
+<br><li><b>nthCircularPrime</b> [25 pts]<br>
+A circular prime is a number with the property that any rotation of that number's digits is prime. In this case, rotation refers to cycling the digits of a number; for example, the rotations of 1234 are 1234, 2341, 3412, and 4123. You can read more about this on <a href="https://en.wikipedia.org/wiki/Circular_prime">the Wikipedia page</a>. Single-digit primes are all circular, of course. To find the nth circular prime, you'll need to write isPrime and three other functions:
+
+<ol><br><li><b>rotateNumber</b> [10 pts]<br>
+This function takes a number, x, and rotates that number's digits by one place. This would turn the number 1234 to 4123. You should work with the number input directly instead of casting it to a string.</li>
+
+<br><li><b>isCircularPrime</b> [10 pts]<br>
+This function takes a number, x, and determines whether that number is a circular prime. To do this, you'll need to check whether every rotation of the number is prime.</li>
+
+<br><li><b>nthCircularPrime</b> [5 pts]<br>
+This function takes a number, n, and returns the nth circular prime.</li>
+
+</ol></li>
+
+<br><li><b>countLowercaseUpToPercent</b> [25 pts]<br>
+Write the function countLowercaseUpToPercent(s) that takes a possibly-empty string and returns the number of lowercase letters that occur in the string before the first percent sign (%). If no percent signs occur, the function should return the total number of lowercase characters in the string.</li>
+
+<br><li><b>longestCommonSubstring</b> [25 pts]<br>
+Write the function, longestCommonSubstring(s1, s2), that takes two possibly-empty strings and returns the longest string that occurs in both strings (and returns the empty string if either string is empty).  For example:
+<pre>
+     longestCommonSubstring("abcdef", "abqrcdest") returns "cde"
+     longestCommonSubstring("abcdef", "ghi") returns "" (the empty string)
+</pre>
+If there are two or more longest common substrings, return the
+lexicographically smaller one (ie, just use "<" to compare the strings).  So, for example:
+<pre>
+    longestCommonSubstring("abcABC", "zzabZZAB") returns "AB" and not "ab"
+</pre><br>
+
+<b>Hint:</b> Start by solving a simpler problem: how would you find and return the longest-matching substring starting from the beginning of each of the strings? Under this restriction:
+<pre>
+     longestCommonSubstring*("abcdef", "abqrcdest") returns "ab"
+</pre>
+Now imagine you have a helper function that implements that simpler version of longestCommonSubstring. With that helper function, you can solve longestCommonSubstring by generating <i>all possible combinations</i> of the starting places of s1 and s2, and calling the helper function with each. This can help you identify which sequence of matching characters is the longest.
+</li>
+
+<br><li><b>gradebookSummary</b> [25 pts]<br>
+For this problem, we'll assume that gradebooks are stored in .txt files. Each row of the gradebook file contains a student's name (one word, all lowercase), followed by one or more comma-separated integer grades. A gradebook always contains at least one student, and each row always contains at least one grade. Gradebooks can also contain blank lines and lines starting with the "#" character, which should be ignored.<br><br>
+
+With this in mind, write the function gradebookSummary(gradebookFilename) that takes the filename of a gradebook as an argument and returns a summary of the gradebook as a string. This summary string should show each student followed by a tab followed by their average grade (rounded to the hundreth place). The summary string should have the students listed in their original order (separated by newlines, but without a newline at the end), but should get rid of any comments or blank lines.<br><br>
+
+For example, here is a test case:
+<pre>
+# the following string is the content of the file gradebook1.txt
+"""# ignore blank lines and lines starting with #'s
+wilma,91,93,94
+fred,80,85,90,97,100
+betty,88"""
+assert(gradebookSummary("gradebook1.txt") == "wilma\t92.67\nfred\t90.40\nbetty\t88.00"))
+</pre>
+<b>Hint:</b> you most likely will want to use both s.split(",") and s.splitlines() in your solution.
+</li> 
+
+</ol>
+</div>
+<hr>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html><head><title>Tetris for Intro/Intermediate Programmers (Fall 2017 update)</title></head>
+<body bgcolor="#ADDEFA">
+
+<hr color="#e88100">
+<font face="Arial"><b>Tetris for Intro/Intermediate Programmers (Fall 2017 update)<br>
+Step 5:&nbsp; Rotating the fallingPiece</b></font>
+
+<hr color="#e88100">
+<ul>
+	<li>
+	<p align="left">This is generally the most difficult part of the project:&nbsp; 
+	in response to up-arrow key presses, we should rotate the falling piece 90 
+	degrees counterclockwise.&nbsp; We do this in the same way we handled other 
+	changes to the falling piece:&nbsp; we make the change, test if it is legal, 
+	and if it is not, we unmake the change.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Explaining rotateFallingPiece:<br>
+	As noted, this function (which takes one parameter, data)
+	is similar to moveFallingPiece, in that it makes the 
+	rotation and then calls fallingPieceIsLegal (the same function used by 
+	moveFallingPiece) and undoes any illegal changes.&nbsp; As for the actual 
+	rotation, this is accomplished by changing the two-dimensional list of 
+	booleans that represent the falling piece.&nbsp; A new 2d list is created, 
+	and cells in the old list are mapped to cells in the new list according to a 90-degree 
+	counterclockwise rotation.&nbsp; To see how this works, consider this 
+	picture, which shows a grid that is rotated counterclockwise (the corners 
+	are highlighted to make the rotation clear):<br>
+	<img src="pix/rotation.png" border="0" height="236" width="390"><br>
+	<i><br>
+	[To avoid any confusion, note that it would not be possible to generate 
+	these particular boards during an actual Tetris game.]<br>
+	</i><br>
+	First, we see that the dimensions reverse:&nbsp; in this example, the old 
+	grid was 7 rows by 10 columns, whereas the new grid is 10 rows by 7 columns.&nbsp; 
+	Next, consider what happens as we move in the old grid from red to green 
+	(that is, moving downward with rows increasing from 0 to 6):&nbsp; this maps 
+	in the new grid to moving <span style="font-style: italic;">across</span> with columns increasing from 0 to 6 .&nbsp; 
+	Thus, <i>our new column is equal to our old row</i>.&nbsp; That is the 
+	easier dimension.&nbsp; Now consider the other dimension, as we move in the 
+	old grid from red to white (that is, moving across with columns increasing 
+	from 0 to 9:&nbsp; this maps in the new grid to moving <i>up</i> with rows
+	<i>decreasing</i> from 9 to 0.&nbsp; Thus, <i>our new row is equal to (9 
+	minus our old column)</i>.&nbsp; More generally, we replace "9" with "one 
+	less than the number of old columns".<br>&nbsp;</p></li>
+	<li>
+	<p align="left">Writing rotateFallingPiece:<br>
+Following the plan just described, we start by storing the old piece
+(the 2d list of booleans), its location, and its dimensions in local
+variables (because we may need these to undo our move if it turns out
+to be illegal).&nbsp; Next, we compute the new dimensions, by reversing
+the old dimensions.<br>
+	<br>
+	Next, we compute the new location.&nbsp; Our goal is to keep the center of 
+	the falling piece constant (or, given that this is not possible if we have 
+	an even number of rows or columns, to keep the center as constant as possible).&nbsp;
+	<u>Keeping the center of the falling piece constant during rotation is the 
+	most difficult part of Tetris</u>,
+so read this part very carefully (though that is always good advice!).
+Besides making rotation more intuitive, we want to keep the center
+constant so that if we rotate around and around, the center does not
+"drift" -- a full 360 degree turn should bring us back to where we
+started. &nbsp;
+<br><br>
+To make this happen, we observe that the center row of the falling piece
+can be computed as the sum of its top row plus half its height in rows.
+That is:
+<br><br>
+&nbsp;&nbsp;&nbsp;centerRow = fallingPieceRow + fallingPieceRows/2
+<br><br>
+Now, we actually have two pieces -- the old falling piece, before the rotation,
+and the new falling piece, after the rotation.  We can compute each of
+their centers as such:
+<br><br>
+&nbsp;&nbsp;&nbsp;oldCenterRow = oldRow + oldRows/2<br>
+&nbsp;&nbsp;&nbsp;newCenterRow = newRow + newRows/2
+<br><br>
+Note that oldRows and newRows are not the same, since the dimensions change
+when the piece is rotated.  In any case, to keep the old and new centers
+the same, we just set oldCenterRow equal to newCenterRow in the equations
+above.  Then we solve for newRow, and that gives us the new value
+for fallingPieceRow.  Repeat for the columns, and voila!
+<br><br>
+At that point, we have 
+	the new location and dimensions, so we create an entirely new piece (that is, a 
+	new 2d list of booleans) and load it with a rotation of the old piece 
+	according to the algorithm described above, then set fallingPiece equal to 
+	this new 2d list.<font color="#800000" face="Courier New" size="2"><br>
+	</font><br>
+Finally, we check if this rotation makes the falling piece go off the
+board or collide with a non-empty cell on the board (simply reusing our
+code from the previous steps, where we wrote a function that tests if
+the current board is legal or not), and if either of these conditions
+occurs, we restore the piece, its location, and its dimensions to their
+original values.<font color="#800000" face="Courier New" size="2"><br>
+&nbsp;</font></p></li>
+	<li>
+	<p align="left">Updating keyPressed:<br>
+	We modify keyPressed to call rotateFallingPiece in response to 
+	an up-arrow key press.<br>&nbsp;</p></li>
+	<li>
+	<p align="left">Testing the code<br>
+	Hint:&nbsp; Remember to press the up-arrow key to rotate the falling piece 
+	(and try to move it off the board!), and to press some non-arrow keys to 
+	start with new falling pieces to test the code!&nbsp; Verify that the piece 
+	rotates counterclockwise, that the center basically stays fixed, and in 
+	particular that a 360 degree turns result in no change to the falling piece.</p>
+</li>
+
+
+<li>At the end of this stage, your Tetris board should be able to do this:<br><br>
+	<img src="pix/step-5.gif" border="0" width="250">
+</li>
+</ul>
+
+<hr color="#e88100">
+<table style="border-collapse: collapse;" id="table2" border="0" cellpadding="0" width="100%">
+	<tbody><tr>
+		<td width="33%">&nbsp;</td>
+		<td width="33%">
+		<p align="center">
+<a href="2_4_MovingTheFallingPiece.html"><img src="pix/previous.gif" border="0" height="15" width="73"></a>
+<a href="TetrisForIntroIntermediateProgrammers.html"><img src="pix/home.gif" border="0" height="16" width="19"></a>
+<a href="2_6_PlacingTheFallingPiece.html"><img src="pix/next.gif" border="0" height="16" width="73"></a></p></td>
+		<td width="33%">
+		<p align="right"><font face="Arial" size="2">David Kosbie<br>
+Carnegie Mellon University<br>
+<a href="mailto:koz@cmu.edu">koz@cmu.edu</a></font></p></td>
+	</tr>
+</tbody></table>
+
+<hr color="#e88100">
+
+</body></html>

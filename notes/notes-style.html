@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Style
+</h1>
+
+<hr>
+
+
+<b>Some Style Facts:</b>
+<br>
+<br>
+<ul>
+<li><b>Good style is...</b><br>
+<ul>
+<li>Both an art and a science.</li>
+<li>Open to some debate, yet mostly agreed upon.</li>
+<li>The product of years of suffering due to bad style.</li>
+</ul>
+</li>
+ 
+<br><li><b>Good style reduces errors, and...</b><br>
+<ul>
+<li>Software errors cost the global economy over <b>$300 billion</b> annually in 2013! (<a target="_blank" href="http://www.prweb.com/releases/2013/1/prweb10298185.htm">source</a>)</li>
+<li>Software errors have resulted in many spectacular failures
+(<a target="_blank" href="https://en.wikipedia.org/wiki/List_of_software_bugs">source</a>)</li>
+</ul>
+</li>
+ 
+<br><li><b>Good style reduces time spent debugging, and...</b><br>
+<ul>
+
+<li>Around 75% of a developer's time is spent debugging
+(<a target="_blank" href="http://coralogix.com/this-is-what-your-developers-are-doing-75-of-the-time-and-this-is-the-cost-you-pay/">source</a>)</li>
+
+<li>Fixing a bug takes 30 times longer than writing a line of code
+(<a target="_blank" href="http://coralogix.com/this-is-what-your-developers-are-doing-75-of-the-time-and-this-is-the-cost-you-pay/">source</a>)</li>
+
+</ul>
+</li>
+ 
+<br><li><b>Good style will...</b><br>
+<ul>
+<li>Help you get an "A"</li>
+<li>Help you get a "job"</li>
+<li>Help you be happy, healthy, prosperous, and keenly admired by all.</li>
+</ul>
+</li>
+
+<br><li><b>Some Style Guides (which are not OUR style guide):</b><br>
+<ul>
+<li><a target="_blank" href="https://www.python.org/dev/peps/pep-0008/">The Official PEP-8 Python Style Guide</a></li>
+<li><a target="_blank" href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a></li>
+<li>Many, many others...</li>
+</ul>
+</li>
+</ul>
+
+<hr>
+
+<b>Style Rubric</b><br><br>
+
+<ol type="A">
+<li><b>5-Point Style Issues</b><br>
+<ol>
+<li><b>Comments</b><br>
+Not using any comments is a 5-point error; not using enough comments or having bad comments is just a 2-point error.<br>
+Use concise, clear, and informative comments where needed (and do not use comments where unneeded), especially at the start of functions or other obvious logical blocks of code. Comments should also be used to explain any code that is not self-documenting.
+
+</li><li><b>
+Helper Functions (Top-Down Design)
+</b><br>
+Not using any helper functions (where appropriate) is a 5-point error; not using enough is just a 2-point error.<br>
+Use helper functions to break down the logic of a solution into several clear tasks. Read the Top-Down Design section to learn more about how to do this.
+
+</li><li><b>
+Test Functions
+</b><br>
+Not using any test functions (where appropriate) is a 5-point error; not using enough is just a 2-point error.<br>
+You must write test functions for any function you write which is <i>reasonably testable</i>. Functions which are <b>not</b> reasonably testable include graphics functions, data initialization functions, and functions which return random results.
+
+</li><li><b>
+Clarity
+</b><br>
+Even if your code works, and is reasonably efficient, your logic must not be overly complex, particularly if a reasonably clear and straightforward options exist (which they nearly always will in this course). Many of the 2-point issues below involve clarity, but the 5-point version is reserved for especially gross violations.
+
+</li><li><b>
+Efficiency
+</b><br>
+This being 15-112, you do not have to use the most efficient solution in general, but your code may not be "grossly" inefficient, particularly if your approach is also unclear, and especially if you had simple, clear, and reasonably efficient options to choose from.
+</li>
+</ol>
+<br>
+
+<li><b>2-Point Style Issues</b><br>
+<ol>
+
+<li><b>
+Ownership
+</b><br>
+You must include your name, andrew id, and section in a comment at the top of every file you submit.
+
+</li><li><b>
+Meaningful Names
+</b><br>
+Use meaningful variable and function names (whenever possible), with proper mixedCase/camelCase naming, with the first letter in lowercase (eg: tetrisPiece). Note that variable names should not overwrite built-in keywords; for example, str is a bad name for a string variable.
+
+</li><li><b>
+Run-On Functions
+</b><br>
+Use helper functions liberally. Do not have more than 20 lines in any one function (or 25 lines for functions in animation or graphics problems). While it is possible to have a well-written 20+ line function, we expect you to keep your functions at a reasonable length for this course. Note that lines that are blank or only contain comments do not count towards the 20-line/function limit.
+
+</li><li><b>
+"Numbered" Variables (Avoiding Loops and Lists)
+</b><br>
+This entails making code unnecessarily complex, or simply verbose and amateurish, by avoiding using loops or lists. This is most often typified by using variables with consecutive numeric suffixes, as in foo0, foo1, foo2, etc. Extreme violations may qualify for the 5-point clarity violation above.
+
+</li><li><b>
+Formatting
+</b><br>
+Do not exceed 80 characters in any one line (including comments!). Indent properly. Use spaces, not tabs, with 4 spaces per indent level (most editors let you map tabs to spaces automatically). Use standard whitespace, including one blank line between functions.  Note that while comments do not count towards the 20-lines/function limit, they do count towards the 80-chars/line limit.
+
+</li><li><b>
+Global Variables
+</b><br>
+Within this course, avoid global variables.
+
+</li><li><b>
+Magic Numbers
+</b><br>
+Do not use magic numbers. In particular, every number besides -2, -1, 0, 1, 2, or 10 must generally be stored in a well-named variable. At the grader's discretion, we may not deduct points when other constants are used in what we deem to be a safe and clear manner, such as, say, x**0.5 for a square root when computing the quadratic formula. This is clear code but it is also safely constant, because you would never want to use any other exponent in that specific case. Regardless, your safest bet is to follow the general rule above and just store constants in well-named variables.
+
+</li><li><b>
+Duplicate Code
+</b><br>
+Do not duplicate code (instead of copy-pasting, place the code in a helper function).
+
+</li><li><b>
+Dead Code
+</b><br>
+Do not include any dead code (code that cannot ever be executed). Once you have finished debugging, remove any remaining debugging code from your function, even if it is commented out.
+
+</li><li><b>
+Meaningful UI
+</b><br>
+When appropriate, provide meaningful UI (clear prompts, clear output) for interactive programs.
+
+</li><li><b>
+Et Cetera
+</b><br>
+Follow other guidelines as described in the class notes.
+For example:  Use "else" where appropriate.
+So this code loses 2 points:
+<pre>
+  if (x < 2): foo()
+  if (x > 3): bar() # <- should be "elif"
+</pre>
+</li>
+</ol>
+
+</li>
+</ol>
+</div>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Object-Oriented Programming (OOP) (part1)<br>
+</h1>
+<hr>
+<ol>
+
+<li><a href="#optionalReading"><b>Optional Reading</b></a></li>
+<li><a href="#typeTesting"><b>Type Testing (type, isinstance)</b></a></li>
+<li><a href="#constructor"><b>Constructor (__init__)</b></a></li>
+<li><a href="#equalityTesting"><b>Equality Testing (__eq__)</b></a></li>
+<li><a href="#convertingToStrings"><b>Converting to Strings (__str__ and __repr__)</b></a></li>
+<li><a href="#usingSets"><b>Using in Sets (__hash__ and __eq__)</b></a></li>
+<li><a href="#usingDicts"><b>Using in Dictionaries (__hash__ and __eq__)</b></a></li>
+<li><a href="#fractionExample"><b>Fraction Example</b></a></li>
+</ol>
+<hr>
+
+<ol>
+
+<li><a name="optionalReading"></a><b>Optional Reading</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/inYZcteU98g"></span><br>
+For more on these topics, and many additional OOP-related topics, check here:<br>
+&nbsp; &nbsp; &nbsp;
+<a target="_blank" href="https://docs.python.org/3/reference/datamodel.html">https://docs.python.org/3/reference/datamodel.html
+</a>
+
+</li><br><li><a name="typeTesting"></a><b>Type Testing (type, isinstance)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/2s8qaJxLn20"></span><br>
+<div class="python-code">
+class A(object): pass
+a = A()
+print(type(a))           # A (technically, < class '__main__.A' >)
+print(type(a) == A)      # True
+print(isinstance(a, A))  # True
+</div>
+
+</li><br><li><a name="constructor"></a><b>Constructor (__init__)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/CHxWytJCems"></span><br>
+<div class="python-code">
+class A(object):
+    def __init__(self, color, isHappy):
+        self.color = color
+        self.isHappy = isHappy
+
+a1 = A('yellow', True)
+a2 = A('blue', False)
+print(a1.color, a1.isHappy)
+print(a2.color, a2.isHappy)
+</div>
+
+</li><br><li><a name="equalityTesting"></a><b>Equality Testing (__eq__)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/wQ5CJ4QKbJQ"></span><br>
+<b>The problem:</b>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+a1 = A(5)
+a2 = A(5)
+print(a1 == a2)  # False!
+</div>
+
+<br>
+<b>The partial solution:  __eq__</b>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+    def __eq__(self, other):
+        return (self.x == other.x)
+a1 = A(5)
+a2 = A(5)
+print(a1 == a2)  # True
+print(a1 == 99)  # crash (darn!)
+</div>
+
+<br>
+<b>A better solution:</b>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+    def __eq__(self, other):
+        return (isinstance(other, A) and (self.x == other.x))
+a1 = A(5)
+a2 = A(5)
+print(a1 == a2)  # True
+print(a1 == 99)  # False (huzzah!)
+</div>
+
+</li><br><li><a name="convertingToStrings"></a><b>Converting to Strings (__str__ and __repr__)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/rpNsfsGLm88"></span><br>
+<b>The problem:</b>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+a = A(5)
+print(a) # prints <__main__.A object at 0x102916128> (yuck!)
+</div>
+
+<br>
+<b>The partial solution: __str__</b>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+    def __str__(self):
+        return "A(x=%d)" % self.x
+a = A(5)
+print(a) # prints A(x=5) (better)
+print([a]) # prints [<__main__.A object at 0x102136278>] (yuck!)
+</div>
+
+<br>
+<b>The better solution: __repr__</b>
+<div class="python-code">
+# Note: repr should be a computer-readable form so that
+# (eval(repr(obj)) == obj), but we are not using it that way.
+# So this is a simplified use of repr.
+
+class A(object):
+    def __init__(self, x):
+        self.x = x
+    def __repr__(self):
+        return "A(x=%d)" % self.x
+a = A(5)
+print(a) # prints A(x=5) (better)
+print([a]) # [A(x=5)]
+</div>
+
+</li><br><li><a name="usingSets"></a><b>Using in Sets (__hash__ and __eq__)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/hlvtj9psAMk"></span><br>
+<b>The problem:</b>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+
+s = set()
+s.add(A(5))
+print(A(5) in s) # False
+</div>
+
+<br>
+<b>The solution: __hash__ and __eq__</b>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+    def __hash__(self):
+        return hash(self.x)
+    def __eq__(self, other):
+        return (isinstance(other, A) and (self.x == other.x))
+
+s = set()
+s.add(A(5))
+print(A(5) in s) # True (whew!)
+
+</div>
+
+<br>
+<b>A better (more generalizable) solution</b>
+<div class="python-code">
+# Your getHashables method should return the values upon which
+# your hash method depends, that is, the values that your __eq__
+# method requires to test for equality.
+
+class A(object):
+    def __init__(self, x):
+        self.x = x
+    def getHashables(self):
+        return (self.x, ) # return a tuple of hashables
+    def __hash__(self):
+        return hash(self.getHashables())
+    def __eq__(self, other):
+        return (isinstance(other, A) and (self.x == other.x))
+
+s = set()
+s.add(A(5))
+print(A(5) in s) # True (still works!)
+
+</div>
+
+</li><br><li><a name="usingDicts"></a><b>Using in Dictionaries (__hash__ and __eq__)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/dSXjLOy_xEI"></span><br>
+<b>The problem (same as sets):</b>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+
+d = dict()
+d[A(5)] = 42
+print(d[A(5)]) # crashes
+</div>
+
+<br>
+<b>The solution (same as sets):</b>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+    def getHashables(self):
+        return (self.x, ) # return a tuple of hashables
+    def __hash__(self):
+        return hash(self.getHashables())
+    def __eq__(self, other):
+        return (isinstance(other, A) and (self.x == other.x))
+
+d = dict()
+d[A(5)] = 42
+print(d[A(5)]) # works!
+</div>
+
+</li><br><li><a name="fractionExample"></a><b>Fraction Example</b><br>
+<div class="python-code">
+# Very simple, far-from-fully implemented Fraction class
+# to demonstrate the OOP ideas from above.
+# Note that Python actually has a full Fraction class that
+# you would use instead (from fractions import Fraction),
+# so this is purely for demonstrational purposes.
+
+def gcd(x, y):
+    if (y == 0): return x
+    else: return gcd(y, x%y)
+
+class Fraction(object):
+    def __init__(self, num, den):
+        # Partial implementation -- does not deal with 0 or negatives, etc
+        g = gcd(num, den)
+        self.num = num // g
+        self.den = den // g
+
+    def __repr__(self):
+        return '%d/%d' % (self.num, self.den)
+
+    def __eq__(self, other):
+        return (isinstance(other, Fraction) and
+                ((self.num == other.num) and (self.den == other.den)))
+
+    def times(self, other):
+        if (isinstance(other, int)):
+            return Fraction(self.num * other, self.den)
+        else:
+            return Fraction(self.num * other.num, self.den * other.den)
+
+    def __hash__(self):
+        return hash((self.num, self.den))
+
+def testFractionClass():
+    print('Testing Fraction class...', end='')
+    assert(str(Fraction(2, 3)) == '2/3')
+    assert(str([Fraction(2, 3)]) == '[2/3]')
+    assert(Fraction(2,3) == Fraction(2,3))
+    assert(Fraction(2,3) != Fraction(2,5))
+    assert(Fraction(2,3) != "Don't crash here!")
+    assert(Fraction(2,3).times(Fraction(3,4)) == Fraction(1,2))
+    assert(Fraction(2,3).times(5) == Fraction(10,3))
+    s = set()
+    assert(Fraction(1, 2) not in s)
+    s.add(Fraction(1, 2))
+    assert(Fraction(1, 2) in s)
+    s.remove(Fraction(1, 2))
+    assert(Fraction(1, 2) not in s)
+    print('Passed.')
+
+if (__name__ == '__main__'):
+    testFractionClass()
+</div>
+
+</li>
+</ol>
+<hr>
+</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Monte Carlo Methods
+<br>
+</h1>
+
+<hr>
+<ul>
+<li><b>Monte Carlo Methods:</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/fSUq0gpFl7w"></span><br
+<ul>
+<li><b>Definition:</b><br>
+<ul><li>
+Using (pseudo)random numbers to solve (not-so-random) problems.
+</li></ul>
+</li><li><b>General approach</b>
+<ul>
+<li>Run Trials</li>
+<li>In each trial, simulate event (coin toss, dice rolling, etc)</li>
+<li>Count # of successful trials</li>
+<li>Guess that Expected Odds ~= Observed Odds = (successful trials) / (total trials)</li>
+</ul>
+</li><li><b>Law of Large Numbers</b>
+<ul><li>
+As total trials increases, observed odds --> expected odds.</li>
+</li></ul>
+</li><li><b>Time-Accuracy Tradeoff</b>
+<ul><li>
+More trials == more accurate + more time</li>
+</li></ul>
+</ul>
+
+</li><br><li><b>Examples:</b>
+<ul>
+<li><b>
+Finding pi on a desert isle</b> (see
+<a href="piOnADesertIsle.py">piOnADesertIsle.py</a>)
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/a1FbFJaqKd8"></span><br>
+Here, we have fun approximating pi by repeatedly throwing a coconut into a circle we inscribed in a square (using a vine we found on the beach).  If the coconut throws are random, and we ignore throws that land outside the square, then the odds that a throw lands inside the circle are the ratio of the area of the circle divided by the area of the square, which equals pi/4.  So we guess that pi is about 4 times our observed ratio.
+
+</li><br><li><b>
+Random Run Length</b> (see
+<a href="randomRunLength.py">randomRunLength.py</a>)
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/gYhJ77BspyM"></span><br>
+We will say that a "run" of random numbers continues
+until you pick one that is smaller than the previous one.
+That last number ends the run, and is also counted in the run
+(so the shortest possible run length is 2).
+With this definition, what is the expected length of
+a run of random numbers?
+
+</li><br><li><b>
+Dice Throwing Tables</b> (see
+<a href="diceThrowing.py">diceThrowing.py</a> and
+<a href="betterDiceThrowing.py">betterDiceThrowing.py</a>)
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/D1MZ7RYyFpk"></span><br>
+Here we compute the odds of getting various sums by rolling different numbers of different-sided dice (say, rolling 4 5-sided dice).  There are many web resources to check your answer, such as this one (chosen randomly).
+
+</li><br><li><b>
+The Birthday Problem</b> (see
+<a href="birthdayProblem.py">birthdayProblem.py</a>)
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/LkxRGJwQW00"></span><br>
+And here we solve the famous birthday problem:  how many people must be in a room so that it is more likely than not that at least two of them share a birthday (same day and month, not necessarily year; and we ignored leap year birthdays)?  You can check your answer at the Wikipedia page on the Birthday Problem.
+</li>
+</ul>
+</ul>
+
+</div>
+</body>
+</html>

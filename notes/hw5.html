@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112 Spring 2018: Fundamentals of Programming and Computer Science<br>
+Homework 5 (Due Saturday 17-Feb, at 8pm)
+</h1>
+
+<hr>
+
+<ul>
+<li>This assignment is <span class="solo">SOLO</span>. This means you may not look at other student's code or let other students look at your code for these problems. See the syllabus for details.
+</li>
+
+<hr>
+
+  <li>For this assignment, you will want to make use of your Sudoku related code from colab5.  In order to facilitate this, you are going to create your very first Python library module. You should copy your functions into the sudoku.py library that we have included.  Once your code is in the Sudoku library, add the line <b>from sudoku import *</b> to your hw5.py file; then you can just call the functions directly from within hw5.py. For example, if you wanted to check whether a sudoku board was legal, you would write:</li>
+
+<div class="python-code no-run no-viz no-copy">from sudoku import *
+if isLegalSudoku(board):
+    # do stuff
+</div>
+  
+  <li>When grading, we will provide our own version of the sudoku.py library that contains our implementation of the library.  <b>Do not include any of your colab5 code inside hw5.py; you must put it into sudoku.py.</b> Additionally, please note that our implementation assumes all blank cells are represented by 0. Make sure your implementation works with this assumption!</li>
+  <li>If you did not finish colab5, don't panic!  You can build the vast majority of the game without a functional sudoku.py library.  Simply assume that your isLegalSudoku function works correctly and write your program accordingly. If you'd like to test your Sudoku game with a working library, ask a TA to help you fix yours during office hours.</li>
+
+<hr>
+
+<li>To start:
+<ol>
+<li>Go to your folder named 'week5'</li>
+<li>Download <a href="sudoku.py" download>sudoku.py</a> into that folder.</li>
+<li>Create a file named hw5.py in that folder</li>
+<li>Edit hw5.py using Pyzo</li>
+<li>When you are ready, submit hw5.py to Autolab. For this hw, you may submit as many times as you want.</li>
+</ol>
+</li>
+<li>Do not use dictionaries or recursion this week.</li>
+<li>Do not hardcode the test cases in your solutions.</li>
+</ul>
+
+<hr>
+
+<ol>
+
+<br><li><b>Lab Problems</b> [10pts]<br>
+Attend your scheduled lab on Friday. While there, complete the basic problem and make a real attempt at the advanced problem. One of the TAs will record your participation by hand.</li>
+
+<br><li><b>playSudoku</b> [90 pts] [manually graded]<br>
+Write an animation that displays an interactive game allowing the user to play Sudoku.<br><br>
+
+Here are some things to consider while building your game.
+<ol>
+  <li>Define a function starterBoard() which returns the starter board for the game (defined as a 2D list, like in colab5). You should then specify that <b>data.board = starterBoard()</b> in the init function. You can then test the game by returning different boards in starterBoard. In fact, this is part of how we will test your code!</li>
+  <li>The game starts by displaying the full 9x9 grid (in the format of a standard Sudoku board) and filling in the numbers already included.</li>
+  <li>At any time, a single cell in the board is highlighted.  The player can change the highlighted cell by clicking on a new cell, or by moving from the current cell with the up, down, left, and right arrows (with wraparound, so for example, pressing the left arrow with the selection in the leftmost column causes the selection to move to the rightmost column in the same row). If the user clicks outside of the board, the highlighted cell does not change.</li>
+  <li>To make a move, the current player can press a single digit key to insert a number into an empty square.  The move is only allowed if it will still result in a valid board.</li>
+  <li>A player can clear the number from the highlighted square by pressing the backspace key.</li>
+  <li>Initial numbers (squares that were filled in before game play began) should be a different color than numbers added by a player.  In addition, a player cannot modify initial numbers.</li>
+  <li>If, after a move, the player has properly filled in the entire board and won the game, a message should be displayed congratulating the player.  After this, all further keypresses and mouse presses should be ignored.</li>
+</ol><br>
+
+Note: So long as you follow the rules above, there are many tiny details left unanswered here (how large should the board be? what colors should I use?  exactly what should the board look like? what font for the numbers? etc, etc, etc). You have to decide them for yourself.  Do not ask on piazza, do not ask at OH.  Just decide. Keep it simple.  We are not looking for anything amazing here, just a simple playable game that follows the rules above.  Have fun!<br><br>
+
+Addendum 1: If you want to test whether you can win the game properly, but don't want to play lots of Sudoku, consider testing with an almost complete board such as this one:
+<pre>
+[
+  [ 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  [ 5, 0, 8, 1, 3, 9, 6, 2, 4],
+  [ 4, 9, 6, 8, 7, 2, 1, 5, 3],
+  [ 9, 5, 2, 3, 8, 1, 4, 6, 7],
+  [ 6, 4, 1, 2, 9, 7, 8, 3, 5],
+  [ 3, 8, 7, 5, 6, 4, 0, 9, 1],
+  [ 7, 1, 9, 6, 2, 3, 5, 4, 8],
+  [ 8, 6, 4, 9, 1, 5, 3, 7, 2],
+  [ 2, 3, 5, 7, 4, 8, 9, 1, 6]
+]
+</pre><br>
+
+Addendum 2: You may solve this problem any way you wish.  That said, here are some hints/suggestions for one approach to solving the problem.  Use this or not as you wish.  Good luck! <b>Note:</b> these videos are for a slightly older version of the problem, and may not be 100% accurate, but they're still a good guide.
+<ol start="0"><br>
+  <li>Read the problem<span class="play-video"
+      data-src="https://www.youtube.com/embed/kbSGMadz2-Y"></span></li>
+
+  <li>Display the board<span class="play-video"
+      data-src="https://www.youtube.com/embed/EJjU-RWwLco"></span></li>
+
+  <li>Improve the board display<span class="play-video"
+      data-src="https://www.youtube.com/embed/NnnUkpBYpUQ"></span></li>
+
+  <li>Highlight a cell<span class="play-video"
+      data-src="https://www.youtube.com/embed/5eEoFqYsaqQ"></span></li>
+
+  <li>Show initial numbers<span class="play-video"
+      data-src="https://www.youtube.com/embed/zayswfJgLHg"></span></li>
+
+  <li>Handle moves<span class="play-video"
+      data-src="https://www.youtube.com/embed/k0MjqtgrzQE"></span></li>
+
+  <li>Win the game<span class="play-video"
+      data-src="https://www.youtube.com/embed/06KR_5kEgd0"></span></li>
+</ol>
+</li>
+
+<br><li><b>Bonus/Optional: playSokoban</b> [3 pts] [manually graded]<br>
+First, read
+<a target="_blank" href="https://en.wikipedia.org/wiki/Sokoban">the Wikipedia page on Sokoban</a>.
+Then, write the function playSokoban() that plays the game.   Do not use any images.  All drawing must be with graphics primitives (lines, rectangles, ovals, etc).   Also, do not use any sound.  Besides that, design as you will.   The nicer the game, the more points awarded.   Have fun!
+</li>
+
+</ol>
+</div>
+</body>
+</html>

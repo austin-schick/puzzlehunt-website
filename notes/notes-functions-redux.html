@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Functions Redux (part 1)<br>
+</h1>
+<hr>
+
+<ol>
+<li><b><a href="#varArgs">Variable length args (*args)</a></b></li>
+<li><b><a href="#defaultArgs">Default args</a></b>
+<ol>
+<li><b><a href="#defaultArgsExample">Default args example</a></b></li>
+<li><b><a href="#noMutableDefaultArgs">Do not use mutable default args</a></b></li>
+<li><b><a href="#mutableDefaultArgFix">One workaround for mutable default args</a></b></li>
+</li></ol>
+<li><b><a href="#fnsAsParameters">Functions as parameters</a></b></li>
+<li><b><a href="#lambdaFns">Lambda functions</a></b></li>
+<li><b><a href="#keywordArgs">Keyword args (**kwargs)</a></b></li>
+<li><b><a href="#fnsInsideFns">Functions inside functions</a></b></li>
+<!--
+<li><b><a href="#nonlocalVars">Closures + Non-local variables</a></b></li>
+<li><b><a href="#nonlocalVarsFailOnWrite">Non-local variables fail on setting 
+(use nonlocal)</a></b></li>
+-->
+<li><b><a href="#fnsThatReturnFns">Functions that return functions</a></b></li>
+<li><b><a href="#fnDecorators">Function decorators</a></b></li>
+</ol>
+
+<hr>
+<ol>
+<li><a name="varArgs"></a><b>Variable length args (*args)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/wCgLt8_b0vY"></span><br>
+<div class="python-code">
+def longestWord(*args):
+    if (len(args) == 0): return None
+    result = args[0]
+    for word in args:
+        if (len(word) > len(result)):
+            result = word
+    return result
+
+print(longestWord("this", "is", "really", "nice")) # really
+
+mywords = ["this", "is", "really", "nice"]
+
+print(longestWord(mywords))  # ['this', 'is', 'really', 'nice']
+print(longestWord(*mywords)) # really
+</div></li><br>
+
+<li><a name="defaultArgs"></a><b>Default args</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/RNUgqyalMFc"></span><br>
+<ol>
+<li><a name="defaultArgsExample"></a><b>Default args example</b>
+<div class="python-code">
+def f(x, y=10): return (x,y)
+print(f(5))   # (5, 10)
+print(f(5,6)) # (5, 6)
+</div></li><br><li><a name="noMutableDefaultArgs"></a><b>Do not use mutable default args</b>
+<div class="python-code">
+def f(x, L=[ ]):
+    L.append(x)
+    return L
+
+print(f(1))
+print(f(2)) # why is this [1, 2]?
+</div></li><br><li><a name="mutableDefaultArgFix"></a><b>One workaround for mutable default args</b>
+<div class="python-code">
+def f(x, L=None):
+    if (L == None):
+        L = [ ]
+    L.append(x)
+    return L
+
+print(f(1))
+print(f(2)) # [2] (that's better)
+</div></li></ol></li><br><li><a name="fnsAsParameters"></a><b>Functions as parameters</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/YBPUKTZXU9M"></span><br>
+<div class="python-code">
+def derivative(f, x):
+    h = 10**-8
+    return (f(x+h) - f(x))/h
+
+def f(x): return 4*x + 3
+print(derivative(f, 2)) # about 4
+
+def g(x): return 4*x**2 + 3
+print(derivative(g, 2)) # about 16 (8*x at x==2)
+</div></li><br><li><a name="lambdaFns"></a><b>Lambda functions</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/dr9wnHnmFmI"></span><br>
+<div class="python-code">
+print(derivative(lambda x:3*x**5 + 2, 2)) # about 240, 15*x**4 at x==2
+
+myF = lambda x: 10*x + 42
+print(myF(5)) # 92
+print(derivative(myF, 5)) # about 10
+</div></li><br>
+
+<li><a name="keywordArgs"></a><b>Keyword args (**kwargs)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/YgXNlpaBGoE"></span><br>
+<div class="python-code">
+def f(x=1, y=2): return (x,y)
+print(f()) # (1, 2)
+print(f(3)) # (3, 2)
+print(f(y=3)) # (1, 3) [here is where we use a keyword arg]
+
+def f(x, **kwargs): return (x, kwargs)
+print(f(1)) # (1, { })
+print(f(2, y=3, z=4)) # (2, {'z': 4, 'y': 3})
+</div></li><br>
+<li><a name="fnsInsideFns"></a><b>Functions inside functions</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/L4rrywvYqWU"></span><br>
+<div class="python-code">
+def f(L):
+    def squared(x): return x**2
+    return [squared(x) for x in L]
+print(f(range(5)))
+try:
+    print(squared(5))
+except:
+    print("squared is not defined outside f")
+</div></li>
+<!--
+<br><li><a name="nonlocalVars"></a><b>Closures + Non-local variables</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/S-QPV2z5-cA"></span><br>
+<div class="python-code">
+def f(L):
+    myMap = dict()
+    def squared(x):
+        result = x**2
+        myMap[x] = result
+        return result
+    squaredList = [squared(x) for x in L]
+    return myMap
+print(f(range(5)))
+</div></li><br><li><a name="nonlocalVarsFailOnWrite"></a><b>Non-local variables fail on setting (use nonlocal)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/rD7eVVbqzJA"></span><br>
+<div class="python-code">
+def brokenF(L):
+    lastX = 0
+    def squared(x):
+        result = x**2
+        lastX = x
+        return result
+    squaredList = [squared(x) for x in L]
+    return lastX
+print(brokenF(range(5)))
+
+def fixedF(L):
+    lastX = 0
+    def squared(x):
+        nonlocal lastX
+        result = x**2
+        lastX = x
+        return result
+    squaredList = [squared(x) for x in L]
+    return lastX
+print(fixedF(range(5)))
+</div></li>
+-->
+<br><li><a name="fnsThatReturnFns"></a><b>Functions that return functions</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/RbhtMFTJ3nU"></span><br>
+<div class="python-code">
+def derivativeFn(f):
+    def g(x):
+        h = 10**-5
+        return (f(x+h) - f(x))/h
+    return g
+
+def f(x): return 5*x**3 + 10
+fprime1 = derivativeFn(f)
+fprime2 = derivativeFn(fprime1)
+print(f(3))    # 145, 5*x**3 + 10 evaluated at x == 3
+print(fprime1(3)) # about 135, 15*x**2 evaluated at x == 3
+print(fprime2(3)) # about 90, 30*x evaluated at x == 3
+</div></li>
+
+<br><li><a name="fnDecorators"></a><b>Function decorators</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/m1VEk_s2pLU"></span><br>
+<div class="python-code">
+@derivativeFn
+def h(x): return 5*x**3 + 10
+print(h(3)) # 135, matches fprime1 from above.
+</div>
+
+</ol>
+<hr>
+</div>
+</body>
+</html>

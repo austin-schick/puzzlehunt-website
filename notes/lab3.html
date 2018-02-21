@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112 Spring 2018: Fundamentals of Programming and Computer Science<br>
+Lab 3 (Friday 2-Feb)
+</h1>
+
+<hr>
+
+These problems should be completed during your scheduled lab on Friday. 
+To get full credit on the lab portion of the homework, you must complete the basic problem, 
+attempt the advanced problem, and show your work to one of the lab TAs.
+You may work on these problems collaboratively or individually, as you wish (unless the instructions state otherwise).<br><br>
+
+Do not use lists or recursion this week. Do not hardcode the test cases in your solutions.
+
+<hr>
+
+<ol>
+
+<br><li><b>Basic 1: Pair Programming!</b><br>
+  Pair programming is a process where two people code together simultaneously. One person is the <b>driver</b>: they sit at the computer and actually type the code. The other is the <b>navigator</b>: they sit next to the driver and direct the coding process by suggesting what should be done next and reviewing each line of code. The pair switches roles every so often to make sure that they both get a chance to try both roles; in 15-112, we'll start by switching roles <b>every five minutes</b> (as announced by the TAs).<br><br>
+
+  Find a partner and use pair programming to write the function nthFunkyNumber(n). We define a funky number to be a positive number where the ones digit is divisible by 1, the tens digit is divisible by 2, the hundreds digit is divisible by 3, and so on. This means that 1-9 are all funky, as are 20-29, 300-309, etc. We assume that any provided number will have 9 or fewer digits. <b>For this function, you may not cast numbers to strings.</b><br><br>
+
+You have up to 20 minutes to work on this problem. After that point, the TAs will check your work, give credit to everyone who has used effective collaboration, and will move you on to the next problem.<br><br>
+
+<div class="python-code no-run no-viz">
+# Test cases
+def testNthFunkyNumber():
+    print('Testing nthFunkyNumber()... ', end='')
+    assert(nthFunkyNumber(0) == 1)
+    assert(nthFunkyNumber(1) == 2)
+    assert(nthFunkyNumber(8) == 9)
+    assert(nthFunkyNumber(9) == 20)
+    assert(nthFunkyNumber(48) == 89)
+    assert(nthFunkyNumber(49) == 300)
+    assert(nthFunkyNumber(111) == 622)
+    assert(nthFunkyNumber(184) == 965)
+    assert(nthFunkyNumber(199) == 4000)
+    print('Passed!')
+</div></li>
+
+<br><li><b>Basic 2: Debugging</b><br>
+Each of the following four programs has at least one error (or bug) in it somewhere. Your task is to find and fix the bugs without substantially rewriting the program. Note that each of these problems is from a previous assignment; you can go and review the problem statements and test cases for each from the assignment writeups. You may assume the program is correct when it passes the given test cases.<br><br>
+
+To get full credit on this second part of the lab, you must solve the first debugging problem and show good effort towards debugging the rest. You may either work collaboratively or individually on these problems, as you wish.<br><br>
+
+<ol>
+  <li><b>Debugging 1: nearestOdd</b> (from colab1)<br>
+
+<div class="python-code no-run no-viz">
+def nearestOdd(n):
+    if n % 2 == 0:
+        return n - 1
+    else:
+        return (n - (n % (2 + 1)))
+</div></li>
+
+<br><li><b>Debugging 2: getTheCents</b> (from hw1)<br>
+
+<div class="python-code no-run no-viz">
+def getTheCents(n):
+    if isinstance(n, int):
+        return 0
+    cents = (n * 10 ** 2) % 100
+    if cents > int(cents):
+        return int(cents) + 1
+    else:
+        return int(cents)
+</div></li>
+
+<br><li><b>Debugging 3: gradebookSummary</b> (from colab2)<br>
+
+<div class="python-code no-run no-viz">
+def gradebookSummary(gradebookFilename):
+    with open(gradebookFilename, "r") as f:
+        grades = f.read()
+    result = ""
+    for line in grades.splitlines():
+        if line.strip() = "" or line[0] = "#":
+            continue
+        firstWord = None
+        gradeSum = 0
+        gradeCount = 0
+        for item in line.split(","):
+            if firstWord == None:
+                firstWord == item
+            else:
+                gradeSum += int(item)
+                gradeCount += 1
+        gradeStr = "%0.2f" % (gradeSum/gradeCount)
+        result += firstWord + "\t" + gradeStr + "\n"
+    result = result[:-1]
+    return result
+</div></li>
+
+<br><li><b>Debugging 4: patternedMessage</b> (from hw2)<br>
+
+<div class="python-code no-run no-viz">
+def removeWhitespace(s):
+    newS = ""
+    for c in s:
+        if c not in string.whitespace:
+            newS =+ c
+    return newS
+    
+def patternedMessage(msg, pattern):
+    newMsg = removeWhitespace(msg)
+    msgIndex = 0
+    newS = ""
+    for i in range(len(pattern)):
+        if pattern[i] in string.whitespace:
+            newS += pattern[i]
+        else:
+            newS += msg[msgIndex]
+            msgIndex = msgIndex + 1 % len(msg)
+    return newS
+</div></li>
+
+</ol>
+</li>
+
+</ol>
+</div>
+<hr>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112 Spring 2018: Fundamentals of Programming and Computer Science<br>
+Lab 5 (Friday 16-Feb)
+</h1>
+
+<hr>
+
+These problems should be completed during your scheduled lab on Friday. 
+To get full credit on the lab portion of the homework, you must complete the basic problem, 
+attempt the advanced problem, and show your work to one of the lab TAs.
+You may work on these problems collaboratively or individually, as you wish (unless the instructions state otherwise).<br><br>
+
+Do not use recursion this week. Do not hardcode the test cases in your solutions.
+
+<hr>
+
+<ol>
+
+<br><li><b>Basic: findTheX(grid)</b><br>
+  <b>Note:</b> for this problem, you must collaborate with another student. You may choose whether to use pair programming or your own approach.<br>
+
+  Given a 2D list (grid) of 0s and 1s, we want to find an X made of 1s and return its location. The X is spread out over multiple cells in the grid; for example, in the following grid, the X is centered at row 2 and column 1, so findTheX should return (2, 1):
+
+<pre>[
+  [ 0, 0, 0, 0],
+  [ 1, 0, 1, 0],
+  [ 0, 1, 0, 0],
+  [ 1, 0, 1, 0]
+]</pre>
+
+An X will always be contained in a 3x3 box, and has 1s in the upper left, upper right, lower left, lower right, and center. It does not matter whether the other values are 0s or 1s.<br><br>
+
+If there is no X in the grid, you should return (-1, -1). There will be one X at most, and you are guaranteed that the provided list is at least 3x3 and only contains 0s and 1s. Have fun!<br><br>
+
+<div class="python-code no-run no-viz">
+def testFindTheX():
+    print("Testing findTheX...", end="")
+    list1 = [
+              [ 0, 0, 0, 0],
+              [ 1, 0, 1, 0],
+              [ 0, 1, 0, 0],
+              [ 1, 0, 1, 0]
+            ]
+    assert(findTheX(list1) == (2, 1))
+    list2 = [
+              [ 0, 0, 1, 0],
+              [ 1, 1, 0, 1],
+              [ 1, 0, 1, 0],
+              [ 0, 1, 0, 1]
+            ]
+    assert(findTheX(list2) == (2, 2))
+    list3 = [ 
+              [ 1, 0, 1],
+              [ 0, 1, 0],
+              [ 1, 0, 1]
+            ]
+    assert(findTheX(list3) == (1, 1))
+    list4 = [
+              [ 0, 1, 1, 0],
+              [ 1, 0, 1, 0],
+              [ 0, 0, 1, 1],
+              [ 1, 1, 1, 1]
+            ]
+    assert(findTheX(list4) == (-1, -1))
+    list5 = [
+              [ 1, 1, 0, 1],
+              [ 1, 1, 1, 1],
+              [ 1, 1, 1, 0],
+              [ 0, 1, 1, 1]
+            ]
+    assert(findTheX(list5) == (2, 2))
+    print("Done!")
+</div></li>
+
+
+<br><li><b>Advanced: circleGame</b><br>
+    The circle game is a very simple game. In it, you start with a blank window that shows the score in the upper left corner. Every time you click on the screen, you create a new circle. Every time you click on a circle that already exists, you delete that circle and add one to the score. The colors of the added circles depend on the current color state, which starts as purple but changes to red if the user pressed the "r" key, green if they press the "g" key, or blue if they press the "b" key. There is no end game- you just play until you're bored! Write an animation that lets the user play the circle game.</li>
+
+
+</ol>
+</li>
+
+</ol>
+</div>
+<hr>
+</body>
+</html>

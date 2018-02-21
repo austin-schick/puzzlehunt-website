@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: 1d Lists: Worked Examples
+</h1>
+<hr>
+
+<ol>
+<li><a href="#lockerProblem"><b>The Locker Problem</b></a></li>
+<li><a href="#anagrams"><b>Anagrams</b></a></li>
+<li><a href="#sieve1"><b>The Sieve of Eratosthenes</b></a></li>
+<li><a href="#sieve2"><b>The Prime Counting Function</b></a></li>
+<li><a href="#sorting"><b>Sorting (selection, bubble, merge, builtin sorts) (Moved to Efficiency Week!)</b></a></li>
+</ol>
+
+<hr>
+
+<ol>
+
+<li><a name="lockerProblem"></a><b>The Locker Problem</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/vJXLqgap4p4"></span>
+<div class="python-code">
+def lockerProblem(lockers):
+    isOpen = [ False ] * (lockers+1)
+    students = lockers
+    for student in range(1,students+1):
+        for locker in range(student, lockers+1, student):
+            isOpen[locker] = not isOpen[locker]
+    openLockers = [ ]
+    for locker in range(1, lockers+1):
+        if isOpen[locker]:
+            openLockers.append(locker)
+    return openLockers
+
+print(lockerProblem(2000))
+</div>
+
+</li><br><li><a name="anagrams"></a><b>Anagrams</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/8nxLoAvpmJ4"></span>
+<div class="python-code">
+def letterCounts(s):
+    counts = [0] * 26
+    for ch in s.upper():
+        if ((ch >= "A") and (ch <= "Z")):
+            counts[ord(ch) - ord("A")] += 1
+    return counts
+
+def isAnagram(s1, s2):
+    # First approach: same #'s of each letter
+    return (letterCounts(s1) == letterCounts(s2))
+
+def isAnagram(s1, s2):
+    # Second approach: sorted strings must match!
+    return sorted(list(s1.upper())) == sorted(list(s2.upper()))
+
+def testIsAnagram():
+    print("Testing isAnagram()...", end="")
+    assert(isAnagram("", "") == True)
+    assert(isAnagram("abCdabCd", "abcdabcd") == True)
+    assert(isAnagram("abcdaBcD", "AAbbcddc") == True)
+    assert(isAnagram("abcdaabcd", "aabbcddcb") == False)
+    print("Passed!")
+
+testIsAnagram()
+</div>
+
+</li><br><li><a name="sieve1"></a><b>The Sieve of Eratosthenes</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/ltXAU6m5rdw"></span>
+<div class="python-code">
+# Sieve of Eratosthenes
+
+# This function returns a list of prime numbers
+# up to n (inclusive), using the Sieve of Eratosthenes.
+# See http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+
+def sieve(n):
+    isPrime = [ True ] * (n+1) # assume all are prime to start
+    isPrime[0] = isPrime[1] = False # except 0 and 1, of course
+    primes = [ ]
+    for prime in range(n+1):
+        if (isPrime[prime] == True):
+            # we found a prime, so add it to our result
+            primes.append(prime)
+            # and mark all its multiples as not prime
+            for multiple in range(2*prime, n+1, prime):
+                isPrime[multiple] = False
+    return primes
+
+print(sieve(100))
+</div>
+
+</li><br><li><a name="sieve2"></a><b>The Prime Counting Function</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/D3ssRfqj-Uk"></span>
+<div class="python-code">
+# Sieve of Eratosthenes
+# More complete example, showing one reason why we might
+# care to use the sieve rather than the simple isPrime function
+# we already learned how to write.
+
+# We'll be computing the prime counting function, pi(n):
+# See http://en.wikipedia.org/wiki/Prime-counting_function
+
+# We'll do it two different ways:  once using the simple isPrime
+# function, and again using the sieve.  We'll time each way
+# and see how it goes.
+
+####################################################
+
+###################
+## sieve(n)
+###################
+
+# This function returns a list of prime numbers
+# up to n (inclusive), using the Sieve of Eratosthenes.
+# See http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+
+def sieve(n):
+    isPrime = [ True ] * (n+1) # assume all are prime to start
+    isPrime[0] = isPrime[1] = False # except 0 and 1, of course
+    primes = [ ]
+    for prime in range(n+1):
+        if (isPrime[prime] == True):
+            # we found a prime, so add it to our result
+            primes.append(prime)
+            # and mark all its multiples as not prime
+            for multiple in range(2*prime, n+1, prime):
+                isPrime[multiple] = False
+    return primes
+
+# Here we will use the sieve to compute the prime
+# counting function.  The sieve will return a list
+# of all the primes up to n, so the prime counting
+# function merely returns the length of this list!
+
+def piUsingSieve(n):
+    return len(sieve(n))
+
+###################
+## piUsingisPrime(n)
+###################
+
+# Here we will use the isPrime function to compute
+# the prime counting function.
+
+def piUsingIsPrime(n):
+    primeCount = 0
+    for counter in range(n+1):
+        if (isPrime(counter)):
+            primeCount += 1
+    return primeCount
+
+def isPrime(n):
+    if (n < 2): return False
+    if (n == 2): return True
+    if (n % 2 == 0): return False
+    for factor in range(3, 1+int(round(n**0.5)), 2):
+        if (n % factor == 0):
+            return False
+    return True
+
+####################################################
+
+###################
+## test code
+###################
+
+# Before running the timing code below, let's run
+# some test code to verify that the functions above
+# seemingly work.  Test values are from:
+# http://en.wikipedia.org/wiki/Prime-counting_function
+
+def testCorrectness():
+    print("First testing functions for correctness...", end="")
+    assert(piUsingSieve(10) == 4)
+    assert(piUsingIsPrime(10) == 4)
+    assert(piUsingSieve(100) == 25)
+    assert(piUsingIsPrime(100) == 25)
+    assert(piUsingSieve(1000) == 168)
+    assert(piUsingIsPrime(1000) == 168)
+    print("Passed!")
+
+testCorrectness()
+
+####################################################
+
+###################
+## timing code
+###################
+
+# Finally we can time each version for a large value of n
+# and compare their runtimes
+
+import time
+
+def testTiming():
+    n = 1000 # Use 1000 for Brython, 1000*1000 for Python
+
+    print("***************")
+    print("Timing piUsingIsPrime(" + str(n) + "):")
+    startTime = time.time()
+    result1 = piUsingIsPrime(n)
+    endTime = time.time()
+    time1 = endTime - startTime
+    print("   result = " + str(result1))
+    print("   time = " + str(time1) + " sec")
+
+    print("***************")
+    print("Timing piUsingSieve(" + str(n) + "):")
+    startTime = time.time()
+    result2 = piUsingSieve(n)
+    endTime = time.time()
+    time2 = endTime - startTime
+    print("   result = " + str(result2))
+    print("   time = " + str(time2) + " sec")
+
+    print("***************")
+    print("Comparison:")
+    print("   Same result: " + str(result1 == result2))
+    print("   (time of isPrime) / (time of sieve) = " + str(time1 / time2))
+    print("And this only gets worse, and quickly, for larger values of n.")
+
+testTiming()
+</div>
+
+</li><br><li><a name="sorting"></a><b>Sorting (selection, bubble, merge, builtin sorts) (Moved to Efficiency Week!)</b><br>
+<b>Sorting videos:</b>
+<ul>
+<li>selectionsort <span class="play-video"
+      data-src="https://www.youtube.com/embed/AMyc8WxkvH8"></span></li>
+<li>bubblesort <span class="play-video"
+      data-src="https://www.youtube.com/embed/ZPDtu-pcAEc"></span></li>
+<li>mergesort <span class="play-video"
+      data-src="https://www.youtube.com/embed/TMq9eYLGUCs"></span></li>
+<li>sorting timing <span class="play-video"
+      data-src="https://www.youtube.com/embed/Q7yuVDpU6FA"></span></li>
+</ul>
+<div class="python-code">
+# sorting.py
+
+import time, random
+
+####################################################
+# swap
+####################################################
+
+def swap(a, i, j):
+    (a[i], a[j]) = (a[j], a[i])
+
+####################################################
+# selectionSort
+####################################################
+
+def selectionSort(a):
+    n = len(a)
+    for startIndex in range(n):
+        minIndex = startIndex
+        for i in range(startIndex+1, n):
+            if (a[i] < a[minIndex]):
+                minIndex = i
+        swap(a, startIndex, minIndex)
+
+####################################################
+# bubbleSort
+####################################################
+
+def bubbleSort(a):
+    n = len(a)
+    end = n
+    swapped = True
+    while (swapped):
+        swapped = False
+        for i in range(1, end):
+            if (a[i-1] > a[i]):
+                swap(a, i-1, i)
+                swapped = True
+        end -= 1
+
+####################################################
+# mergeSort
+####################################################
+
+def merge(a, start1, start2, end):
+    index1 = start1
+    index2 = start2
+    length = end - start1
+    aux = [None] * length
+    for i in range(length):
+        if ((index1 == start2) or
+            ((index2 != end) and (a[index1] > a[index2]))):
+            aux[i] = a[index2]
+            index2 += 1
+        else:
+            aux[i] = a[index1]
+            index1 += 1
+    for i in range(start1, end):
+        a[i] = aux[i - start1]
+
+def mergeSort(a):
+    n = len(a)
+    step = 1
+    while (step < n):
+        for start1 in range(0, n, 2*step):
+            start2 = min(start1 + step, n)
+            end = min(start1 + 2*step, n)
+            merge(a, start1, start2, end)
+        step *= 2
+
+####################################################
+# builtinSort (wrapped as a function)
+####################################################
+
+def builtinSort(a):
+    a.sort()
+
+####################################################
+# testSort
+####################################################
+
+def testSort(sortFn, n):
+    a = [random.randint(0,2**31) for i in range(n)]
+    sortedA = sorted(a)
+    startTime = time.time()
+    sortFn(a)
+    endTime = time.time()
+    elapsedTime = endTime - startTime
+    assert(a == sortedA)
+    print("%20s n=%d  time=%6.3fs" % (sortFn.__name__, n, elapsedTime))
+
+def testSorts():
+    n = 2**8 # use 2**8 for Brython, use 2**12 or larger for Python
+    for sortFn in [selectionSort, bubbleSort, mergeSort, builtinSort]:
+        testSort(sortFn, n)
+
+testSorts()
+</div>
+
+</li>
+</ol>
+</div>
+</body>
+</html>

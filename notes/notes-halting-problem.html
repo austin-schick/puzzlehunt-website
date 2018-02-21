@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: The Halting Problem
+</h1>
+<hr>
+
+<ol>
+    <li><a href="#introduction"><b>Introduction</b></a></li>
+    <li><a href="#programs-as-input"><b>Programs as Input</b></a></li>
+    <li><a href="#halting-problem"><b>The Halting Problem</b></a></li>
+    <li><a href="#results"><b>Results</b></a></li>
+</ol>
+
+<hr>
+
+<ol>
+
+<li><a name="introduction"></a><b>Introduction</b><br>
+    <ul>
+        <li>Testing is important, as we established early in the semester. However, test cases are not infalliable; we may sometimes forget to include a specific test case, which means that our code may break unexpectedly.</li>
+        <li>It would be great if we could write a program that could test any given program to make sure it works correctly on all possible inputs. First, though, we have to make sure that the program actually finishes running for all possible inputs.</li>
+        <li><b>The Halting Problem:</b> can we write a program that checks an input program to make sure it doesn't run forever? In other words, determine whether the input program halts.</li>
+    </ul>
+</li><br>
+
+<li><a name="programs-as-input"></a><b>Programs as Input</b><br>
+    <ul>
+        <li>Before we can solve the halting problem, we have to determine how to use programs as input.</li>
+        <li>Programs can be represented as text; therefore, we can pass a program in as a string, then use exec to evaluate the code directly.</li><br>
+
+<div class="python-code no-viz no-run">
+# The Halting Problem (a 112-friendly version)
+
+##############################################################################
+# Step 1: run(program, input)
+##############################################################################
+
+# We start with a function that can run a given program with a given input:
+# (Students do not need to write the following run function from scratch,
+# but should understand what it is doing):
+import io, sys
+def run(programString, inputString):
+    sys.stdin = io.StringIO(inputString)
+    try: exec(programString, globals())
+    except Exception as e: print("Error:", e)
+    finally: sys.stdin = sys.__stdin__
+
+# First, let's just run an everyday program:
+
+p1 = '''
+def fib(n): return 1 if (n < 2) else fib(n-1) + fib(n-2)
+N = int(input())
+print([fib(n) for n in range(N)])
+'''
+
+# Example 1.1: Run a program with expected input
+run(p1,'7')  # --> [1, 1, 2, 3, 5, 8, 13]
+
+# Example 1.2: Run the same program with itself as input (crashes)
+run(p1, p1)  # --> Error: invalid literal for int() with base 10: ''
+
+##############################################################################
+# Step 2: run a program with itself as input (without crashing)
+##############################################################################
+
+# Now let's patch p1 so that it does not crash on non-int input,
+# so it can run with itself as input:
+
+p2 = '''
+def fib(n): return 1 if (n < 2) else fib(n-1) + fib(n-2)
+inputLine = input()
+try: N = int(inputLine)
+except: N = len(inputLine)
+print([fib(n) for n in range(N)])
+'''
+
+# Example 2.1: Program still works as expected
+run(p2,'7')  # --> [1, 1, 2, 3, 5, 8, 13]
+
+# Example 2.2: And now runs (at least halts) on itself as input
+run(p2, p2)  # --> []  (why?)
+
+##############################################################################
+# Step 3: run a program that does something interesting with itself as input
+##############################################################################
+
+# Now let's write a program that does something vaguely interesting
+# with itself as input...
+
+p3 = '''
+import sys
+
+def getAllInput():
+    # reads until EOF
+    return sys.stdin.read()
+
+def findTopLevelFns(code):
+    fns = [ ]
+    for line in code.splitlines():
+        lineItems = line.split()
+        if ((len(lineItems) >= 2) and (lineItems[0] == 'def')):
+            fns.append(cleanFnName(lineItems[1]))
+    return fns
+
+def cleanFnName(fnName):
+    # fnName is either just the name, or perhaps the name followed
+    # by the parameters. So we exclude chars from the left-paren onward.
+    i = fnName.find('(')
+    return fnName if (i < 0) else fnName[:i]
+
+def main():
+    code = getAllInput()
+    print(findTopLevelFns(code))
+
+main()
+'''
+
+code = '''
+def f(x): return x+1
+def g(x): return x+2
+'''
+
+# Example 3.1: run on a simple case:
+run(p3, code)  # --> ['f', 'g']
+
+# Example 3.2: And now it does something interesting with itself as input:
+run(p3, p3)  # --> ['getAllInput', 'findTopLevelFns', 'cleanFnName', 'main']
+</div>
+
+    </ul>
+</li><br>
+
+<li><a name="halting-problem"></a><b>The Halting Problem</b><br>
+    <ul>
+        <li>Now that we can handle programs as input, we can try to write a program runsForever, which detects whether the given program runs forever on a given input.</li>
+        <li>Actually, we'll solve a sub-problem. We'll write the function halts, which takes both program and input and detects whether the program halts on that input. It isn't quite clear how to write this code, though...</li><br>
+
+<div class="python-code no-viz no-run">
+##############################################################################
+# Step 4: The Halting Problem
+##############################################################################
+
+# Definition: halts(program, input) returns True if the given program
+# ever halts (stops running, even if by crashing) on the given input,
+# and False otherwise (that is, if the given program runs forever on the
+# given input).
+
+# One way to try to write halts(program, input) is to simply run the given
+# program with the run() function above.  But...  This does not work.
+# We can run it until it halts (with or without a crash).
+# But how do we know if it NEVER halts?  How can we return False here?
+def halts(programString, inputString):
+    try: run(programString, inputString)
+    except: pass
+    return True
+
+# So: let's just ASSUME that someone somehow was super-clever and figured
+# out a way to write this halts() function.  So?  Well, then we can write
+# this program, that uses that halts() function:
+
+p4 = '''
+import sys
+programString = sys.stdin.read() # assume the input is a program
+inputString = programString      # provide the program as input to itelf!
+if (halts(programString, inputString)):
+    print('Running forever!')
+    while True: pass
+else:
+    print('Halting!')
+'''
+
+# Example 4.1 run haltingProblem (p4) on code that hangs:
+code = '''while True: pass'''
+run(p4, code) # --> Halting! (if halts() works correctly)
+
+# Example 4.2: run haltingProblem (p4) on p3 from above:
+run(p4, p3)  # --> Running forever!  (because run(p3, p3) halts)
+
+# So....?  Intuition suggests this is at least VERY HARD to do.
+# For example: prove Fermat's Last Theorem, Goldbach's Conjecture, ...
+# (Note: we did not discuss how you could use the Halting Problem
+# to prove FLT or Goldbach's, so you are not responsible for that.
+# But, of course, we did do the following:
+
+# And, in fact...
+
+# Example 4.3: THE HALTING PROBLEM
+run(p4, p4)  # --> WHAT HAPPENS?!?
+
+# We see:
+# run(p4, p3) hangs (runs forever) because run(p3, p3) halts.
+# And so:
+# run(p4, p4) should hang if run(p4, p4) halts (and vice versa).
+# And that is impossible.
+# And that is the halting problem!
+
+# So: it is IMPOSSIBLE to write the function halts(program, input)
+# that always returns True or False for arbitrary programs and inputs.
+
+# So what?
+
+# Well, if you can't even tell if a program is going to halt on an input,
+# how can you tell anything else that is interesting, such as whether or
+# not the program WORKS (that is, it halts and produces the correct output)? 
+# (You can't.)
+
+# Uh oh.
+</div>
+    </ul>
+</li><br>
+
+<li><a name="results"></a><b>Results</b><br>
+    <ul>
+        <li>We've proven that we can't write a function which can always determine whether the given program halts on the given input. This means that it is <b>impossible</b> for us to prove that a given program will always behave correctly on a given input as well.</li>
+        <li>There are a whole class of problems that are <b>uncomputable</b>; in other words, they can't be solved with a program.</li>
+        <li>While we cannot write a function for every possible function on every possible input, we can write halting functions on restricted inputs for specific functions. This lets us prove that certain functions will always behave correctly on specific kinds of input.</li>
+        <li>It actually makes sense that we can't always determine whether a program halts! Otherwise, we'd be able to prove crazy things...</li><br>
+
+<div class="python-code no-viz no-run">
+# You are not responsible for the following code, and can ignore everything
+# from here onwards, but this is an example program that ignores its
+# input, and only halts if Goldbach's Conjecture is False, and hangs
+# (runs forever) if Goldbach's Conjecture is True.
+
+def findGoldbachViolation():
+    # halt if/when we find an even number > 2 that is not the sum of two primes
+    def isPrime(n):
+        if (n < 2): return False
+        if (n == 2): return True
+        if (n % 2 == 0): return False
+        for factor in range(3,round(n**0.5)+1,2):
+            if (n % factor == 0): return False
+        return True
+    def goldbachWorks(even):
+        # return true if this even is the sum of two primes, false otherwise
+        for p in range(2, even):
+            if (isPrime(p) and (isPrime(even-p))):
+                return True
+        return False
+    even = 4
+    while True:
+        if (even%(1000*10) == 0): print(even)
+        if (not goldbachWorks(even)):
+            print('Found the violation at even =', even)
+            return False
+        even += 2
+    # never halt if Goldach's conjecture is True
+
+findGoldbachViolation()
+</div>
+    </ul>
+</li>
+</ol>
+
+<hr>
+</div>
+</body>
+</html>

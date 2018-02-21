@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: 2d Lists: Worked Examples
+</h1>
+<hr>
+
+<ol>
+<li><a href="#wordsearch1"><b>Word Search</b></a></li>
+<li><a href="#wordsearch2"><b>Word Search Redux</b></a></li>
+<li><a href="#connect4"><b>Connect4</b></a></li>
+<li><a href="#othello"><b>Othello</b></a></li>
+</ol>
+
+<hr>
+
+<ol>
+
+<li><a name="wordsearch1"></a><b>Word Search</b>
+<span class="play-video1"
+      data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
+<div class="python-code">
+# wordSearch1.py
+
+def wordSearch(board, word):
+    (rows, cols) = (len(board), len(board[0]))
+    for row in range(rows):
+        for col in range(cols):
+            result = wordSearchFromCell(board, word, row, col)
+            if (result != None):
+                return result
+    return None
+
+def wordSearchFromCell(board, word, startRow, startCol):
+    for dir in range(8):
+        result = wordSearchFromCellInDirection(board, word,
+                                               startRow, startCol, dir)
+        if (result != None):
+            return result
+    return None
+
+def wordSearchFromCellInDirection(board, word, startRow, startCol, dir):
+    (rows, cols) = (len(board), len(board[0]))
+    dirs = [ (-1, -1), (-1, 0), (-1, +1),
+             ( 0, -1),          ( 0, +1),
+             (+1, -1), (+1, 0), (+1, +1) ]
+    dirNames = [ "up-left"  ,   "up", "up-right",
+                 "left"     ,         "right",
+                 "down-left", "down", "down-right" ]
+    (drow,dcol) = dirs[dir]    
+    for i in range(len(word)):
+        row = startRow + i*drow
+        col = startCol + i*dcol
+        if ((row < 0) or (row >= rows) or
+            (col < 0) or (col >= cols) or
+            (board[row][col] != word[i])):
+            return None
+    return (word, (startRow, startCol), dirNames[dir])
+
+def testWordSearch():
+    board = [ [ 'd', 'o', 'g' ],
+              [ 't', 'a', 'c' ],
+              [ 'o', 'a', 't' ],
+              [ 'u', 'r', 'k' ],
+            ]
+    print(wordSearch(board, "dog")) # ('dog', (0, 0), 'right')
+    print(wordSearch(board, "cat")) # ('cat', (1, 2), 'left')
+    print(wordSearch(board, "tad")) # ('tad', (2, 2), 'up-left')
+    print(wordSearch(board, "cow")) # None
+
+testWordSearch()
+</div>
+
+</li><br><li><a name="wordsearch2"></a><b>Word Search Redux</b>
+<span class="play-video1"
+      data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
+<div class="python-code">
+# wordSearch2.py
+# This time with a slightly different handling of directions
+
+def wordSearch(board, word):
+    (rows, cols) = (len(board), len(board[0]))
+    for row in range(rows):
+        for col in range(cols):
+            result = wordSearchFromCell(board, word, row, col)
+            if (result != None):
+                return result
+    return None
+
+def wordSearchFromCell(board, word, startRow, startCol):
+    for drow in [-1, 0, +1]:
+        for dcol in [-1, 0, +1]:
+            if ((drow != 0) or (dcol != 0)):
+                result = wordSearchFromCellInDirection(board, word,
+                                                       startRow, startCol,
+                                                       drow, dcol)
+                if (result != None):
+                    return result
+    return None
+
+def wordSearchFromCellInDirection(board, word, startRow, startCol, drow, dcol):
+    (rows, cols) = (len(board), len(board[0]))
+    dirNames = [ ["up-left"  ,   "up", "up-right"],
+                 ["left"     ,   ""  , "right"   ],
+                 ["down-left", "down", "down-right" ] ]
+    for i in range(len(word)):
+        row = startRow + i*drow
+        col = startCol + i*dcol
+        if ((row < 0) or (row >= rows) or
+            (col < 0) or (col >= cols) or
+            (board[row][col] != word[i])):
+            return None
+    return (word, (startRow, startCol), dirNames[drow+1][dcol+1])
+
+def testWordSearch():
+    board = [ [ 'd', 'o', 'g' ],
+              [ 't', 'a', 'c' ],
+              [ 'o', 'a', 't' ],
+              [ 'u', 'r', 'k' ],
+            ]
+    print(wordSearch(board, "dog")) # ('dog', (0, 0), 'right')
+    print(wordSearch(board, "cat")) # ('cat', (1, 2), 'left')
+    print(wordSearch(board, "tad")) # ('tad', (2, 2), 'up-left')
+    print(wordSearch(board, "cow")) # None
+
+testWordSearch()
+</div>
+
+</li><br><li><a name="connect4"></a><b>Connect4</b>
+<span class="play-video1"
+      data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
+<div class="python-code">
+# connect4.py
+
+# A simple game of connect4 with a text interface
+# based on the wordSearch code written in class.
+
+def playConnect4():
+    rows = 6
+    cols = 7
+    board = makeBoard(rows, cols)
+    player = "X"
+    moveCount = 0
+    printBoard(board)
+    while (moveCount < rows*cols):
+        moveCol = getMoveCol(board, player)
+        moveRow = getMoveRow(board, moveCol)
+        board[moveRow][moveCol] = player
+        printBoard(board)
+        if checkForWin(board, player):
+            print("*** Player %s Wins!!! ***" % player)
+            return
+        moveCount += 1
+        player = "O" if (player == "X") else "X"
+    print("*** Tie Game!!! ***")
+
+def makeBoard(rows, cols):
+    return [ (["-"] * cols) for row in range(rows) ]
+
+def printBoard(board):
+    rows = len(board)
+    cols = len(board[0])
+    print()
+    # first print the column headers
+    print("    ", end="")
+    for col in range(cols):
+        print(str(col+1).center(3), " ", end="")
+    print()
+    # now print the board
+    for row in range(rows):
+        print("    ", end="")
+        for col in range(cols):
+            print(board[row][col].center(3), " ", end="")
+        print()
+
+def getMoveCol(board, player):
+    cols = len(board[0])
+    while True:
+        response = input("Enter player %s's move (column number) --> " %
+                         (player))
+        try:
+            moveCol = int(response)-1  # -1 since user sees cols starting at 1
+            if ((moveCol < 0) or (moveCol >= cols)):
+                print("Columns must be between 1 and %d. " % (cols), end="")
+            elif (board[0][moveCol] != "-"):
+                print("That column is full! ", end="")
+            else:
+                return moveCol
+        except:
+            # they did not even enter an integer!
+            print("Columns must be integer values! ", end="")
+        print("Please try again.")
+
+def getMoveRow(board, moveCol):
+    # find first open row from bottom
+    rows = len(board)
+    for moveRow in range(rows-1, -1, -1):
+        if (board[moveRow][moveCol] == "-"):
+            return moveRow
+    # should never get here!
+    assert(False)
+
+def checkForWin(board, player):
+    winningWord = player * 4
+    return (wordSearch(board, winningWord) != None) # that was easy!
+
+##############################################
+# taken from wordSearch.py
+##############################################
+
+def wordSearch(board, word):
+    (rows, cols) = (len(board), len(board[0]))
+    for row in range(rows):
+        for col in range(cols):
+            result = wordSearchFromCell(board, word, row, col)
+            if (result != None):
+                return result
+    return None
+
+def wordSearchFromCell(board, word, startRow, startCol):
+    for drow in [-1, 0, +1]:
+        for dcol in [-1, 0, +1]:
+            if ((drow != 0) or (dcol != 0)):
+                result = wordSearchFromCellInDirection(board, word,
+                                                       startRow, startCol,
+                                                       drow, dcol)
+                if (result != None):
+                    return result
+    return None
+
+def wordSearchFromCellInDirection(board, word, startRow, startCol, drow, dcol):
+    (rows, cols) = (len(board), len(board[0]))
+    dirNames = [ ["up-left"  ,   "up", "up-right"],
+                 ["left"     ,   ""  , "right"   ],
+                 ["down-left", "down", "down-right" ] ]
+    for i in range(len(word)):
+        row = startRow + i*drow
+        col = startCol + i*dcol
+        if ((row < 0) or (row >= rows) or
+            (col < 0) or (col >= cols) or
+            (board[row][col] != word[i])):
+            return None
+    return (word, (startRow, startCol), dirNames[drow+1][dcol+1])
+
+playConnect4()
+</div>
+
+</li><br><li><a name="othello"></a><b>Othello</b>
+<span class="play-video1"
+      data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
+<div class="python-code">
+# othello.py
+
+def make2dList(rows, cols):
+    a=[]
+    for row in range(rows): a += [[0]*cols]
+    return a
+
+def hasMove(board, player):
+    (rows, cols) = (len(board), len(board[0]))
+    for row in range(rows):
+        for col in range(cols):
+            if (hasMoveFromCell(board, player, row, col)):
+                return True
+    return False
+
+def hasMoveFromCell(board, player, startRow, startCol):
+    (rows, cols) = (len(board), len(board[0]))
+    if (board[startRow][startCol] != 0):
+        return False
+    for dir in range(8):
+        if (hasMoveFromCellInDirection(board, player, startRow, startCol, dir)):
+            return True
+    return False
+
+def hasMoveFromCellInDirection(board, player, startRow, startCol, dir):
+    (rows, cols) = (len(board), len(board[0]))
+    dirs = [ (-1, -1), (-1, 0), (-1, +1),
+             ( 0, -1),          ( 0, +1),
+             (+1, -1), (+1, 0), (+1, +1) ]
+    (drow,dcol) = dirs[dir]
+    i = 1
+    while True:
+        row = startRow + i*drow
+        col = startCol + i*dcol
+        if ((row < 0) or (row >= rows) or (col < 0) or (col >= cols)):
+            return False
+        elif (board[row][col] == 0):
+            # no blanks allowed in a sandwich!
+            return False
+        elif (board[row][col] == player):
+            # we found the other side of the 'sandwich'
+            break
+        else:
+            # we found more 'meat' in the sandwich
+            i += 1
+    return (i > 1)
+
+def makeMove(board, player, startRow, startCol):
+    # assumes the player has a legal move from this cell
+    (rows, cols) = (len(board), len(board[0]))
+    for dir in range(8):
+        if (hasMoveFromCellInDirection(board, player, startRow, startCol, dir)):
+            makeMoveInDirection(board, player, startRow, startCol, dir)
+    board[startRow][startCol] = player
+
+def makeMoveInDirection(board, player, startRow, startCol, dir):
+    (rows, cols) = (len(board), len(board[0]))
+    dirs = [ (-1, -1), (-1, 0), (-1, +1),
+             ( 0, -1),          ( 0, +1),
+             (+1, -1), (+1, 0), (+1, +1) ]
+    (drow,dcol) = dirs[dir]
+    i = 1
+    while True:
+        row = startRow + i*drow
+        col = startCol + i*dcol
+        if (board[row][col] == player):
+            # we found the other side of the 'sandwich'
+            break
+        else:
+            # we found more 'meat' in the sandwich, so flip it!
+            board[row][col] = player
+            i += 1
+
+def getPlayerLabel(player):
+    labels = ["-", "X", "O"]
+    return labels[player]
+
+def printColLabels(board):
+    (rows, cols) = (len(board), len(board[0]))
+    print("   ", end="") # skip row label
+    for col in range(cols): print(chr(ord("A")+col)," ", end="")
+    print()
+
+def printBoard(board):
+    (rows, cols) = (len(board), len(board[0]))
+    printColLabels(board)
+    for row in range(rows):
+        print("%2d " % (row+1), end="")
+        for col in range(cols):
+            print(getPlayerLabel(board[row][col]), " ", end="")
+        print("%2d " % (row+1))
+    printColLabels(board)
+
+def isLegalMove(board, player, row, col):
+    (rows, cols) = (len(board), len(board[0]))
+    if ((row < 0) or (row >= rows) or (col < 0) or (col >= cols)): return False
+    return hasMoveFromCell(board, player, row, col)
+
+def getMove(board, player):
+    print("\n**************************")
+    printBoard(board)
+    while True:
+        prompt = "Enter move for player " + getPlayerLabel(player) + ": "
+        move = input(prompt).upper()
+        # move is something like "A3"
+        if ((len(move) != 2) or
+            (not move[0].isalpha()) or
+            (not move[1].isdigit())):
+            print("Wrong format!  Enter something like A3 or D5.")
+        else:
+            col = ord(move[0]) - ord('A')
+            row = int(move[1])-1
+            if (not isLegalMove(board, player, row, col)):
+                print("That is not a legal move!  Try again.")
+            else:
+                return (row, col)            
+
+def playOthello(rows, cols):
+    # create initial board
+    board = make2dList(rows, cols)
+    board[rows//2][cols//2] = board[rows//2-1][cols//2-1] = 1
+    board[rows//2-1][cols//2] = board[rows//2][cols//2-1] = 2
+    (currentPlayer, otherPlayer) = (1, 2)
+    # and play until the game is over
+    while True:
+        if (hasMove(board, currentPlayer) == False):
+            if (hasMove(board, otherPlayer)):
+                print("No legal move!  PASS!")
+                (currentPlayer, otherPlayer) = (otherPlayer, currentPlayer)
+            else:
+                print("No more legal moves for either player!  Game over!")
+                break
+        (row, col) = getMove(board, currentPlayer)
+        makeMove(board, currentPlayer, row, col)
+        (currentPlayer, otherPlayer) = (otherPlayer, currentPlayer)
+    print("Goodbye!")
+
+playOthello(8,8)
+</div>
+
+
+</li>
+</ol>
+</div>
+</body>
+</html>

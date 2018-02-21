@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112 Spring 2018: Fundamentals of Programming and Computer Science<br>
+Lab 2 (Friday 26-Jan)
+</h1>
+
+<hr>
+
+These problems should be completed during your scheduled lab on Friday. 
+To get full credit on the lab portion of the homework, you must complete the basic problem, 
+attempt the advanced problem, and show your work to one of the lab TAs.
+You may work on these problems collaboratively or individually, as you wish.<br><br>
+
+Do not use lists or recursion this week. Do not hardcode the test cases in your solutions.
+
+<hr>
+
+<ol>
+
+
+<br><li><b>Basic: countMatchingDigits</b><br>
+Write the function countMatchingDigits(x, y) that takes two non-negative integers, x and y, and counts the number of unique digits that match between the two integers. For example, the pair (1234, 2071) has two matches, 1 with 1 and 2 with 2. The pair (2203, 1527) also has two matches, since each of the 2s from the first number match with the 2 from the second; the same is true of the pair (18737, 7). This may not seem intuitive at first, so we recommend that you read through each of the test cases before you start coding to make sure you fully understand the problem.<br><br>
+<b>Hint:</b> If you want, you can reuse your solution to getKthDigit from colab1 to help solve this problem
+<div class="python-code no-run no-viz">
+# Test cases
+def testCountMatchingDigits():
+    print('Testing countMatchingDigits()... ', end='')
+    assert(countMatchingDigits(1234, 2071) == 2)
+    assert(countMatchingDigits(2203, 1527) == 2)
+    assert(countMatchingDigits(5, 1253) == 1)
+    assert(countMatchingDigits(18737, 7) == 2)
+    assert(countMatchingDigits(1220, 7322) == 4)
+    assert(countMatchingDigits(1234, 5678) == 0)
+    print('Passed!')
+</div>
+</li>
+
+<br><li><b>Advanced: playPig() (Dice Game)</b><br>
+This is an open-ended exercise, without any test functions and without an autograder. First, read about the dice game of pig
+<a target="_blank" href="http://en.wikipedia.org/wiki/Pig_%28dice_game%29#Gameplay">here</a>.
+Then write the function playPig() that takes no parameters and plays a console-based (that is, no graphics) two-player interactive game of pig.  The computer does not actually play a side, but just manages play between two human players.  This involves showing the score and whose turn it is, managing the turn sequence by rolling a die, asking the user what their move will be, enacting that choice, switching sides, determining a winner, and displaying suitable messages for all of this.  While you may want to do more than this, say using more exotic rules, or using a GUI rather than console input, resist the urge.  That said, this spec is broad, so you have some leeway on how you design this, both in terms of the user experience as well as how your code is written.
+Hint: you will almost surely want to use random.randint(1, 6) to randomly roll your die. Look it up to see the details.
+</li>
+</ol>
+</div>
+<hr>
+</body>
+</html>

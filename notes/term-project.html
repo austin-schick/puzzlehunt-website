@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Term Project</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Term Project Assignment<br>
+Due: Thu 7-Dec at 4:30pm <b>(no late submissions accepted)</b>
+</h1>
+<hr>
+
+<p>See the <a href="../gallery.html">Term Project Gallery</a> for examples!</p>
+
+<p>Note: this is a long document. But: <b>you really need to read all of it, very carefully, before starting any of it</b>. You are about to invest serious effort creating the capstone project for this course. You need to take the time to carefully read and understand everything in this document before you get started.</p>
+
+<p>Also, this project is meant to be educational but also good fun. Enjoy, and work hard!!!</p>
+
+<hr>
+
+<ol>
+  <li><a href="#summary"><b>Description</b></a></li>
+  <li><a href="#schedule"><b>Schedule</b></a></li>
+  <li><a href="#rules"><b>Policies and Rules</b></a></li>
+  <li><a href="#deliverables"><b>Deliverables</b></a>
+    <ol>
+      <li><a href="#tp1"><b>TP1</b></a></li>
+      <li><a href="#tp2"><b>TP2</b></a></li>
+      <li><a href="#tp3"><b>TP3</b></a></li>
+    </ol>
+  </li>
+</ol>
+
+<hr>
+
+<ol>
+  <li><a name="summary"></a><b>Term Project Description</b><br>
+
+    <p>Your task is to design and implement a program of your choosing. You must program in Python unless your chosen task absolutely requires another language for some compelling reason (in this case you must also obtain written instructor permission to pursue such a non-Python project). Your project may be graphical, text-based, or even file-based. It may be a game, or a math or science application, or a baseball statistics package, or a productivity application (think Word or Excel, only very "lite" versions), or a shell script, or anything else you choose. This is a wide open assignment, and you are expected to be creative in your approach to it.</p>
+
+    <p>Also: you may use any materials, including any Python libraries (like vpython or Blender or Panda3d or processing-python-mode for 3d graphics, or PyGame for richer 2d game support, or pyMedia or pyAudio or aubio for multimedia, or numpy and scipy or sympy for scientific computing, etc, etc, etc). You should understand that using such materials requires that you train yourself on their use (presumably through online materials). TA's and instructors will try to assist as we can, but you should expect less direct support if you use libraries that we did not cover in class.</p>
+
+    <p>Each of you will be assigned a Mentor TA for your term project. While every staff member is happy to help you at any time, it is expected that your Mentor TA will provide most of your support and guidance during the course of your term project. Also, your Mentor TA will be grading your term project. You are encouraged to discuss your grade with your Mentor TA during the course of the term project, so you know where you stand and what additional work may be required to improve your grade.</p>
+
+    <p>You have an extended period to finish this assignment, with no other required assignments during the last three weeks. You are expected to invest at least 30 total hours into this project in this time, and it is further expected that your project will clearly reflect the quantity and quality of design and craftsmanship that goes along with that much time on this task. Naturally, most of you will exceed the 30-hour bar, but this is a minimum expectation for passing the term project.</p>
+  </li>
+  <li><a name="schedule"></a><b>Schedule</b><br>
+
+    <p>There will be multiple deadlines associated with the Term Project. This is your guide to all of them!</p>
+
+    <p><b>Mon Nov-6 to Thu Nov-9</b>: Attend a TA-Led Optional Lecture (see Hw11)</p>
+    <p><b>Fri Nov-10 at 8pm</b>: Fill out the Mentor Preference Form (see Hw11)</p>
+    <p><b>Mon Nov-13 at 8pm</b>: Receive Mentor Assignments</p>
+    <p><b>Fri Nov-17 at 8pm</b>: Meet with your mentor for TP0 (to receive project idea approval)</p>
+    <p><b>Sun Nov-19 at 8pm</b>: If applicable, meet with your mentor for Tech Demo (see Policies and Rules)</p>
+    <p><b>Tue Nov-21 at 8pm</b>: Meet with your mentor for <a href="#tp1">TP1</a> and submit the deliverables on Autolab</p>
+    <p><b>Wed Nov-29 at 8pm</b>: Meet with your mentor for <a href="#tp2">TP2</a> and submit the deliverables on Autolab</p>
+    <p><b>Thu Dec-7 at 4:30pm</b>: Submit TP3 deliverables on Autolab</p>
+    <p><b>Thu Dec-7 to Sat Dec-9</b>: Meet with your mentor for <a href="#tp3">TP3</a></p>
+    <p><b>Thu Dec-7 at 7:30pm</b>: Term Project showcase!</p>
+
+  </li>
+  <li><a name="rules"></a><b>Policies and Rules</b><br>
+
+    <p>The term project is different from the other assignments and exams in 15-112. Therefore, it has its own special set of policies and rules. Note that the main course policies still apply, unless they are overruled by the policies described here.</p>
+
+    <ul>
+
+      <li><p><b>Collaboration:</b> This project is solo, in that every student must do their own independent project. However, unlike other solo assignments, you may be richly collaborative in terms of helping each other, including viewing other students' code to help them debug, openly discussing designs and algorithms, etc. Using resources wisely is an important aspect of this term project. However, you still must conceive and understand your entire design of your project, and you must personally write every line of code that you submit for credit.</p></li>
+
+      <li><p><b>Online Resources:</b> You may use any materials whatsoever, including source code, designs, images, text, sounds, or anything else, from any sources you may discover online. <b>However</b>, you must very clearly cite each such use, so it is very clear what is yours and what is not, and in the latter case where the materials came from. We will grade you only on your original contributions, and we will penalize use of external materials without citation. Note that you must also clearly cite code that comes from the course notes!</p></li>
+
+      <li><p><b>Prior Work:</b> You may use code that you've written for past assignments, or code that you've written for projects outside of this course, but you must clearly cite this code as having been written for a different purpose. We will only grade you on code developed specifically for the term project.</p></li>
+
+      <li><p><b>External Module/Technologies:</b> You are allowed to use external modules or physical technologies for your Term Project, but to receive permission to use these modules, you must demonstrate that you understand how they work. You may discuss what a suitable tech demo for your module looks like with your mentor in your TP0 meeting. This demonstration must be done by <b>Sunday November 19th at 8pm</b>, after which your mentor will let you know whether or not you can use the module. Projects that use modules which have not been approved by the mentor will not be accepted.</p></li>
+
+      <li><p><b>Weekly Meetings:</b> You'll have weekly meetings with your mentor to demonstrate the progress you've made and to receive advice. These meetings will be quick (often only ten minutes), but should greatly help you in making progress in the project. We expect you to treat your mentor with respect by responding promptly to scheduling emails, arriving at meetings on time, and never missing scheduled meetings. If you miss a scheduled meeting, there will be a 5% deduction on the associated deliverable</p></li>
+
+      <li><p><b>Submission:</b> You will submit each deliverable as a zip file on Autolab. If you don't know how to zip a file, <a href="https://www.wikihow.com/Make-a-Zip-File">learn how here</a>. Please note that Autolab will not accept submissions larger than 10 MB. If your zip file is larger than this, submit the core part of your project to Autolab, and submit the rest to your mentor via some other means (Google Drive, USB drive, email, etc).</p></li>
+
+      <li><p><b>Late Policy:</b> We generally do not allow students to submit the deliverables late, and you may not use grace days on the term project deliverables. That having been said, if you have a medical or family emergency, email the professors to see if an extension can be arranged.</p></li>
+    </ul>
+
+  </li>
+  <li><a name="deliverables"></a><b>Deliverables</b><br>
+
+    <p>You will have 3 weekly deliverables for this term project, each graded separately. The first two deliverables (TP1 and TP2) will be counted as quizzes on autolab and in your final grade. The last deliverable (TP3) will determine your general Term Project grade, which counts for 25% of your final grade.</p>
+
+    <p>Grading will generally be done in person with your mentor. Each of the deliverables comes with a rubric, but these rubrics are fairly general, as projects vary so widely. In general, we expect a large amount of effort to go into the design, writeup, implementation, and presentation of your project.</p>
+
+    <ol>
+      <li><a name="tp1"></a><b>TP1</b> (due Tue Nov-21 at 8pm)<br>
+
+        <p>The TP1 deliverable consists of two main components: a design proposal and preliminary code. You should finish these components before meeting with your mentor, so that you can present them to your mentor in full.</p>
+
+        <p>We recognize that some students may be traveling the week of November 21st for Thanksgiving. If you will be out of town on that Tuesday, you may arrange a meeting with your mentor via video chat instead of in person.</p>
+
+        <ul>
+          <li><b>Design Proposal</b> [70 pts]<br>
+          <p>Your Design Proposal should be submitted as a directory containing several files:</p>
+          <ul>
+            <li><b>Project Proposal</b> [30 pts]<br>
+              Include a complete and thorough project proposal (in the file proposal.txt, or .doc, or .pdf), clearly defining the problem you intend to solve, a fairly detailed description of how you intend to solve it, how you will break this problem down into several different tasks, and an algorithmic plan for the trickiest part of the project. Your proposal must also list all modules and technologies you plan to use outside of Tkinter.</p></li>
+
+            <li><p><b>Competitive Analysis</b> [20 pts]<br>
+              Perform a competitive analysis (as we learned in class) on at least two other systems similar to the one you plan to develop in the file competitive_analysis.txt, or .doc, or .pdf. If your idea is so unique that no other systems exist, find at least two systems that share a property with your planned project (for example, if you're developing a platformer game, find two other platformer games). Include at least five features in your feature table. In the summary, describe how the analysis influenced your ideas for the term project.</p></li>
+
+            <li><p><b>Storyboard</b> [20 pts]<br>
+              Generate a storyboard (as we learned in class) that demonstrates how a user would interact with your finished project. Your storyboard should have at least six panels, and at least three of those should demonstrate features within the project. You may scan or take a picture of your storyboard to submit it.</p></li>
+          </ul></li>
+
+          <li><b>Preliminary Code</b> [20 pts]<br>
+          <p>In addition to the design proposal, you should also submit code artifacts showing some early work on the project. This does not need to be a working demo; it should just be a real start towards solving the core problems of your project. For most students, 200-400 lines of decent code would indicate a good start.</p></li>
+
+          <li><b>Timesheet</b> [0 pts]<br>
+          <p>In addition to the main deliverables, you must also submit time data <a href="https://goo.gl/forms/Yywst0OYnest4pmA3">here</a>. To do this, you should keep track of the time you spend on the project and enter it into the form.</p></li>
+
+          <li><b>TP0 Meeting</b> [10 pts]<br>
+          <p>You should have met with your mentor the previous week to discuss your idea. Attending this meeting on time is worth 10 points.</p></li>
+        </ul>
+
+        <p>You can submit all of these files within a <b>single zip file</b> on Autolab, under the TP1 assignment. TP1 will be counted as a quiz in your grades.</p>
+      </li>
+      <li><a name="tp2"></a><b>TP2</b> (due Wed Nov-29 at 8pm)<br>
+
+        <p>Your TP2 deliverable consists of one main component: a working demo. You should get this demo working before your mentor meeting, so that you can show off your awesome work.</p>
+
+        <ul>
+          <li><b>Working Demo</b> [90 pts]<br>
+            <p>At this point, you should have a working demo of your project, approximately at what would be considered a C-level final project. The code may be missing features, it may have a less-than-polished user interface, it may have bugs, it may even crash more often than desired, but it has to basically work for some reasonable definition of "work". Your project must clearly show results consistent with at least 10 hours per week of productive effort, with most students investing more than that.</p></li>
+
+          <li><b>Design Modifications</b> [10 pts]<br>
+            <p>Many students update their design plans due to unforeseen problems or new ideas. If you change your project design, you must update your design proposal to reflect the changes. Changes should be added to a new section in the proposal titled 'Update 1'. You do not need to update your competitive analysis or storyboard, but you should keep them in your design directory.</p></li>
+
+          <li><b>Timesheet</b> [0 pts]<br>
+            <p>Fill out <a href="https://goo.gl/forms/xppbm99tbALsDO4V2">another timesheet</a> to include the hours worked since TP1.</p></li>
+        </ul>
+
+        <p>Again, place all the following in a single zip file which you will submit to Autolab, this time under TP2. TP2 will be counted as a quiz in your grades.</p>
+      </li>
+      <li><a name="tp3"></a><b>TP3</b> (due Thu Dec-7 at 4:30pm)<br>
+
+        <p>TP3 is your final term project deliverable, and should be your completed term project. The main deliverables are the project codebase and source files, a demo video, and a design directory. Your project should be complete when you present it to your mentor. Note that the presentation may take place after the Thursday deadline (up to Saturday evening), but you may only present work contained in your Autolab submission.</p>
+
+        <ul>
+          <li><b>Project Codebase</b> [75 pts]<br>
+            <p>The codebase should include all your python files and any other files (images, music files, etc.) required to help your project run. Your project should run robustly, should be algorithmically complex, and should have decent user experience. It may also have a well-designed user interface, depending on the project.</p></li>
+
+          <li><b>Design and Documentation</b> [10 pts]<br>
+            <p>Your submission should include the design directory from the previous deliverables, with a new section, 'Update 2', which includes any design modifications made since the previous update. You must also add a new file, readme.txt, which describes what the project is at a high level, and explains how to run the project and how to install any needed libraries (if you can include the library in the submission, that is preferred). A competent programmer should be able to run your project after reading the readme file, so make sure to include all necessary files in your submission!</p></li>
+
+          <li><b>Project Demo</b> [5 pts]<br>
+            <p>You will need to demo your project two times: once in your TP3 mentor meeting, and once in a video included in your submission. Your demo should be 1 to 3 minutes long, and should capture the main idea of the project. Do not show every last feature.  Instead, show the most important features, the highlights, the parts that are distinctive. You may just use a screen capture utility if you wish, along with a voiceover. Or you may just use a webcam or other video camera (even a decent cell phone camera) and directly video your screen. You do not need expert production value, and in particular you do not have to edit your video (and so you can have pauses, imperfect scene changes, and occasional verbal slips). However, the video should be of decent quality, and should clearly demonstrate your project, such that we can use it as part of our grading process (though we will also run your code). We may also place excerpts from some videos in a student term project gallery on the course website.  Also, critically, your video should meet your own standards so that you could reasonably place it in an online portfolio of your academic work, and submit it to a prospective employer as part of your CV. <b>Your video demo may be submitted as a link to YouTube (or some other video hosting service) in a file called demo-video.txt.</b></p></li>
+
+          <li><b>Style</b> [0 pts]<br>
+            <p>Writing your project code with good and consistent code will make your life much easier! In particular, we expect that you will organize your code in a sensible way (and certainly into more than one python file), and that you will have a short comment at the top of each file describing what the file does. We will not directly grade your code for style, but we reserve the right to deduct points for egregious style errors.</p></li>
+
+          <li><b>Timesheet</b> [0 pts]<br>
+            <p>Fill out <a href="https://goo.gl/forms/cJqHyfkOLn5Gk4lF2">another timesheet</a> to include the hours worked since TP2.</p></li>
+
+          <li><b>Effort</b> [10 pts]<br>
+            <p>The term project should take up the majority of your 15-112 time in the last three weeks of the semester. After subtracting 2.6 hours for lecture, this leaves <b>10 hours a week</b> which you should be spending on the term project. Therefore, we expect that each student will spend <b>at least 30 hours</b> on the whole project. Spending this time and showing real effort and progress in mentor meetings will factor into these ten points.</p></li>
+        </ul>
+
+        <p>Again, place all of your files into a single zip file and submit on Autolab, under TP3. If your whole project (including supplementary files) takes more than 10 MB of space, submit the main parts to Autolab, and submit the rest to your mentor through some other means. TP3 will be graded as the main Term Project, and is worth 25% of your final grade.</p>
+
+        <p>Note that the TP3 meeting is <b>very important</b>, as it is where your mentor will decided what your grade should look like. Your mentor will send an email with sign-ups for time slots. We strongly suggest that you arrive 5 minutes early to your time slot, with your computer prepared to give a demonstration, so that none of your time is wasted. Also, your demonstration should take no more than five minutes, so that your mentor has adequate time to ask you questions. Grades will not be finalized until all the 15-112 staff have met to normalize grades across mentors.</p>
+    </ol>
+  </li>
+</ol>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Miscellaneous Tkinter/Python Demos 
+</h1>
+<hr>
+For convenience,
+<a href="tkinter-demos.zip" download>tkinter-demos.zip</a> contains all the examples from below.
+<hr>
+
+<ol>
+
+<li><b>(Non)-Resizable Windows</b><br>
+non-resizable window and resizable window (with sizeChanged)<br>
+See
+<a target="_blank" href="resizableDemo.py">resizableDemo.py</a>
+and
+<a target="_blank" href="nonResizableDemo.py">nonResizableDemo.py</a>
+
+
+</li><br><li><b>Mouse Events</b><br>
+mousePressed, mouseMoved, mouseReleased, with left or right button, and with ctrl and shift, and mouseMotion (without button pressed)<br>
+See
+<a target="_blank" href="mouseEventsDemo.py">mouseEventsDemo.py</a>
+
+</li><br><li><b>Key Events</b><br>
+keyPressed, keyReleased with ctrl and shift<br>
+<a target="_blank" href="keyEventsDemo.py">keyEventsDemo.py</a>
+
+</li><br><li><b>Images</b><br>
+view in canvas, read from file, read from the web, with transparent pixels, get size, resize (zoom and subsample), read/write pixels, base64 encoding (create from file, view as image)<br>
+Requires:  <a target="_blank" href="sampleImage1.gif">sampleImage1.gif</a><br>
+See <a target="_blank" href="imagesDemo1.py">imagesDemo1.py</a> (read from file)<br>
+See <a target="_blank" href="imagesDemo2.py">imagesDemo2.py</a> (read from web)<br>
+See <a target="_blank" href="imagesDemo3a.py">imagesDemo3a.py</a> and <a target="_blank" href="imagesDemo3b.py">imagesDemo3b.py</a>, (write base64, read from base64)<br>
+See <a target="_blank" href="imagesDemo4.py">imagesDemo4.py</a> (read/write pixels)<br>
+
+</li><br><li><b>Delta (Efficient) Graphics</b><br>
+Return values from create_shape(), no redrawAll(), canvas.coords() and canvas.itemconfig()<br>
+See <a target="_blank" href="deltaGraphicsDemo1.py">deltaGraphicsDemo1.py</a> (without delta graphics)<br>
+See <a target="_blank" href="deltaGraphicsDemo2.py">deltaGraphicsDemo2.py</a> (with delta graphics)<br>
+
+</li><br><li><b>Buttons</b><br>
+<ul>
+<li><b>Simple Buttons</b><br>
+See <a target="_blank" href="button-demo1.py">button-demo1.py</a><br>
+
+</li><br><li><b>Buttons in a Row</b><br>
+Simple buttons now in a horizontal row at the top or bottom<br>
+(using a gridded frame)<br>
+(uses same buttons from button-demo1.py)<br>
+See <a target="_blank" href="button-demo2.py">button-demo2.py</a><br>
+
+</li><br><li><b>Buttons with an Image</b><br>
+Requires:  <a target="_blank" href="button.gif">button.gif</a><br>
+See <a target="_blank" href="button-demo3.py">button-demo3.py</a><br>
+</li>
+</ul>
+
+</li><br><li><b>Dialogs</b><br>
+<ul>
+<li><b>Standard Dialogs</b><br>
+messagebox: Info box, warning box, error box, and question box<br>
+simpledialog: Askstring box<br>
+See <a target="_blank" href="dialogs-demo1.py">dialogs-demo1.py</a><br>
+
+</li><br><li><b>Modal Password Dialog</b><br>
+modal dialog, text input field, and hidden password<br>
+See <a target="_blank" href="dialogs-demo2.py">dialogs-demo2.py</a><br>
+</li>
+</ul>
+
+</li><br><li><b>py2exe</b><br>
+To package your Python program as an executable app (.exe file
+in Windows, similar executable on a Mac) that does
+not require Python to be installed on the client machine,
+check out <a target="_blank" href="http://www.py2exe.org/index.cgi/FrontPage">py2exe</a> for windows (tutorial
+<a target="_blank" href="http://www.py2exe.org/index.cgi/Tutorial">here</a>)
+or <a target="_blank" href="https://py2app.readthedocs.io/en/latest/">py2app</a> for Macs (tutorial <a target="_blank" href="https://py2app.readthedocs.io/en/latest/tutorial.html">here</a>).  Alternatively,
+<a target="_blank" href="https://anthony-tuininga.github.io/cx_Freeze/">cx_freeze</a> also does something similar but cross-platform for both Windows and Macs.
+</li>
+
+</ol>
+</div>
+<hr>
+</body>
+</html>

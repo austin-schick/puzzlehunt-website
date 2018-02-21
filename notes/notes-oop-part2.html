@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>15-112: Fundamentals of Programming</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
+  <base target="_self">
+</head>
+<body>
+
+<div class="navbar">
+15-112 <br> Spring 18
+<br><br><a target="_self" href="../index.html">Home</a>
+<br><br><a target="_self" href="../syllabus.html">Syllabus</a>
+<br><br><a target="_self" href="../schedule.html">Schedule</a>
+<br><br><a target="_self" href="../gallery.html">Gallery</a>
+<br><br><a target="_self" href="../staff.html">Staff</a>
+<br><br><a target="_self" href="../piazza.html">Piazza</a>
+<br><br><a target="_self" href="../autolab.html">Autolab</a>
+<br><br><a target="_blank" href="../oh-queue.html">OH Queue</a>
+</div>
+
+<div class="content">
+<h1>
+CMU 15-112: Fundamentals of Programming and Computer Science<br>
+Class Notes: Object-Oriented Programming (OOP) (part2)<br>
+</h1>
+<hr>
+<ol>
+
+<li><a href="#inheritance"><b>Inheritance</b></a>
+<ol>
+<li><a href="#superclass"><b>Specifying a Superclass</b></a></li>
+<li><a href="#overriding"><b>Overriding methods</b></a></li>
+<li><a href="#isinstanceVsType"><b>isinstance vs type in inherited classes</b></a></li>
+<li><a href="#multipleInheritance"><b>Multiple Inheritance</b></a></li>
+</ol>
+</li>
+
+<li><a href="#classAttributes"><b>Class Attributes</b></a></li>
+<li><a href="#staticMethods"><b>Static Methods</b></a></li>
+<li><a href="#directAccessToDict"><b>Direct access to __dict__ (for instances and classes)</b></a></li>
+<li><a href="#workedExamples"><b>Worked Examples Using OOP</b></a>
+
+<ol>
+<li><a href="#oopyDotsDemo"><b>oopy-dots-demo</b></a></li>
+<li><a href="#oopyCardsDemo"><b>oopy-playing-cards-demo</a></b>
+</ol>
+</li>
+
+</ol>
+<hr>
+
+<ol>
+
+<li><a name="inheritance"></a><b>Inheritance</b>
+<ol>
+<li><a name="superclass"></a><b>Specifying a Superclass</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/cR5Ve9fVdZg"></span><br>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+    def f(self):
+        return 10*self.x
+
+class B(A):
+    def g(self):
+        return 1000*self.x
+
+print(A(5).f()) # 50
+print(B(7).g()) # 7000
+print(B(7).f()) # 70 (class B inherits the method f from class A)
+print(A(5).g()) # crashes (class A does not have a method g)
+
+</li><br><li><a name="overriding"></a><b>Overriding methods</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/5P7rcPzImtY"></span><br>
+<div class="python-code">
+class A(object):
+    def __init__(self, x):
+        self.x = x
+    def f(self):
+        return 10*self.x
+    def g(self):
+        return 100*self.x
+
+class B(A):
+    def __init__(self, x=42, y=99):
+        super().__init__(x) # call overridden init!
+        self.y = y
+    def f(self):
+        return 1000*self.x
+    def g(self):
+        return (super().g(), self.y)
+
+a = A(5)
+b = B(7)
+print(a.f()) # 50
+print(a.g()) # 500
+print(b.f()) # 7000
+print(b.g()) # (700, 99)
+
+</li><br><li><a name="isinstanceVsType"></a><b>isinstance vs type in inherited classes</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/C9kVNAnRSsQ"></span><br>
+<div class="python-code">
+class A(object): pass
+class B(A): pass
+a = A()
+b = B()
+print(type(a) == A) # True
+print(type(b) == A) # False
+print(type(a) == B) # False
+print(type(b) == B) # True
+print()
+print(isinstance(a, A)) # True
+print(isinstance(b, A)) # True (surprised?)
+print(isinstance(a, B)) # False
+print(isinstance(b, B)) # True
+
+</li><br><li><a name="multipleInheritance"></a><b>Multiple Inheritance</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/UFHyBzPtAvs"></span><br>
+<i>Note:  Python supports multiple inheritance, where a class may have more than one superclass.  We will not cover that in 15-112.</i>
+</li>
+</ol>
+
+</li><br><li><a name="classAttributes"></a><b>Class Attributes</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/e5A4vtIOdos"></span><br>
+<div class="python-code">
+class A(object):
+    dirs = ["up", "down", "left", "right"]
+
+# typically access class attributes directly via the class (no instance!)
+print(A.dirs) # ['up', 'down', 'left', 'right']
+
+# can also access via an instance:
+a = A()
+print(a.dirs)
+
+# but there is only one shared value across all instances:
+a1 = A()
+a1.dirs.pop() # not a good idea
+a2 = A()
+print(a2.dirs) # ['up', 'down', 'left'] ('right' is gone from A.dirs)
+</div>
+
+</li><br><li><a name="staticMethods"></a><b>Static Methods</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/FooxO0IkMKI"></span><br>
+<div class="python-code">
+class A(object):
+    @staticmethod
+    def f(x):
+        return 10*x
+
+print(A.f(42)) # 420 (called A.f without creating an instance of A)
+</div>
+
+</li><br><li><a name="directAccessToDict"></a><b>Direct access to __dict__ (for instances and classes)</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/12-iPG1l01I"></span><br>
+<div class="python-code">
+class A(object):
+    x = 42
+    def __init__(self, y):
+        self.y = y
+
+a = A(99)
+print(a.__dict__) # {'y': 99}
+print(A.__dict__) # {'x': 42, ... }
+
+a.__dict__['y'] = 100
+print(a.y) # 100
+</div>
+
+</li><br><li><a name="workedExamples"></a><b>Worked Examples Using OOP</b>
+<ol>
+
+<li><a name="oopyDotsDemo"></a><b>oopy-dots-demo</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/Y_XT5081DJE"></span><br>
+<div class="python-code no-viz no-run">
+# oopyDotsDemo.py
+# starts with betterDotsDemo and adds:
+#   * a dotCounter that counts all the instances of Dot or its subclasses
+#   * a MovingDot subclass of Dot that scrolls horizontally
+#   * a FlashingMovingDot subclass of MovingDot that flashes and moves
+
+import random
+from tkinter import *
+
+class Dot(object):
+    dotCount = 0
+
+    def __init__(self, x, y):
+        Dot.dotCount += 1
+        self.x = x
+        self.y = y
+        self.r = random.randint(20,50)
+        self.fill = random.choice(["pink","orange","yellow","green",
+                                   "cyan","purple"])
+        self.clickCount = 0
+
+    def containsPoint(self, x, y):
+        d = ((self.x - x)**2 + (self.y - y)**2)**0.5
+        return (d <= self.r)
+
+    def draw(self, canvas):
+        canvas.create_oval(self.x-self.r, self.y-self.r,
+                           self.x+self.r, self.y+self.r,
+                           fill=self.fill)
+        canvas.create_text(self.x, self.y, text=str(self.clickCount))
+
+    def onTimerFired(self, data):
+        pass
+
+class MovingDot(Dot):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.speed = 5 # default initial speed
+
+    def onTimerFired(self, data):
+        self.x += self.speed
+        if (self.x > data.width):
+            self.x = 0
+
+class FlashingMovingDot(MovingDot):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.flashCounter = 0
+        self.showFlash = True
+
+    def onTimerFired(self, data):
+        super().onTimerFired(data)
+        self.flashCounter += 1
+        if (self.flashCounter == 5):
+            self.flashCounter = 0
+            self.showFlash = not self.showFlash
+
+    def draw(self, canvas):
+        if (self.showFlash):
+            canvas.create_rectangle(self.x-self.r, self.y-self.r,
+                               self.x+self.r, self.y+self.r,
+                               fill="lightGray")
+        super().draw(canvas)
+
+def init(data):
+    data.dots = [ ]
+
+def mousePressed(event, data):
+    for dot in reversed(data.dots):
+        if (dot.containsPoint(event.x, event.y)):
+            dot.clickCount += 1
+            return
+    dotType = (len(data.dots) % 3)
+    if (dotType == 0):
+        data.dots.append(Dot(event.x, event.y))
+    elif (dotType == 1):
+        data.dots.append(MovingDot(event.x, event.y))
+    else:
+        data.dots.append(FlashingMovingDot(event.x, event.y))
+
+def redrawAll(canvas, data):
+    for dot in data.dots:
+        dot.draw(canvas)
+    canvas.create_text(data.width/2, 10, text="%d Dots" % Dot.dotCount)
+
+def keyPressed(event, data):
+    pass
+
+def timerFired(data):
+    for dot in data.dots:
+        dot.onTimerFired(data)
+
+####################################
+# use the run function as-is
+####################################
+
+def run(width=300, height=300):
+    def redrawAllWrapper(canvas, data):
+        canvas.delete(ALL)
+        canvas.create_rectangle(0, 0, data.width, data.height,
+                                fill='white', width=0)
+        redrawAll(canvas, data)
+        canvas.update()    
+
+    def mousePressedWrapper(event, canvas, data):
+        mousePressed(event, data)
+        redrawAllWrapper(canvas, data)
+
+    def keyPressedWrapper(event, canvas, data):
+        keyPressed(event, data)
+        redrawAllWrapper(canvas, data)
+
+    def timerFiredWrapper(canvas, data):
+        timerFired(data)
+        redrawAllWrapper(canvas, data)
+        # pause, then call timerFired again
+        canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
+    # Set up data and call init
+    class Struct(object): pass
+    data = Struct()
+    data.width = width
+    data.height = height
+    data.timerDelay = 100 # milliseconds
+    init(data)
+    # create the root and the canvas
+    root = Tk()
+    canvas = Canvas(root, width=data.width, height=data.height)
+    canvas.pack()
+    # set up events
+    root.bind("&lt;Button-1&gt;", lambda event:
+                            mousePressedWrapper(event, canvas, data))
+    root.bind("&lt;Key&gt;", lambda event:
+                            keyPressedWrapper(event, canvas, data))
+    timerFiredWrapper(canvas, data)
+    # and launch the app
+    root.mainloop()  # blocks until window is closed
+    print("bye!")
+
+run(400, 200)
+</div>
+
+</li><br><li><a name="oopyCardsDemo"></a><b>oopy-playing-cards-demo</b>
+<span class="play-video"
+      data-src="https://www.youtube.com/embed/2RDvNgpghPk"></span><br>
+<div class="python-code no-viz no-run">
+# oopy-playing-cards-demo.py
+# Demos class attributes, static methods, repr, eq, hash
+
+import random
+
+class PlayingCard(object):
+    numberNames = [None, "Ace", "2", "3", "4", "5", "6", "7",
+                   "8", "9", "10", "Jack", "Queen", "King"]
+    suitNames = ["Clubs", "Diamonds", "Hearts", "Spades"]
+    CLUBS = 0
+    DIAMONDS = 1
+    HEARTS = 2
+    SPADES = 3
+
+    @staticmethod
+    def getDeck(shuffled=True):
+        deck = [ ]
+        for number in range(1, 14):
+            for suit in range(4):
+                deck.append(PlayingCard(number, suit))
+        if (shuffled):
+            random.shuffle(deck)
+        return deck
+
+    def __init__(self, number, suit):
+        # number is 1 for Ace, 2...10,
+        #           11 for Jack, 12 for Queen, 13 for King
+        # suit is 0 for Clubs, 1 for Diamonds,
+        #         2 for Hearts, 3 for Spades
+        self.number = number
+        self.suit = suit
+
+    def __repr__(self):
+        return ("&lt;%s of %s&gt;" %
+                (PlayingCard.numberNames[self.number],
+                 PlayingCard.suitNames[self.suit]))
+
+    def getHashables(self):
+        return (self.number, self.suit) # return a tuple of hashables
+
+    def __hash__(self):
+        return hash(self.getHashables())
+
+    def __eq__(self, other):
+        return (isinstance(other, PlayingCard) and
+                (self.number == other.number) and
+                (self.suit == other.suit))
+
+# Show this code in action
+print("Demo of PlayingCard will keep creating new decks, and")
+print("drawing the first card, until we see the same card twice.")
+print()
+cardsSeen = set()
+diamondsCount = 0
+
+# Now keep drawing cards until we get a duplicate
+while True:
+    deck = PlayingCard.getDeck()
+    drawnCard = deck[0]
+    if (drawnCard.suit == PlayingCard.DIAMONDS):
+        diamondsCount += 1
+    print("  drawnCard:", drawnCard)
+    if (drawnCard in cardsSeen): break
+    cardsSeen.add(drawnCard)
+
+# And then report how many cards we drew
+print("Total cards drawn:", 1+len(cardsSeen))
+print("Total diamonds drawn:", diamondsCount)
+
+</div>
+
+</ol>
+</li>
+</ol>
+<hr>
+</div>
+</body>
+</html>

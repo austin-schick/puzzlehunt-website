@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html><head><title>Tetris for Intro/Intermediate Programmers (Fall 2017 update)</title></head>
+<body bgcolor="#ADDEFA">
+
+<hr color="#e88100">
+<font face="Arial"><b>Tetris for Intro/Intermediate Programmers (Fall 2017 update)<br>
+Step 1:&nbsp; Design Overview</b></font>
+
+<hr color="#e88100">
+<ul>
+	<li>
+	<p align="left">These notes assume that you are familiar with the game of 
+	Tetris.&nbsp; If not, we suggest that you first read the
+	<a href="http://en.wikipedia.org/wiki/Tetris">Wikipedia entry on Tetris</a> 
+	and then play the game a bit.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">These notes also assume that you are familiar with Python and Tkinter as we have used them in our 15-112 course.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Here is Tetris approximately as we will write it:<br>
+&nbsp;&nbsp; applet:&nbsp; <a href="tetris.html">tetris.html</a><br>
+&nbsp;&nbsp; jar file:&nbsp; <a href="tetris.jar">tetris.jar</a><br>
+&nbsp;&nbsp; zip file:&nbsp; <a href="tetris.zip">
+	tetris.zip</a> (which is just a zip file containing tetris.jar)<br><span style="font-style: italic;">Actually, those are Java applets/programs, and we will write ours in Python, but this can give you a clear idea of our design.</span><br>
+	As should be clear when you run it, this is a simplified version of Tetris, 
+	and many interesting features have been left for you to add as bonus (see 
+	step 8 for details, though also note that bonus points vary by semester).<br>
+	<br>
+	And here is a picture of the game in action:<br>
+	<br>
+	<img src="pix/goal.png" border="0" width="250"><br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Our design includes two main elements:&nbsp; a <i>board</i> 
+	and a <i>falling piece</i>.&nbsp; In the picture, the board contains all 
+	blue (empty) cells except in the bottom three rows, where it contains 
+	various other colors.&nbsp; The falling piece is the red piece in the 
+	picture.&nbsp; In our design, this is <i>not</i> part of the board, but is 
+	drawn <i>over</i> the board.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">More specifically, the <i>board</i>
+is a 2-dimensional list of color names (strings like "red", "blue",
+"green").&nbsp; Initially, the board is full of one color, the
+emptyColor ("blue" in our sample code).&nbsp; As falling pieces are
+transferred onto the board, other colors are introduced.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">The goal of the game is to fill rows entirely with non-empty 
+	colors.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">The <i>falling piece</i> is a 2-dimensional list of 
+	booleans, indicating whether the given cell is or is not painted in this 
+	piece.&nbsp; For example, here is the definition of an S piece:<br><font color="#800000">
+<pre>    sPiece = [
+        [ False,  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span> ],
+        [  <span style="background-color: rgb(192, 192, 192);">True</span>,  <span style="background-color: rgb(192, 192, 192);">True</span>, False ]
+    ]</pre>
+	</font></p></li>
+	<li>
+	<p align="left">As noted, the falling piece is not part of the board, but drawn over 
+	the board.&nbsp; It becomes part of the board when it can no longer fall and 
+	we place it on the board, which will not happen until several steps from now 
+	in our design process.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">The game is graphical and event-based.&nbsp; This is 
+	achieved by using Tkinter as we have in previous animations.<br>
+&nbsp;</p></li>
+	<li>
+	<p align="left">Important debugging hint:  you almost surely will want to
+	add pausing (say, with "p"), unpausing (also with "p", or maybe
+	"g" for "go"), stepping while pausing (with "s"),
+	and resetting / calling init() again
+	(say with "r").  These can be invaluable
+	when trying to debug animations.</p>
+	</li>
+	<li>
+	<p align="left">Many more details are available on the following pages.</p>
+	</li>
+</ul>
+
+<hr color="#e88100">
+<table style="border-collapse: collapse;" id="table2" border="0" cellpadding="0" width="100%">
+	<tbody><tr>
+		<td width="33%">&nbsp;</td>
+		<td width="33%">
+		<p align="center">
+<a href="TetrisForIntroIntermediateProgrammers.html"><img src="pix/previous.gif" border="0" height="15" width="73"></a>
+<a href="TetrisForIntroIntermediateProgrammers.html"><img src="pix/home.gif" border="0" height="16" width="19"></a>
+<a href="2_2_CreatingTheBoard.html"><img src="pix/next.gif" border="0" height="16" width="73"></a></p></td>
+		<td width="33%">
+		<p align="right"><font face="Arial" size="2">David Kosbie<br>
+Carnegie Mellon University<br>
+<a href="mailto:koz@cmu.edu">koz@cmu.edu</a></font></p></td>
+	</tr>
+</tbody></table>
+
+<hr color="#e88100">
+
+</body></html>

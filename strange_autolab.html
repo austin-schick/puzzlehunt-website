@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+    <meta name="csrf-param" content="authenticity_token" />
+    <meta name="csrf-token" content="0LFnj/a6bZ3gn1f8svGiiglFe/ogLI/SDPpRY8eD+CrZdi/4NXWvB2TU8ElgbgD4UlX9gDn/C8WTkSX9WqRpiQ==" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://autolab.andrew.cmu.edu/assets/autolab-c2c852cd48ec091632c43939af5af27b0f774cff3c541e54750163d84fd6b59c.ico?v=3" />
+
+    <link rel="stylesheet" media="screen" href="https://autolab.andrew.cmu.edu/assets/application-8b902f54362bb32854355223324ab2cad7594188f0f67ea4d3df9a74f156de9c.css" />
+    <!-- Flatpickr Datepicker CSS (lightweight file) -->
+    <link rel="stylesheet" media="screen" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" media="screen" href="https://autolab.andrew.cmu.edu/assets/animate-01b874b4bcbe82b29ae58740fea5d3ee62a96424eb7a8edd56184ee9caaa2de8.css" />
+    <link rel="stylesheet" media="screen" href="https://autolab.andrew.cmu.edu/assets/style-13e9e9e25e5bce3bca6bc26139ac86e3955dd46877e9de195df445f5c6598df3.css" />
+
+
+
+
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400' rel='stylesheet' type='text/css'>
+      <style>
+    .collection-item {
+      overflow: auto;
+    }
+  </style>
+
+    <title>15-112: Fundamentals of Programming and Computer Science</title>
+
+  </head>
+
+  <body class="autolab">
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=259908887444831";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.js"></script>-->
+    <script src="https://autolab.andrew.cmu.edu/assets/application-42a13fb5fc9d6b49e98bcecb18279ca5b49ceb5c35ddf56fda3b1bf9637698a8.js"></script>
+
+    <!-- Flatpickr Datetimepicker JS (lightweight file) -->
+    <script src="https://unpkg.com/flatpickr"></script>
+
+    <div class="page-wrapper">
+      <div class="main-header">
+
+  <!-- Materialize Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script>
+    // Not using Jquery to bind the listener since it's not loaded at this point
+    document.addEventListener("DOMContentLoaded", function(event) {
+      $('.button-collapse').sideNav({
+        edge: 'right'
+      });
+    });
+  </script>
+
+  <link rel="stylesheet" media="screen" href="https://autolab.andrew.cmu.edu/assets/navbar-8495210f45a0982a7e3b10db52f80f161906296fecae12a54f3fedba30259ab0.css" />
+
+  <!-- Experimental Navbar Code -->
+  <ul id="dropdown1" class="dropdown-content">
+      <li role="presentation">
+        <a title="View your account info" >Account</a>
+      </li>
+      <li role="presentation">
+        <a title="View your user profile for the current course" >Course Profile</a>
+      </li>
+    <li role="presentation" class="divider"></li>
+    <li role="presentation">
+      <a>Log out</a>
+    </li>
+  </ul>
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo"><a href="/" class="logo"><img width="180" alt="Carnegie Mellon University" src="https://autolab.andrew.cmu.edu/assets/AUTOLAB@2x-df4fd023ed256b3d2a1cbb5373e378d1c0dec6ea2adbe1511ac73385155c5bc8.png" /></a></a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="material-icons">menu</i></a>
+
+      <ul class="right hide-on-med-and-down">
+
+
+          <li><a title="View a history of autograding jobs" ><i class='material-icons left'>clear_all</i> Jobs</a></li>
+
+
+
+          <li><a class="dropdown-button" href="#!" data-activates="dropdown1" data-beloworigin="true" data-hover="false">Wong<i class="material-icons right">arrow_drop_down</i></a></li>
+      </ul>
+
+      <!-- Responsive Sidebar -->
+      <ul class="side-nav" id="mobile-demo">
+        <!-- User -->
+        <div id="nav-user" class="red lighten-5">
+          <div class="dropdown-toggle" id="dropdownMenu1">
+            Austin Schick
+          </div>
+          <li role="presentation">
+            <a title="View your account info" ><i class='material-icons left'>account_circle</i> Account</a>
+          </li>
+          <li role="presentation">
+            <a title="View your user profile for the current course" ><i class='material-icons left'>assignment_ind</i> Course Profile</a>
+          </li>
+        <li role="presentation">
+          <a><i class='material-icons left'>exit_to_app</i> Log out</a>
+        </li>
+        <li role="presentation" class="divider"></li>
+      </div>
+        <!-- Usual Navbar Items -->
+
+
+          <li><a title="View a history of autograding jobs" ><i class='material-icons left'>clear_all</i> Jobs</a></li>
+
+
+      </ul>
+
+    </div>
+
+    <!-- Responsive Menu Code -->
+
+  </nav>
+
+</div>
+
+  <div class="sub-navigation">
+    <span class="left-nav">
+      <span class="item">
+        <a href="/"><i class="material-icons home-icon">home</i></a>
+      </span>
+        <span class="item"><a id="courseTitle" >15-112: Fundamentals of Programming and Computer Science (s18)</a></span>
+    </span>
+  </div>
+
+
+      <!-- Page Body -->
+      <div id="pageBody" class="container">
+
+
+        <!-- Flashes -->
+        <div id="flashes">
+
+          <noscript>
+              <div id="flash_error" class="error">
+                  AutoLab requires Javascript to be enabled for all features to correctly function. Please enable Javascript.
+              </div>
+          </noscript>
+        </div>
+        <!-- End Flashes -->
+
+        <!-- Persistent Announcements -->
+          <ul class="gray-box">
+
+  </ul>
+
+        <!-- End Persistent Announcements -->
+
+        <!-- Content -->
+        <div id="content">
+
+
+  <ul class="gray-box">
+
+  </ul>
+
+
+
+
+<div class="section">
+  <h3 class="section-title"><span class="white">Assignments</span></h3>
+
+  <div class="row">
+        <div class="clearfix hide-on-small-only"></div>
+        <div class="col s12 m4">
+          <div class="card hoverable">
+            <div class="card-content red darken-3">
+              <span class="card-title white-text">attendance</span>
+            </div>
+
+            <div class="collection red darken-4">
+                <a class="collection-item grey-text text-darken-4" >
+                  attend1
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  Dormammu
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  attend3
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  attend4
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  attend5
+</a>            </div>
+
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="card hoverable">
+            <div class="card-content red darken-3">
+              <span class="card-title white-text">check</span>
+            </div>
+
+            <div class="collection red darken-4">
+                <a class="collection-item grey-text text-darken-4" >
+                  check2
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  check3
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  Baron Mordo
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  check5
+</a>            </div>
+
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="card hoverable">
+            <div class="card-content red darken-3">
+              <span class="card-title white-text">colab</span>
+            </div>
+
+            <div class="collection red darken-4">
+                <a class="collection-item grey-text text-darken-4" >
+                  colab1
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  Kaecilius
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  colab3
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  colab4
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  colab5
+</a>            </div>
+
+          </div>
+        </div>
+        <div class="clearfix hide-on-small-only"></div>
+        <div class="col s12 m4">
+          <div class="card hoverable">
+            <div class="card-content red darken-3">
+              <span class="card-title white-text">homework</span>
+            </div>
+
+            <div class="collection red darken-4">
+                <a class="collection-item grey-text text-darken-4" >
+                  hw1
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  hw2
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  hw3
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  hw4
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  Shuma-Gorath
+</a>            </div>
+
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="card hoverable">
+            <div class="card-content red darken-3">
+              <span class="card-title white-text">quiz</span>
+            </div>
+
+            <div class="collection red darken-4">
+                <a class="collection-item grey-text text-darken-4" >
+                  Umar
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  quiz2
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  quiz3
+</a>                <a class="collection-item grey-text text-darken-4" >
+                  quiz4
+</a>            </div>
+
+          </div>
+        </div>
+
+  </div>
+</div>
+
+
+        </div>
+        <!-- End Content -->
+        <div id="footer">
+    <a href="http://autolabproject.com">Autolab Project</a>
+    · <a href="/contact">Contact</a>
+    · <a href="https://github.com/autolab/Autolab">GitHub</a>
+    · <a href="https://www.facebook.com/autolabproject">Facebook</a>
+    · <a rel="nofollow" data-method="delete" >Logout</a>
+</div>
+
+        <!-- End Footer -->
+      </div>
+      <!-- End Page Body -->
+      <!-- Footer -->
+    </div>
+
+
+    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+      <script>
+    jQuery(function() {
+      /* a way to mimic nested anchor tags */
+      $('a.collection-item span.new.badge').each(function(idx, obj) {
+        $(obj).on("click", function() {
+          window.location = obj.dataset.url;
+          return false;  // prevent click propagation
+        });
+      });
+    });
+  </script>
+
+
+  </body>
+</html>
