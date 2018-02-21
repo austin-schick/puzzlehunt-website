@@ -25,7 +25,7 @@ letterDict = {
     "r": ['<td><img src="staff-photos/raahuja.jpg"/>Rahul (raahuja)</td>', '<td><img src="staff-photos/ramgopav.jpg"/>Ramgopal (ramgopav)</td>', '<td><img src="staff-photos/raunaksg.jpg"/>Raunak (raunaksg)</td>', '<td><img src="staff-photos/rishabhc.jpg"/>Rishabh (rishabhc)</td>', '<td><img src="staff-photos/rkaufman.jpg"/>Roman (rkaufman)</td>'],
     "s": ['<td><img src="staff-photos/sbhartiy.jpg"/>Sanjna (sbhartiy)</td>'],
     "t": ['<td><img src="staff-photos/cowarang.jpg"/>Tian (cowarang)</td>'],
-    "u": ['<td><img src="staff-photos/cowarang.jpg"/>Udit (uar)</td>'],
+    "u": ['<td><img src="staff-photos/uar.jpg"/>Udit (uar)</td>'],
     "v": ['<td><img src="staff-photos/vbaskar.png"/>Vishal (vbaskar)</td>'],
     "w": ['<td><img src="staff-photos/oweiss.jpg"/>Olly (o<strong>w</strong>eiss)</td>'],
     "x": ['<td><img src="staff-photos/xinhuig.jpg"/>Xinhui (xinhuig)</td>'],
