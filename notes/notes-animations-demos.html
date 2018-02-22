@@ -48,107 +48,87 @@ Class Notes: Animation Demos
 <li><a name="modeDemo"></a><b>Mode Demo</b>
 <span class="play-video1"
       data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
-<div class="python-code no-viz no-run"># Mode Demo
+<div class="python-code no-viz no-run">import urllib.request
+import base64
+import math
+
+def downloadImage(image_path):
+    import os, ssl
+    if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
+        getattr(ssl, '_create_unverified_context', None)):
+        ssl._create_default_https_context = ssl._create_unverified_context
+
+    pic = urllib.request.urlopen(image_path)
+    raw_data = pic.read()
+
+    return base64.b64encode(raw_data)
+
+def PhotoImageFromLink(link, width=None, height=None, scale=None):
+    base64_data = downloadImage(link)
+    image = PhotoImage(data=base64_data)
+    (old_w, old_h) = (image.width(), image.height())
+
+    if scale != None:
+        width = int(old_w * scale)
+        height = int(old_h * scale)
+
+    (target_w, target_h) = (width, height)
+
+    if (target_w != None and target_h != None):
+        x_common = math.gcd(target_w, old_w)
+        x_zoom = int(target_w / x_common)
+        x_sub = int(old_w / x_common)
+
+        y_common = math.gcd(target_h, old_h)
+        y_zoom = int(target_h / y_common)
+        y_sub = int(old_h / y_common)
+
+        image = image.zoom(x_zoom, y_zoom)
+        image = image.subsample(x_sub, y_sub)
+
+    return image
+
+
 from tkinter import *
 
-####################################
-# init
-####################################
-
 def init(data):
-    # There is only one init, not one-per-mode
-    data.mode = "splashScreen"
-    data.score = 0
+    woo = ["https://i.pinimg.com/originals/3f/9c/f4/3f9cf47788266c63a51e2b24ff1abc26.gif",
+              "https://media.giphy.com/media/yFoFZmVC9OGIM/giphy.gif",
+              "http://www.intuitivewebdesigns.com/comics/graphics/ff/stretch.gif",
+              "http://3.bp.blogspot.com/-RhHxVCNe3ak/TpSBoL0o8nI/AAAAAAAAETU/u3diSjW-B04/s320/reed+richards.gif"]
+    data.superSecret = []
+    for yay in woo: 
+        data.superSecret.append( PhotoImageFromLink(yay, width=150, height=150) )
 
-####################################
-# mode dispatcher
-####################################
+    data.whichHero = 0
+    data.cat, data.dog = 50, 20
+    data.running = 18
+    data.marvel = (1, -1) 
+
 
 def mousePressed(event, data):
-    if (data.mode == "splashScreen"): splashScreenMousePressed(event, data)
-    elif (data.mode == "playGame"):   playGameMousePressed(event, data)
-    elif (data.mode == "help"):       helpMousePressed(event, data)
+    pass
 
 def keyPressed(event, data):
-    if (data.mode == "splashScreen"): splashScreenKeyPressed(event, data)
-    elif (data.mode == "playGame"):   playGameKeyPressed(event, data)
-    elif (data.mode == "help"):       helpKeyPressed(event, data)
+    pass
 
 def timerFired(data):
-    if (data.mode == "splashScreen"): splashScreenTimerFired(data)
-    elif (data.mode == "playGame"):   playGameTimerFired(data)
-    elif (data.mode == "help"):       helpTimerFired(data)
+    dcat, ddog = data.marvel
+    data.cat += data.running*dcat
+    data.dog += data.running*ddog
+
+    if data.cat < 0 or data.cat+150 > data.width:
+        dcat *= -1
+        data.whichHero += 1
+    if data.dog < 0 or data.dog+150 > data.height:
+        ddog *= -1
+        data.whichHero += 1
+
+    data.marvel = (dcat, ddog)
+    data.whichHero %= len(data.superSecret)
 
 def redrawAll(canvas, data):
-    if (data.mode == "splashScreen"): splashScreenRedrawAll(canvas, data)
-    elif (data.mode == "playGame"):   playGameRedrawAll(canvas, data)
-    elif (data.mode == "help"):       helpRedrawAll(canvas, data)
-
-####################################
-# splashScreen mode
-####################################
-
-def splashScreenMousePressed(event, data):
-    pass
-
-def splashScreenKeyPressed(event, data):
-    data.mode = "playGame"
-
-def splashScreenTimerFired(data):
-    pass
-
-def splashScreenRedrawAll(canvas, data):
-    canvas.create_text(data.width/2, data.height/2-20,
-                       text="This is a splash screen!", font="Arial 26 bold")
-    canvas.create_text(data.width/2, data.height/2+20,
-                       text="Press any key to play!", font="Arial 20")
-
-####################################
-# help mode
-####################################
-
-def helpMousePressed(event, data):
-    pass
-
-def helpKeyPressed(event, data):
-    data.mode = "playGame"
-
-def helpTimerFired(data):
-    pass
-
-def helpRedrawAll(canvas, data):
-    canvas.create_text(data.width/2, data.height/2-40,
-                       text="This is help mode!", font="Arial 26 bold")
-    canvas.create_text(data.width/2, data.height/2-10,
-                       text="How to play:", font="Arial 20")
-    canvas.create_text(data.width/2, data.height/2+15,
-                       text="Do nothing and score points!", font="Arial 20")
-    canvas.create_text(data.width/2, data.height/2+40,
-                       text="Press any key to keep playing!", font="Arial 20")
-
-####################################
-# playGame mode
-####################################
-
-def playGameMousePressed(event, data):
-    data.score = 0
-
-def playGameKeyPressed(event, data):
-    if (event.keysym == 'h'):
-        data.mode = "help"
-
-def playGameTimerFired(data):
-    data.score += 1
-
-def playGameRedrawAll(canvas, data):
-    canvas.create_text(data.width/2, data.height/2-40,
-                       text="This is a fun game!", font="Arial 26 bold")
-    canvas.create_text(data.width/2, data.height/2-10,
-                       text="Score = " + str(data.score), font="Arial 20")
-    canvas.create_text(data.width/2, data.height/2+15,
-                       text="Click anywhere to reset score", font="Arial 20")
-    canvas.create_text(data.width/2, data.height/2+40,
-                       text="Press 'h' for help!", font="Arial 20")
+    canvas.create_image(data.cat, data.dog, anchor=NW, image = data.superSecret[data.whichHero])
 
 ####################################
 # use the run function as-is
@@ -160,207 +140,7 @@ def run(width=300, height=300):
         canvas.create_rectangle(0, 0, data.width, data.height,
                                 fill='white', width=0)
         redrawAll(canvas, data)
-        canvas.update()    
-
-    def mousePressedWrapper(event, canvas, data):
-        mousePressed(event, data)
-        redrawAllWrapper(canvas, data)
-
-    def keyPressedWrapper(event, canvas, data):
-        keyPressed(event, data)
-        redrawAllWrapper(canvas, data)
-
-    def timerFiredWrapper(canvas, data):
-        timerFired(data)
-        redrawAllWrapper(canvas, data)
-        # pause, then call timerFired again
-        canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
-    # Set up data and call init
-    class Struct(object): pass
-    data = Struct()
-    data.width = width
-    data.height = height
-    data.timerDelay = 100 # milliseconds
-    init(data)
-    # create the root and the canvas
-    root = Tk()
-    canvas = Canvas(root, width=data.width, height=data.height)
-    canvas.pack()
-    # set up events
-    root.bind("&lt;Button-1&gt;", lambda event:
-                            mousePressedWrapper(event, canvas, data))
-    root.bind("&lt;Key&gt;", lambda event:
-                            keyPressedWrapper(event, canvas, data))
-    timerFiredWrapper(canvas, data)
-    # and launch the app
-    root.mainloop()  # blocks until window is closed
-    print("bye!")
-
-run(300, 300)
-</div>
-<b>Result:</b><br>
-<img src="animation-mode-demo.gif" width="400px"><br><br></li><br>
-
-<li><a name="undoRedoDemo"></a><b>Undo/Redo Demo</b>
-<span class="play-video1"
-      data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
-<div class="python-code no-viz no-run"># Undo/Redo Demo
-
-from tkinter import *
-
-def init(data):
-    data.points = [ ]
-    data.undoList = [ ]
-
-def mousePressed(event, data):
-    data.points.append((event.x, event.y))
-    data.undoList = [ ]
-
-def keyPressed(event, data):
-    if (event.keysym == "u"):
-        if (len(data.points) > 0):
-            data.undoList.append(data.points.pop())
-    elif (event.keysym == "r"):
-        if (len(data.undoList) > 0):
-            data.points.append(data.undoList.pop())
-    elif (event.keysym == "c"):
-        data.points = [ ]
-        data.undoList = [ ]
-
-def timerFired(data):
-    pass
-
-def redrawAll(canvas, data):
-    if (data.points != []):
-        canvas.create_polygon(data.points, fill="gold", outline="black")
-    canvas.create_text(data.width/2, 20,
-                       text="click to add point. u=undo. r=redo. c=clear.")
-    canvas.create_text(data.width/2, 40,
-                       text=str(len(data.points)) + " point(s) in polygon")
-    canvas.create_text(data.width/2, 60,
-                       text=str(len(data.undoList)) + " point(s) on undoList")
-
-####################################
-# use the run function as-is
-####################################
-
-def run(width=300, height=300):
-    def redrawAllWrapper(canvas, data):
-        canvas.delete(ALL)
-        canvas.create_rectangle(0, 0, data.width, data.height,
-                                fill='white', width=0)
-        redrawAll(canvas, data)
-        canvas.update()    
-
-    def mousePressedWrapper(event, canvas, data):
-        mousePressed(event, data)
-        redrawAllWrapper(canvas, data)
-
-    def keyPressedWrapper(event, canvas, data):
-        keyPressed(event, data)
-        redrawAllWrapper(canvas, data)
-
-    def timerFiredWrapper(canvas, data):
-        timerFired(data)
-        redrawAllWrapper(canvas, data)
-        # pause, then call timerFired again
-        canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
-    # Set up data and call init
-    class Struct(object): pass
-    data = Struct()
-    data.width = width
-    data.height = height
-    data.timerDelay = 100 # milliseconds
-    init(data)
-    # create the root and the canvas
-    root = Tk()
-    canvas = Canvas(root, width=data.width, height=data.height)
-    canvas.pack()
-    # set up events
-    root.bind("&lt;Button-1&gt;", lambda event:
-                            mousePressedWrapper(event, canvas, data))
-    root.bind("&lt;Key&gt;", lambda event:
-                            keyPressedWrapper(event, canvas, data))
-    timerFiredWrapper(canvas, data)
-    # and launch the app
-    root.mainloop()  # blocks until window is closed
-    print("bye!")
-
-run(300, 300)
-</div>
-<b>Result:</b><br>
-<img src="animation-undo-redo-demo.gif" width="400px"><br><br></li><br>
-
-<li><a name="imagesDemo"></a><b>Images Demo</b>
-<span class="play-video1"
-      data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
-<br>
-To run this demo, first download
-<a href="playing-card-gifs.zip" download>playing-card-gifs.zip</a> and unzip
-that file, so the folder playing-card-gifs is at the same level as this code.
-<div class="python-code no-viz no-run"># Images Demo
-from tkinter import *
-
-def init(data):
-    data.step = 0
-    loadPlayingCardImages(data) # always load images in init!
-
-def loadPlayingCardImages(data):
-    cards = 55 # cards 1-52, back, joker1, joker2
-    data.cardImages = [ ]
-    for card in range(cards):
-        rank = (card%13)+1
-        suit = "cdhsx"[card//13]
-        filename = "playing-card-gifs/%s%d.gif" % (suit, rank)
-        data.cardImages.append(PhotoImage(file=filename))
-
-def getPlayingCardImage(data, rank, suitName):
-    suitName = suitName[0].lower() # only car about first letter
-    suitNames = "cdhsx"
-    assert(1 &lt;= rank &lt;= 13)
-    assert(suitName in suitNames)
-    suit = suitNames.index(suitName)
-    return data.cardImages[13*suit + rank - 1]
-
-def getSpecialPlayingCardImage(data, name):
-    specialNames = ["back", "joker1", "joker2"]
-    return getPlayingCardImage(data, specialNames.index(name)+1, "x")
-
-def mousePressed(event, data):
-    pass
-
-def keyPressed(event, data):
-    pass
-
-def timerFired(data):
-    data.step += 1
-
-def redrawAll(canvas, data):
-    suitNames = ["Clubs", "Diamonds", "Hearts", "Spades", "Xtras"]
-    suit = (data.step//10) % len(suitNames)
-    suitName = suitNames[suit]
-    cards = 3 if (suitName == "Xtras") else 13
-    margin = 10
-    (left, top) = (margin, 40)
-    for rank in range(1,cards+1):
-        image = getPlayingCardImage(data, rank, suitName)
-        if (left + image.width() &gt; data.width):
-            (left, top) = (margin, top + image.height() + margin)
-        canvas.create_image(left, top, anchor=NW, image=image)
-        left += image.width() + margin
-    canvas.create_text(data.width/2, 20, text=suitName, font="Arial 28 bold")
-
-####################################
-# use the run function as-is
-####################################
-
-def run(width=300, height=300):
-    def redrawAllWrapper(canvas, data):
-        canvas.delete(ALL)
-        canvas.create_rectangle(0, 0, data.width, data.height,
-                                fill='white', width=0)
-        redrawAll(canvas, data)
-        canvas.update()    
+        canvas.update()
 
     def mousePressedWrapper(event, canvas, data):
         mousePressed(event, data)
@@ -382,22 +162,300 @@ def run(width=300, height=300):
     data = Struct()
     data.width = width
     data.height = height
-    data.timerDelay = 250 # milliseconds
+    data.timerDelay = 100 # milliseconds
     init(data)
     # create the root and the canvas
     canvas = Canvas(root, width=data.width, height=data.height)
     canvas.pack()
     # set up events
-    root.bind("&lt;Button-1&gt;", lambda event:
+    root.bind("<Button-1>", lambda event:
                             mousePressedWrapper(event, canvas, data))
-    root.bind("&lt;Key&gt;", lambda event:
+    root.bind("<Key>", lambda event:
                             keyPressedWrapper(event, canvas, data))
     timerFiredWrapper(canvas, data)
     # and launch the app
     root.mainloop()  # blocks until window is closed
     print("bye!")
 
-run(420, 360)
+run(400, 400)
+</div>
+<b>Result:</b><br>
+<img src="animation-mode-demo.gif" width="400px"><br><br></li><br>
+
+<li><a name="undoRedoDemo"></a><b>Undo/Redo Demo</b>
+<span class="play-video1"
+      data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
+<div class="python-code no-viz no-run">import urllib.request
+import base64
+import math
+
+def downloadImage(image_path):
+    import os, ssl
+    if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
+        getattr(ssl, '_create_unverified_context', None)):
+        ssl._create_default_https_context = ssl._create_unverified_context
+
+    pic = urllib.request.urlopen(image_path)
+    raw_data = pic.read()
+
+    return base64.b64encode(raw_data)
+
+def PhotoImageFromLink(link, width=None, height=None, scale=None):
+    base64_data = downloadImage(link)
+    image = PhotoImage(data=base64_data)
+    (old_w, old_h) = (image.width(), image.height())
+
+    if scale != None:
+        width = int(old_w * scale)
+        height = int(old_h * scale)
+
+    (target_w, target_h) = (width, height)
+
+    if (target_w != None and target_h != None):
+        x_common = math.gcd(target_w, old_w)
+        x_zoom = int(target_w / x_common)
+        x_sub = int(old_w / x_common)
+
+        y_common = math.gcd(target_h, old_h)
+        y_zoom = int(target_h / y_common)
+        y_sub = int(old_h / y_common)
+
+        image = image.zoom(x_zoom, y_zoom)
+        image = image.subsample(x_sub, y_sub)
+
+    return image
+
+
+from tkinter import *
+
+def init(data):
+    woo = ["https://i.pinimg.com/originals/3f/9c/f4/3f9cf47788266c63a51e2b24ff1abc26.gif",
+              "https://media.giphy.com/media/yFoFZmVC9OGIM/giphy.gif",
+              "http://www.intuitivewebdesigns.com/comics/graphics/ff/stretch.gif",
+              "http://3.bp.blogspot.com/-RhHxVCNe3ak/TpSBoL0o8nI/AAAAAAAAETU/u3diSjW-B04/s320/reed+richards.gif"]
+    data.superSecret = []
+    for yay in woo: 
+        data.superSecret.append( PhotoImageFromLink(yay, width=150, height=150) )
+
+    data.whichHero = 0
+    data.cat, data.dog = 50, 20
+    data.running = 18
+    data.marvel = (1, -1) 
+
+
+def mousePressed(event, data):
+    pass
+
+def keyPressed(event, data):
+    pass
+
+def timerFired(data):
+    dcat, ddog = data.marvel
+    data.cat += data.running*dcat
+    data.dog += data.running*ddog
+
+    if data.cat < 0 or data.cat+150 > data.width:
+        dcat *= -1
+        data.whichHero += 1
+    if data.dog < 0 or data.dog+150 > data.height:
+        ddog *= -1
+        data.whichHero += 1
+
+    data.marvel = (dcat, ddog)
+    data.whichHero %= len(data.superSecret)
+
+def redrawAll(canvas, data):
+    canvas.create_image(data.cat, data.dog, anchor=NW, image = data.superSecret[data.whichHero])
+
+####################################
+# use the run function as-is
+####################################
+
+def run(width=300, height=300):
+    def redrawAllWrapper(canvas, data):
+        canvas.delete(ALL)
+        canvas.create_rectangle(0, 0, data.width, data.height,
+                                fill='white', width=0)
+        redrawAll(canvas, data)
+        canvas.update()
+
+    def mousePressedWrapper(event, canvas, data):
+        mousePressed(event, data)
+        redrawAllWrapper(canvas, data)
+
+    def keyPressedWrapper(event, canvas, data):
+        keyPressed(event, data)
+        redrawAllWrapper(canvas, data)
+
+    def timerFiredWrapper(canvas, data):
+        timerFired(data)
+        redrawAllWrapper(canvas, data)
+        # pause, then call timerFired again
+        canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
+    # Create root before calling init (so we can create images in init)
+    root = Tk()
+    # Set up data and call init
+    class Struct(object): pass
+    data = Struct()
+    data.width = width
+    data.height = height
+    data.timerDelay = 100 # milliseconds
+    init(data)
+    # create the root and the canvas
+    canvas = Canvas(root, width=data.width, height=data.height)
+    canvas.pack()
+    # set up events
+    root.bind("<Button-1>", lambda event:
+                            mousePressedWrapper(event, canvas, data))
+    root.bind("<Key>", lambda event:
+                            keyPressedWrapper(event, canvas, data))
+    timerFiredWrapper(canvas, data)
+    # and launch the app
+    root.mainloop()  # blocks until window is closed
+    print("bye!")
+
+run(400, 400)
+</div>
+<b>Result:</b><br>
+<img src="animation-undo-redo-demo.gif" width="400px"><br><br></li><br>
+
+<li><a name="imagesDemo"></a><b>Images Demo</b>
+<span class="play-video1"
+      data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
+<br>
+To run this demo, first download
+<a href="playing-card-gifs.zip" download>playing-card-gifs.zip</a> and unzip
+that file, so the folder playing-card-gifs is at the same level as this code.
+<div class="python-code no-viz no-run">import urllib.request
+import base64
+import math
+
+def downloadImage(image_path):
+    import os, ssl
+    if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
+        getattr(ssl, '_create_unverified_context', None)):
+        ssl._create_default_https_context = ssl._create_unverified_context
+
+    pic = urllib.request.urlopen(image_path)
+    raw_data = pic.read()
+
+    return base64.b64encode(raw_data)
+
+def PhotoImageFromLink(link, width=None, height=None, scale=None):
+    base64_data = downloadImage(link)
+    image = PhotoImage(data=base64_data)
+    (old_w, old_h) = (image.width(), image.height())
+
+    if scale != None:
+        width = int(old_w * scale)
+        height = int(old_h * scale)
+
+    (target_w, target_h) = (width, height)
+
+    if (target_w != None and target_h != None):
+        x_common = math.gcd(target_w, old_w)
+        x_zoom = int(target_w / x_common)
+        x_sub = int(old_w / x_common)
+
+        y_common = math.gcd(target_h, old_h)
+        y_zoom = int(target_h / y_common)
+        y_sub = int(old_h / y_common)
+
+        image = image.zoom(x_zoom, y_zoom)
+        image = image.subsample(x_sub, y_sub)
+
+    return image
+
+
+from tkinter import *
+
+def init(data):
+    woo = ["https://i.pinimg.com/originals/3f/9c/f4/3f9cf47788266c63a51e2b24ff1abc26.gif",
+              "https://media.giphy.com/media/yFoFZmVC9OGIM/giphy.gif",
+              "http://www.intuitivewebdesigns.com/comics/graphics/ff/stretch.gif",
+              "http://3.bp.blogspot.com/-RhHxVCNe3ak/TpSBoL0o8nI/AAAAAAAAETU/u3diSjW-B04/s320/reed+richards.gif"]
+    data.superSecret = []
+    for yay in woo: 
+        data.superSecret.append( PhotoImageFromLink(yay, width=150, height=150) )
+
+    data.whichHero = 0
+    data.cat, data.dog = 50, 20
+    data.running = 18
+    data.marvel = (1, -1) 
+
+
+def mousePressed(event, data):
+    pass
+
+def keyPressed(event, data):
+    pass
+
+def timerFired(data):
+    dcat, ddog = data.marvel
+    data.cat += data.running*dcat
+    data.dog += data.running*ddog
+
+    if data.cat < 0 or data.cat+150 > data.width:
+        dcat *= -1
+        data.whichHero += 1
+    if data.dog < 0 or data.dog+150 > data.height:
+        ddog *= -1
+        data.whichHero += 1
+
+    data.marvel = (dcat, ddog)
+    data.whichHero %= len(data.superSecret)
+
+def redrawAll(canvas, data):
+    canvas.create_image(data.cat, data.dog, anchor=NW, image = data.superSecret[data.whichHero])
+
+####################################
+# use the run function as-is
+####################################
+
+def run(width=300, height=300):
+    def redrawAllWrapper(canvas, data):
+        canvas.delete(ALL)
+        canvas.create_rectangle(0, 0, data.width, data.height,
+                                fill='white', width=0)
+        redrawAll(canvas, data)
+        canvas.update()
+
+    def mousePressedWrapper(event, canvas, data):
+        mousePressed(event, data)
+        redrawAllWrapper(canvas, data)
+
+    def keyPressedWrapper(event, canvas, data):
+        keyPressed(event, data)
+        redrawAllWrapper(canvas, data)
+
+    def timerFiredWrapper(canvas, data):
+        timerFired(data)
+        redrawAllWrapper(canvas, data)
+        # pause, then call timerFired again
+        canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
+    # Create root before calling init (so we can create images in init)
+    root = Tk()
+    # Set up data and call init
+    class Struct(object): pass
+    data = Struct()
+    data.width = width
+    data.height = height
+    data.timerDelay = 100 # milliseconds
+    init(data)
+    # create the root and the canvas
+    canvas = Canvas(root, width=data.width, height=data.height)
+    canvas.pack()
+    # set up events
+    root.bind("<Button-1>", lambda event:
+                            mousePressedWrapper(event, canvas, data))
+    root.bind("<Key>", lambda event:
+                            keyPressedWrapper(event, canvas, data))
+    timerFiredWrapper(canvas, data)
+    # and launch the app
+    root.mainloop()  # blocks until window is closed
+    print("bye!")
+
+run(400, 400)
 </div>
 <b>Result:</b><br>
 <img src="animation-images-demo.gif" width="400px"><br><br></li><br>
@@ -405,105 +463,87 @@ run(420, 360)
 <li><a name="sideScrollerDemo"></a><b>Side Scroller Demo</b>
 <span class="play-video1"
       data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
-<div class="python-code no-viz no-run"># Side Scroller Demo
+<div class="python-code no-viz no-run">import urllib.request
+import base64
+import math
+
+def downloadImage(image_path):
+    import os, ssl
+    if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
+        getattr(ssl, '_create_unverified_context', None)):
+        ssl._create_default_https_context = ssl._create_unverified_context
+
+    pic = urllib.request.urlopen(image_path)
+    raw_data = pic.read()
+
+    return base64.b64encode(raw_data)
+
+def PhotoImageFromLink(link, width=None, height=None, scale=None):
+    base64_data = downloadImage(link)
+    image = PhotoImage(data=base64_data)
+    (old_w, old_h) = (image.width(), image.height())
+
+    if scale != None:
+        width = int(old_w * scale)
+        height = int(old_h * scale)
+
+    (target_w, target_h) = (width, height)
+
+    if (target_w != None and target_h != None):
+        x_common = math.gcd(target_w, old_w)
+        x_zoom = int(target_w / x_common)
+        x_sub = int(old_w / x_common)
+
+        y_common = math.gcd(target_h, old_h)
+        y_zoom = int(target_h / y_common)
+        y_sub = int(old_h / y_common)
+
+        image = image.zoom(x_zoom, y_zoom)
+        image = image.subsample(x_sub, y_sub)
+
+    return image
+
+
 from tkinter import *
 
 def init(data):
-    data.scrollX = 0  # amount view is scrolled to the right
-    data.scrollMargin = 50 # closest player may come to either canvas edge
-    data.playerX = data.scrollMargin # player's left edge
-    data.playerY = 0  # player's bottom edge (distance above the base line)
-    data.playerWidth = 10
-    data.playerHeight = 20
-    data.walls = 5
-    data.wallPoints = [0]*data.walls
-    data.wallWidth = 20
-    data.wallHeight = 40
-    data.wallSpacing = 90 # wall left edges are at 90, 180, 270,...
-    data.currentWallHit = -1 # start out not hitting a wall
+    woo = ["https://i.pinimg.com/originals/3f/9c/f4/3f9cf47788266c63a51e2b24ff1abc26.gif",
+              "https://media.giphy.com/media/yFoFZmVC9OGIM/giphy.gif",
+              "http://www.intuitivewebdesigns.com/comics/graphics/ff/stretch.gif",
+              "http://3.bp.blogspot.com/-RhHxVCNe3ak/TpSBoL0o8nI/AAAAAAAAETU/u3diSjW-B04/s320/reed+richards.gif"]
+    data.superSecret = []
+    for yay in woo: 
+        data.superSecret.append( PhotoImageFromLink(yay, width=150, height=150) )
 
-def getPlayerBounds(data):
-    # returns absolute bounds, not taking scrollX into account
-    (x0, y1) = (data.playerX, data.height/2 - data.playerY)
-    (x1, y0) = (x0 + data.playerWidth, y1 - data.playerHeight)
-    return (x0, y0, x1, y1)
+    data.whichHero = 0
+    data.cat, data.dog = 50, 20
+    data.running = 18
+    data.marvel = (1, -1) 
 
-def getWallBounds(wall, data):
-    # returns absolute bounds, not taking scrollX into account
-    (x0, y1) = ((1+wall) * data.wallSpacing, data.height/2)
-    (x1, y0) = (x0 + data.wallWidth, y1 - data.wallHeight)
-    return (x0, y0, x1, y1)
-
-def getWallHit(data):
-    # return wall that player is currently hitting
-    # note: this should be optimized to only check the walls that are visible
-    # or even just directly compute the wall without a loop
-    playerBounds = getPlayerBounds(data)
-    for wall in range(data.walls):
-        wallBounds = getWallBounds(wall, data)
-        if (boundsIntersect(playerBounds, wallBounds) == True):
-            return wall
-    return -1
-
-def boundsIntersect(boundsA, boundsB):
-    # return l2&lt;=r1 and t2&lt;=b1 and l1&lt;=r2 and t1&lt;=b2
-    (ax0, ay0, ax1, ay1) = boundsA
-    (bx0, by0, bx1, by1) = boundsB
-    return ((ax1 &gt;= bx0) and (bx1 &gt;= ax0) and
-            (ay1 &gt;= by0) and (by1 &gt;= ay0))
-
-def movePlayer(dx, dy, data):
-    data.playerX += dx
-    data.playerY += dy
-    # scroll to make player visible as needed
-    if (data.playerX &lt; data.scrollX + data.scrollMargin):
-        data.scrollX = data.playerX - data.scrollMargin
-    if (data.playerX &gt; data.scrollX + data.width - data.scrollMargin):
-        data.scrollX = data.playerX - data.width + data.scrollMargin
-    # and check for a new wall hit
-    wall = getWallHit(data)
-    if (wall != data.currentWallHit):
-        data.currentWallHit = wall
-        if (wall &gt;= 0):
-            data.wallPoints[wall] += 1
 
 def mousePressed(event, data):
     pass
 
 def keyPressed(event, data):
-    if (event.keysym == "Left"):    movePlayer(-5, 0, data)
-    elif (event.keysym == "Right"): movePlayer(+5, 0, data)
-    elif (event.keysym == "Up"):    movePlayer(0, +5, data)
-    elif (event.keysym == "Down"):  movePlayer(0, -5, data)
-
-def timerFired(data):
     pass
 
+def timerFired(data):
+    dcat, ddog = data.marvel
+    data.cat += data.running*dcat
+    data.dog += data.running*ddog
+
+    if data.cat < 0 or data.cat+150 > data.width:
+        dcat *= -1
+        data.whichHero += 1
+    if data.dog < 0 or data.dog+150 > data.height:
+        ddog *= -1
+        data.whichHero += 1
+
+    data.marvel = (dcat, ddog)
+    data.whichHero %= len(data.superSecret)
+
 def redrawAll(canvas, data):
-    # draw the base line
-    lineY = data.height/2
-    lineHeight = 5
-    canvas.create_rectangle(0, lineY, data.width, lineY+lineHeight,fill="black")
-
-    # draw the walls
-    # (Note: should optimize to only consider walls that can be visible now!)
-    sx = data.scrollX
-    for wall in range(data.walls):
-        (x0, y0, x1, y1) = getWallBounds(wall, data)
-        fill = "orange" if (wall == data.currentWallHit) else "pink"
-        canvas.create_rectangle(x0-sx, y0, x1-sx, y1, fill=fill)
-        (cx, cy) = ((x0+x1)/2 - sx, (y0 + y1)/2)
-        canvas.create_text(cx, cy, text=str(data.wallPoints[wall]))
-        cy = lineY + 5
-        canvas.create_text(cx, cy, text=str(wall), anchor=N)
-
-    # draw the player
-    (x0, y0, x1, y1) = getPlayerBounds(data)
-    canvas.create_oval(x0 - sx, y0, x1 - sx, y1, fill="cyan")
-
-    # draw the instructions
-    msg = "Use arrows to move, hit walls to score"
-    canvas.create_text(data.width/2, 20, text=msg)
+    canvas.create_image(data.cat, data.dog, anchor=NW, image = data.superSecret[data.whichHero])
 
 ####################################
 # use the run function as-is
@@ -515,7 +555,7 @@ def run(width=300, height=300):
         canvas.create_rectangle(0, 0, data.width, data.height,
                                 fill='white', width=0)
         redrawAll(canvas, data)
-        canvas.update()    
+        canvas.update()
 
     def mousePressedWrapper(event, canvas, data):
         mousePressed(event, data)
@@ -530,6 +570,8 @@ def run(width=300, height=300):
         redrawAllWrapper(canvas, data)
         # pause, then call timerFired again
         canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
+    # Create root before calling init (so we can create images in init)
+    root = Tk()
     # Set up data and call init
     class Struct(object): pass
     data = Struct()
@@ -538,20 +580,19 @@ def run(width=300, height=300):
     data.timerDelay = 100 # milliseconds
     init(data)
     # create the root and the canvas
-    root = Tk()
     canvas = Canvas(root, width=data.width, height=data.height)
     canvas.pack()
     # set up events
-    root.bind("&lt;Button-1&gt;", lambda event:
+    root.bind("<Button-1>", lambda event:
                             mousePressedWrapper(event, canvas, data))
-    root.bind("&lt;Key&gt;", lambda event:
+    root.bind("<Key>", lambda event:
                             keyPressedWrapper(event, canvas, data))
     timerFiredWrapper(canvas, data)
     # and launch the app
     root.mainloop()  # blocks until window is closed
     print("bye!")
 
-run(300, 300)
+run(400, 400)
 </div>
 <b>Result:</b><br>
 <img src="animation-side-scroller-demo.gif" width="400px"><br><br></li><br>
@@ -559,106 +600,87 @@ run(300, 300)
 <li><a name="snakeDemo"></a><b>Snake Demo</b>
 <span class="play-video1"
       data-src="https://www.youtube.com/embed/TBDTBDTBD"></span>
-<div class="python-code no-viz no-run"># Snake
+<div class="python-code no-viz no-run">import urllib.request
+import base64
+import math
+
+def downloadImage(image_path):
+    import os, ssl
+    if (not os.environ.get('PYTHONHTTPSVERIFY', '') and
+        getattr(ssl, '_create_unverified_context', None)):
+        ssl._create_default_https_context = ssl._create_unverified_context
+
+    pic = urllib.request.urlopen(image_path)
+    raw_data = pic.read()
+
+    return base64.b64encode(raw_data)
+
+def PhotoImageFromLink(link, width=None, height=None, scale=None):
+    base64_data = downloadImage(link)
+    image = PhotoImage(data=base64_data)
+    (old_w, old_h) = (image.width(), image.height())
+
+    if scale != None:
+        width = int(old_w * scale)
+        height = int(old_h * scale)
+
+    (target_w, target_h) = (width, height)
+
+    if (target_w != None and target_h != None):
+        x_common = math.gcd(target_w, old_w)
+        x_zoom = int(target_w / x_common)
+        x_sub = int(old_w / x_common)
+
+        y_common = math.gcd(target_h, old_h)
+        y_zoom = int(target_h / y_common)
+        y_sub = int(old_h / y_common)
+
+        image = image.zoom(x_zoom, y_zoom)
+        image = image.subsample(x_sub, y_sub)
+
+    return image
+
+
 from tkinter import *
-import random
 
 def init(data):
-    data.rows = 10
-    data.cols = 10
-    data.margin = 5 # margin around grid
-    data.snake = [(data.rows/2, data.cols/2)]
-    data.direction = (0, +1) # (drow, dcol)
-    placeFood(data)
-    data.timerDelay = 250
-    data.gameOver = False
-    data.paused = True
+    woo = ["https://i.pinimg.com/originals/3f/9c/f4/3f9cf47788266c63a51e2b24ff1abc26.gif",
+              "https://media.giphy.com/media/yFoFZmVC9OGIM/giphy.gif",
+              "http://www.intuitivewebdesigns.com/comics/graphics/ff/stretch.gif",
+              "http://3.bp.blogspot.com/-RhHxVCNe3ak/TpSBoL0o8nI/AAAAAAAAETU/u3diSjW-B04/s320/reed+richards.gif"]
+    data.superSecret = []
+    for yay in woo: 
+        data.superSecret.append( PhotoImageFromLink(yay, width=150, height=150) )
 
-# getCellBounds from grid-demo.py
-def getCellBounds(row, col, data):
-    # aka "modelToView"
-    # returns (x0, y0, x1, y1) corners/bounding box of given cell in grid
-    gridWidth  = data.width - 2*data.margin
-    gridHeight = data.height - 2*data.margin
-    x0 = data.margin + gridWidth * col / data.cols
-    x1 = data.margin + gridWidth * (col+1) / data.cols
-    y0 = data.margin + gridHeight * row / data.rows
-    y1 = data.margin + gridHeight * (row+1) / data.rows
-    return (x0, y0, x1, y1)
+    data.whichHero = 0
+    data.cat, data.dog = 50, 20
+    data.running = 18
+    data.marvel = (1, -1) 
+
 
 def mousePressed(event, data):
-    data.paused = False
+    pass
 
 def keyPressed(event, data):
-    if (event.keysym == "p"): data.paused = True; return
-    elif (event.keysym == "r"): init(data); return
-    if (data.paused or data.gameOver): return
-    if (event.keysym == "Up"):      data.direction = (-1, 0)
-    elif (event.keysym == "Down"):  data.direction = (+1, 0)
-    elif (event.keysym == "Left"):  data.direction = (0, -1)
-    elif (event.keysym == "Right"): data.direction = (0, +1)
-    # for debugging, take one step on any keypress
-    takeStep(data)
+    pass
 
 def timerFired(data):
-    if (data.paused or data.gameOver): return
-    takeStep(data)
+    dcat, ddog = data.marvel
+    data.cat += data.running*dcat
+    data.dog += data.running*ddog
 
-def takeStep(data):
-    (drow, dcol) = data.direction
-    (headRow, headCol) = data.snake[0]
-    (newRow, newCol) = (headRow+drow, headCol+dcol)
-    if ((newRow &lt; 0) or (newRow &gt;= data.rows) or
-        (newCol &lt; 0) or (newCol &gt;= data.cols) or
-        ((newRow, newCol) in data.snake)):
-        data.gameOver = True
-    else:
-        data.snake.insert(0, (newRow, newCol))
-        if (data.foodPosition == (newRow, newCol)):
-            placeFood(data)
-        else:
-            # didn't eat, so remove old tail (slither forward)
-            data.snake.pop()
+    if data.cat < 0 or data.cat+150 > data.width:
+        dcat *= -1
+        data.whichHero += 1
+    if data.dog < 0 or data.dog+150 > data.height:
+        ddog *= -1
+        data.whichHero += 1
 
-def placeFood(data):
-    data.foodPosition = None
-    row0 = random.randint(0, data.rows-1)
-    col0 = random.randint(0, data.cols-1)
-    for drow in range(data.rows):
-        for dcol in range(data.cols):
-            row = (row0 + drow) % data.rows
-            col = (col0 + dcol) % data.cols
-            if (row,col) not in data.snake:
-                data.foodPosition = (row, col)
-                return
-
-def drawBoard(canvas, data):
-    for row in range(data.rows):
-        for col in range(data.cols):
-            (x0, y0, x1, y1) = getCellBounds(row, col, data)
-            canvas.create_rectangle(x0, y0, x1, y1, fill="white")
-
-def drawSnake(canvas, data):
-    for (row, col) in data.snake:
-        (x0, y0, x1, y1) = getCellBounds(row, col, data)
-        canvas.create_oval(x0, y0, x1, y1, fill="blue")
-
-def drawFood(canvas, data):
-    if (data.foodPosition != None):
-        (row, col) = data.foodPosition
-        (x0, y0, x1, y1) = getCellBounds(row, col, data)
-        canvas.create_oval(x0, y0, x1, y1, fill="green")
-
-def drawGameOver(canvas, data):
-    if (data.gameOver):
-        canvas.create_text(data.width/2, data.height/2, text="Game over!",
-                           font="Arial 26 bold")
+    data.marvel = (dcat, ddog)
+    data.whichHero %= len(data.superSecret)
 
 def redrawAll(canvas, data):
-    drawBoard(canvas, data)
-    drawSnake(canvas, data)
-    drawFood(canvas, data)
-    drawGameOver(canvas, data)
+    canvas.create_image(data.cat, data.dog, anchor=NW, image = data.superSecret[data.whichHero])
 
 ####################################
 # use the run function as-is
@@ -670,7 +692,7 @@ def run(width=300, height=300):
         canvas.create_rectangle(0, 0, data.width, data.height,
                                 fill='white', width=0)
         redrawAll(canvas, data)
-        canvas.update()    
+        canvas.update()
 
     def mousePressedWrapper(event, canvas, data):
         mousePressed(event, data)
@@ -685,6 +707,8 @@ def run(width=300, height=300):
         redrawAllWrapper(canvas, data)
         # pause, then call timerFired again
         canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
+    # Create root before calling init (so we can create images in init)
+    root = Tk()
     # Set up data and call init
     class Struct(object): pass
     data = Struct()
@@ -693,20 +717,19 @@ def run(width=300, height=300):
     data.timerDelay = 100 # milliseconds
     init(data)
     # create the root and the canvas
-    root = Tk()
     canvas = Canvas(root, width=data.width, height=data.height)
     canvas.pack()
     # set up events
-    root.bind("&lt;Button-1&gt;", lambda event:
+    root.bind("<Button-1>", lambda event:
                             mousePressedWrapper(event, canvas, data))
-    root.bind("&lt;Key&gt;", lambda event:
+    root.bind("<Key>", lambda event:
                             keyPressedWrapper(event, canvas, data))
     timerFiredWrapper(canvas, data)
     # and launch the app
     root.mainloop()  # blocks until window is closed
     print("bye!")
 
-run(300, 300)
+run(400, 400)
 </div>
 <b>Result:</b><br>
 <img src="animation-snake-demo.gif" width="400px"><br><br></li><br>

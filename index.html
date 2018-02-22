@@ -6,6 +6,14 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/112.css">
   <link rel="stylesheet" type="text/css" href="css/112-highlight-style.css">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/112.css">
+  <link rel="stylesheet" type="text/css" href="../css/112-highlight-style.css">
+  <script src="../js/jquery-2.1.4.min.js"></script>
+  <script src="../js/highlight.pack.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script id="112-script" src="../js/112.js"></script>
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/highlight.pack.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -36,31 +44,12 @@ Spring 2018
 <tr>
 <img border="0" src="fence-s17.png">
 </tr>
-<tr>
-<td>
-<img border="0" height="250" src="112-dragon.png">
-</td>
-<td>
-<script type="text/javascript" language="JavaScript">
-   var gifs = 8;
-   var gif = Math.floor(Math.random() * gifs);
-   // use local storage to be non-random if possible
-   if (typeof(Storage) !== "undefined") {
-     gif = parseInt(localStorage.getItem("studentGif") || String(gif));
-     gif = (1 + gif) % gifs
-     localStorage.setItem("studentGif", gif);
-   }
-   document.write('<img src="student-images/' +
-                  gif +
-                  '.gif" height="250">');
-</script>
-</td>
-</tr>
 </table>
+
 
 <table>
 <tbody>
-  <tr class="color1">
+<tr class="color1">
     <td>Units</td>
     <td>12</td>
   </tr>
@@ -125,6 +114,14 @@ Spring 2018
 </ul>
   </td>
   </tr>
+  <tr>
+    <div class="python-code">
+(title1, name1) = tuple("Green Answer".split(" "))
+(title2, name2) = tuple("Purple Answer".split(" ")) 
+print("".join([title2, name1]))
+    </div>
+  </tr>
+  <!--  -->
 </tbody>
 </table>
 </div>
